@@ -5,4 +5,5 @@ output a bro and snort ruleset.
 
 This is the backend processor, it will involve to parts, written in python3 (more than likely)
 - Download Agent (pulls the threat feeds)
+- Enricher (adds more data from the basic data feeds, enriches the data)
 - Miner (enriches the data)
