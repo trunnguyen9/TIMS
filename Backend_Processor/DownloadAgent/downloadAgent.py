@@ -39,6 +39,8 @@ from datetime import datetime
 from pprint import pprint
 
 import DataStore_Modules
+import IoC_Modules
+
 
 # __MAIN__
 # create main DataStore for all threat information
@@ -55,6 +57,11 @@ currentHour=todayDateTime.hour
 # different threat libraries are updated at different time intervals, everything from updated every hour to once a day
 # these conditional statements will be used to download the proper threat libraries at the proper time interval. If you
 # to download too often, many will block you. So we cant annoy them too much or we'll get blocked.
+
+#PhishTank Test Data
+PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
+PhishTank_gatherer.pullPhishtank()
+PhishTank_gatherer.showThreats()
 
 if (currentHour%1)==0:
 	print ("DO EVERY HOUR!")
