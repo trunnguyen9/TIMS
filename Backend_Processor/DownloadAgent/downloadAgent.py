@@ -28,5 +28,47 @@
 # @TODO          - MD5/SHA1 hash of malware/virus: no idea how we can enrich
 # @TODO   * Don't know if we can do this as we ingest the data, or if it will take too long. Might be better
 # @TODO   * to ingest quickly then have another agent that goes back and enriches the data, as another process
+# @TODO lots and lots of error checking
+
 
 # --====================================================--
+# Import Necessary Libraries
+# --====================================================--
+
+from datetime import datetime
+from pprint import pprint
+
+import DataStore_Modules
+
+# __MAIN__
+# create main DataStore for all threat information
+threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
+SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
+
+# create a time object to obtain current time
+todayDateTime=datetime.now()
+
+# get current hour, this will be used to determine which processes are run
+currentHour=todayDateTime.hour
+
+# python doesnt have a case statement, so you have to use a bunch of if statements
+# different threat libraries are updated at different time intervals, everything from updated every hour to once a day
+# these conditional statements will be used to download the proper threat libraries at the proper time interval. If you
+# to download too often, many will block you. So we cant annoy them too much or we'll get blocked.
+
+if (currentHour%1)==0:
+	print ("DO EVERY HOUR!")
+if (currentHour%2)==0:
+	print ("DO EVERY TWO HOURS!")
+if (currentHour%4)==0:
+	print ("DO EVERY FOUR HOURS")
+if (currentHour%6)==0:
+	print ("DO EVERY SIX HOURS!")
+if (currentHour%12)==0:
+	print ("DO EVERY TWELVE HOUR!")
+if (currentHour%24)==0:
+	print ("DO EVERY TWENTY FOUR HOURS!")
+
+
+
+
