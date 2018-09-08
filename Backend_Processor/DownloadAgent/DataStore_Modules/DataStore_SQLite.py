@@ -33,30 +33,7 @@ class SQLiteDataStore:
         self.log['SQLErrorCount'] = 0
         self.threatLibrary = threatResults.copy()
         # --===========================================--
-
         print ("Connecting to SQLite DB for storing IOCs..")
-
-        '''
-        con = _sqlite3.connect('../../Threats.sqlite',detect_types=_sqlite3.PARSE_DECLTYPES)
-        cursor = con.cursor()
-
-        datetimevalue = datetime.now()
-
-        print (datetimevalue.now())
-        cursor.execute("SELECT * FROM ThreatLoggerDB;")
-        cursor.execute('insert into ThreatLoggerDB values (?,?,?)', ['12','blah', str(datetimevalue)] )
-        con.commit()
-        cursor = con.cursor()
-
-        print(cursor.fetchall())
-
-        noThreats = 11
-        notes = "blah blah blah"
-        indexKey= datetime
-
-        #cursor.execute("INSERT INTO threatLogger(noThreats,Notes,indexKey) values ("'11','blahblahblah',datetime"))
-        con.close()
-        '''
     # end constructor
 
     def checkDBForDuplicate(self, key, con):
@@ -163,7 +140,6 @@ class SQLiteDataStore:
         # pprint (self.threatLibrary)
         print("## Done ## ")
     #end showDataInThreatDB
-
 
 #end SQLiteDataStore
 
