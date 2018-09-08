@@ -45,7 +45,6 @@ import IoC_Modules
 # __MAIN__
 # create main DataStore for all threat information
 threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
-SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
 
 # create a time object to obtain current time
 todayDateTime=datetime.now()
@@ -58,11 +57,30 @@ currentHour=todayDateTime.hour
 # these conditional statements will be used to download the proper threat libraries at the proper time interval. If you
 # to download too often, many will block you. So we cant annoy them too much or we'll get blocked.
 
-#PhishTank Test Data
-PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
-PhishTank_gatherer.pullPhishtank()
-PhishTank_gatherer.showThreats()
+# -- ================ --
+# PhishTank Test Data
+# -- ================ --
+#
+# This is just a basic test to pull data from one open source threat library and dump it into the database
+# so we have some real data in the database, so everyone can see the workflow that i think will work..
+# Once we get this working for one library, it will be just a matter of making modules for the other threat libraries
+#
 
+# creates the object to connect to the phishtank opensource library
+PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
+
+# performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
+# format. The data will just sit in the data dictionary until you put it into the database.
+PhishTank_gatherer.pullPhishtank()
+
+# Moves the data from the phishtank object to the main internal data object
+threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
+
+# writes data to sqlite database
+SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore(threatDataStore.getDataStore())
+SQLiteDataStore.processNewThreats()
+
+'''
 if (currentHour%1)==0:
 	print ("DO EVERY HOUR!")
 if (currentHour%2)==0:
@@ -75,7 +93,4 @@ if (currentHour%12)==0:
 	print ("DO EVERY TWELVE HOUR!")
 if (currentHour%24)==0:
 	print ("DO EVERY TWENTY FOUR HOURS!")
-
-
-
-
+'''

@@ -19,8 +19,6 @@ class interalDataStore:
     #end constructor
 
     def addDataToStore(self, newDataDictionary):
-        #pprint(newDataDictionary)
-
         for item in newDataDictionary:
             if newDataDictionary[item]['indicator'] in self.allThreats.keys():
                 if type(self.allThreats[newDataDictionary[item]['indicator']]['count'])==int:
