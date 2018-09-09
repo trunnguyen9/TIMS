@@ -8,64 +8,58 @@
 #
 # Unit Test Object with methods for assessing functionality of
 # TIMS IoC Module
-
 import unittest
 import hashlib
-from IoC_Modules import IoC_PhishTank #Import PhishTank IoC
+from IoC_Modules import IoC_EmergingThreats #Import Emerging Threats IoC
+from IoC_Modules import IoC_Methods
 
-class IoC_EmergingThreats_UnitTests(unittest.TestCase):
-
-	# /*
-	# Example Test Format
-	# #Test -- Not Corrected From Java
-	# def  ExampleTest(){
-	#  // This test should pass
-	#  self.assertTrue(1==1)
-	# }
-
-	# #Test -- Not Corrected From Java
-	# def  ExampleTest2(){
-	#  // This test should fail
-	#  self.assertTrue(1==0)
-	# }
-	#  */
+class Test_IoC_EmergingThreats(unittest.TestCase):
 
 	def setUp(self):
-		print("Emerging Threats Unit Test Constructor")
+		self.ThreatObject = IoC_EmergingThreats()	
+
+	def suite():
+	    suite = unittest.TestSuite()
+	    suite.addTest(testCollectingResourceTest('testresource_connection'))
+	    suite.addTest(testParseANewResourceTest('testresource_parsing'))
+	    suite.addTest(testExportThreatListTest('testresource_return'))
+	    suite.addTest(testCreateUniqueKey('testunique_key_creation'))
+	    return suite
 
 	#Test the ability of the module to connect with its resource via HTTP request 
-	def  CollectingResourceTest(self):
-		self.pullEmergingThreats()
-		uri = 'http://data.EmergingThreats.com/data/online-valid.json'
-		result = HGMMethods.CreateHTTPRequest(uri)
-		self.assertTrue(result.contains("HTTP POST"))
+	def testCollectingResourceTest(self):
+		ThreatObject = IoC_Methods()
+		ThreatObject.uri = 'http://data.EmergingThreats.com/data/online-valid.json'
+		result = ThreatObject.pull()
+		self.assertNotEqual(result,'')
 
 	#Test the ability of the module to parse the resources' response
-	def  ParseANewResourceTest(self):
-		self.pullEmergingThreats()
-		self.assertIsInstance(self.recordedTheats,dict())
+	def testParseANewResourceTest(self):
+		# self.ThreatObject.pullEmergingThreats()
+		self.assertIsInstance(self.ThreatObject.recordedThreats,dict)
 
 	#Test the ability of the module to display all recorded threats
-	def  ViewThreatsTest(self):
+	def testViewThreatsTest(self):
 		print('Under Construction')
-		# threats = self.getThreats()
-		# self.assertIsInstance(threats.get(1).getClass(),IoC_EmergingThreats)
+		# threats = self.ThreatObject.getThreats()
+		# self.ThreatObject.assertIsInstance(threats.get(1).getClass(),IoC_EmergingThreats)
 
 	#Test the ability of the module to return an object containing recorded threats
-	def  ExportThreatListTest(self):
-		self.pullEmergingThreats()
-		copy = self.getThreats()
-		self.assertIsInstance(copy,dict())
+	def testExportThreatListTest(self):
+		# self.ThreatObject.pullEmergingThreats()
+		copy = self.ThreatObject.getThreats()
+		self.assertIsInstance(copy,dict)
 
 	# Test the ability of the module to create unique identifier keys
-	def CreateUniqueKey(self):
+	def testCreateUniqueKey(self):
 		keystrings = ['Fake Keystring1','Fake Keystring2']
-		mdsStrings = []
-		for item in keystrings:
+		md5strings = []
+		for entry in keystrings:
 			m = hashlib.md5()
-			m.update(keystring1.encode('utf-8'))
+			m.update(entry.encode('utf-8'))
 			md5strings.append(m.hexdigest())
-		self.assertNotEqual(md5string[0],md5string[1])
+		self.assertNotEqual(md5strings[0],md5strings[1])
 
 if __name__ == '__main__':
 	unittest.main()
+

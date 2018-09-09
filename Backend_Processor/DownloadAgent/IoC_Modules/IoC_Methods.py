@@ -1,3 +1,10 @@
+# SimpleIOC
+# Darrell Miller
+# darrellrhodesmiller@gmail.com
+#
+# The following code outlines uniform functions that are intended
+# to be accesible by all specific IoC modules.  Certain Functions
+# may be overwritten by specific-resource modules
 
 import urllib.request
 import urllib.parse
@@ -8,8 +15,6 @@ import requests
 
 import hashlib
 from hashlib import md5
-from Backend_Processor.DownloadAgent.DataStore_Modules.DataStore_SQLite import SQLiteDataStore
-
 
 class IoC_Methods:
 	threatCounter=0
@@ -17,14 +22,11 @@ class IoC_Methods:
 	uri = '' #Link to Location of Threats to be Extracted
 
 	def __init__(self):
+		print('Generic IoC Constructor')
 
 	def pull(self):
-		print("Pulling Phish Tank Data, this could take a while, its pretty large")
-		phishThreat=dict() #temp spot to hold threat info to put in recordedThreats
-		lineCount = 0
-
 		# I think it might be worth making the URI an attribute of the class - Doug
-		x = urllib.request.urlopen('http://data.phishtank.com/data/online-valid.json')
+		x = urllib.request.urlopen(self.uri)
 		results = x.read()
 		results = results.decode("utf-8")
 		return results
