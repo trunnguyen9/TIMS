@@ -45,14 +45,14 @@ class IoC_PhishTank:
 
         for x in jsonResults:
             lineCount += 1
-            phishThreat['key']=""
+            phishThreat['threatkey']=""
             phishThreat['tlp']="green"
 
             dt= parse(x['submission_time'])
 
             phishThreat['lasttime']=str(dt.strftime('%Y-%m-%d %H:%M:%S'))
             phishThreat['reporttime'] = str(datetime.datetime.now())
-            phishThreat['count'] = 1
+            phishThreat['icount'] = 1
             phishThreat['itype'] = "fqdn"
             phishThreat['indicator'] = x['url']
             phishThreat['cc'] = ""
@@ -64,9 +64,11 @@ class IoC_PhishTank:
             phishThreat['tags'] = "phishing"
             phishThreat['rdata'] = "info:" + x['phish_detail_url'] + " target:" + x['target']
             phishThreat['provider'] = "PhishTank.com"
+            phishThreat['gps'] = "lat and long will go here"
+            phishThreat['enriched']=0
 
             tempKey=phishThreat['indicator']+":"+phishThreat['provider']
-            phishThreat['key']=self.createMD5Key(tempKey)
+            phishThreat['threatkey']=self.createMD5Key(tempKey)
             self.recordedThreats[self.threatCounter]=phishThreat.copy()
             self.threatCounter+=1
             phishThreat.clear()

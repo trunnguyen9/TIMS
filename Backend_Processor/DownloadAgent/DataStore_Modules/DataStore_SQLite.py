@@ -44,78 +44,53 @@ class SQLiteDataStore:
         msg = cursor.fetchone()
         if (cursor.rowcount) > 0:
             self.log['dupeCount'] += 1
+            print ("dupe")
             return 1
         else:
             self.log['newCount'] += 1
+            print ("nope,new")
             return 0
     # checkDBForDuplicate
-
-    def buildSQLInsertString(self, threatInfo):
-
-        sqlString = "INSERT into RecordedThreatsDB ("
-        sqlString += "`tlp`,"
-        sqlString += "`lastTime`,"
-        sqlString += "`reportTime`,"
-        sqlString += "`count`,"
-        sqlString += "`iType`,"
-        sqlString += "`indicator`,"
-        sqlString += "`cc`,"
-        sqlString += "`gps`,"
-        sqlString += "`asn`,"
-        sqlString += "`asn_desc`,"
-        sqlString += "`confidence`,"
-        sqlString += "`description`,"
-        sqlString += "`tags`,"
-        sqlString += "`rData`,"
-        sqlString += "`provider`,"
-        sqlString += "`threatKey`,"
-        sqlString += "`entryTime`,"
-        sqlString += "`enriched`)"
-
-        sqlString += " VALUES ('"
-        sqlString += threatInfo['tlp'] + "','"
-        sqlString += threatInfo['lasttime'] + "','"
-        sqlString += threatInfo['reporttime'] + "','"
-        sqlString += str(threatInfo['count']) + "','"
-        sqlString += threatInfo['itype'] + "','"
-        sqlString += threatInfo['indicator'] + "','"
-        sqlString += threatInfo['cc'] + "','"
-        sqlString += "GPS long,lat" + "','"
-        sqlString += threatInfo['asn'] + "','"
-        sqlString += threatInfo['asn_desc'] + "','"
-        sqlString += str(threatInfo['confidence']) + "','"
-        sqlString += threatInfo['description'] + "','"
-        sqlString += threatInfo['tags'] + "','"
-        sqlString += threatInfo['rdata'] + "','"
-        sqlString += threatInfo['provider'] + "','"
-
-        sqlString += threatInfo['key'] + "','"
-
-        currentDateTime = datetime.now()
-        sqlString += str(currentDateTime) + "','"
-        sqlString += "FALSE" + "')"
-        return sqlString
-
-    # END BuildSQLInsertString
 
     def insertRowIntoDB(self, sqlString,con):
         print (sqlString)
         cursor = con.cursor()
-        #cursor.execute(sqlString)
+        cursor.execute(sqlString)
     # END insertRowIntoDB
 
     def processNewThreats(self):
         threatCounter = 1
         totalThreats = len(self.threatLibrary)
+        currentDateTime = datetime.now()
 
         con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         cursor = con.cursor()
         print ("--===================--")
+
         for item in self.threatLibrary:
             if self.checkDBForDuplicate(item, con) == 0:
                 print("[", threatCounter, "/", totalThreats, "]", "Checking Database for Record:", item, ": New Threat")
-                self.insertRowIntoDB(self.buildSQLInsertString(self.threatLibrary[item]), con)
-                if threatCounter % 500 == 0:  # saves db every 500 records
+                cursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                               [self.threatLibrary[item]['tlp'],
+                                self.threatLibrary[item]['lasttime'],
+                                self.threatLibrary[item]['reporttime'],
+                                self.threatLibrary[item]['icount'],
+                                self.threatLibrary[item]['itype'],
+                                self.threatLibrary[item]['indicator'],
+                                self.threatLibrary[item]['cc'],
+                                self.threatLibrary[item]['gps'],
+                                self.threatLibrary[item]['asn'],
+                                self.threatLibrary[item]['asn_desc'],
+                                self.threatLibrary[item]['confidence'],
+                                self.threatLibrary[item]['description'],
+                                self.threatLibrary[item]['tags'],
+                                self.threatLibrary[item]['rdata'],
+                                self.threatLibrary[item]['provider'],
+                                self.threatLibrary[item]['threatkey'],
+                                str(currentDateTime),
+                                self.threatLibrary[item]['enriched'],
+                                ])
+                if threatCounter%5000==0: #saves db every 5000 records
                     con.commit()
             else:
                 print("[", threatCounter, "/", totalThreats, "] Checking Database for Record:", item,

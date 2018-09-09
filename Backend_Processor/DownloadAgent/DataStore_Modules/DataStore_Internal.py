@@ -21,12 +21,12 @@ class interalDataStore:
     def addDataToStore(self, newDataDictionary):
         for item in newDataDictionary:
             if newDataDictionary[item]['indicator'] in self.allThreats.keys():
-                if type(self.allThreats[newDataDictionary[item]['indicator']]['count'])==int:
-                    self.allThreats[newDataDictionary[item]['indicator']]['count']+=1
+                if type(self.allThreats[newDataDictionary[item]['indicator']]['icount'])==int:
+                    self.allThreats[newDataDictionary[item]['indicator']]['icount']+=1
                 else:
-                    print ("WTF!!!!", type(self.allThreats[newDataDictionary[item]['indicator']]['count']))
+                    print ("WTF!!!!", type(self.allThreats[newDataDictionary[item]['indicator']]['icount']))
                 print("Duplicate, adding to count of previous entry")
-                print("COUNT::", self.allThreats[newDataDictionary[item]['indicator']]['count'])
+                print("COUNT::", self.allThreats[newDataDictionary[item]['indicator']]['icount'])
             else:
                 self.allThreats[newDataDictionary[item]['indicator']]=newDataDictionary[item]
     #end addDataToStore
