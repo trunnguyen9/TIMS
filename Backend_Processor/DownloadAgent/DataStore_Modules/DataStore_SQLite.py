@@ -36,19 +36,17 @@ class SQLiteDataStore:
         print ("Connecting to SQLite DB for storing IOCs..")
     # end constructor
 
-    def checkDBForDuplicate(self, key, con):
+    def checkDBForDuplicate(self, threatkey, con):
         cursor = con.cursor()
-        sqlString = "SELECT * FROM `RecordedThreatsDB` WHERE `indicator` ="
-        sqlString += "'" + key + "'"
+        sqlString = "SELECT * FROM `RecordedThreatsDB` WHERE `threatKey` ="
+        sqlString += "'" + threatkey + "'"
         cursor.execute(sqlString)
         msg = cursor.fetchone()
-        if (cursor.rowcount) > 0:
+        if (msg):
             self.log['dupeCount'] += 1
-            print ("dupe")
             return 1
         else:
             self.log['newCount'] += 1
-            print ("nope,new")
             return 0
     # checkDBForDuplicate
 
@@ -65,10 +63,14 @@ class SQLiteDataStore:
 
         con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         cursor = con.cursor()
-        print ("--===================--")
 
+
+
+
+        print ("--===================--")
         for item in self.threatLibrary:
-            if self.checkDBForDuplicate(item, con) == 0:
+         #print (self.checkDBForDuplicate(self.threatLibrary[item]['threatkey'],con))
+            if self.checkDBForDuplicate(self.threatLibrary[item]['threatkey'],con) == 0:
                 print("[", threatCounter, "/", totalThreats, "]", "Checking Database for Record:", item, ": New Threat")
                 cursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                [self.threatLibrary[item]['tlp'],

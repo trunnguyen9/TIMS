@@ -28,10 +28,11 @@ class IoC_PhishTank:
     recordedThreats=dict() #where threats are stored to put uploaded to database
 
     def __init__(self):
-        print ("constructor")
+        print ("Phish Tank Constructor")
     #end constructor
 
     def pullPhishtank(self):
+        print("Pulling Phish Tank Data, this could take a while, its pretty large")
         phishThreat=dict() #temp spot to hold threat info to put in recordedThreats
         lineCount = 0
 
@@ -74,6 +75,7 @@ class IoC_PhishTank:
             phishThreat.clear()
 
         print("lineCount", lineCount)
+        print("Completed Phish Tank Ingest!")
         #sqlLogger.writeToLog("Phishtank",str(self.threatCounter),"phishing")
     #end pullPhishtank
 

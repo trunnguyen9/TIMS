@@ -4,3 +4,4 @@
 # each file is a different open source database of *Indicators of Compromise*/Internet Threats
 
 from .IoC_PhishTank import IoC_PhishTank
+from .IoC_EmergingThreats import IoC_EmergingThreats
