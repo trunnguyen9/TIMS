@@ -45,8 +45,8 @@ class IoC_Module_UnitTests(unittest.TestCase)
 
 	#Test the ability of the module to display all recorded threats
 	def  ViewThreatsTest(self):
-		threats = self.getThreats()
-		self.assertIsInstance(threats.get(1).getClass(),IoC_PhishTank)
+		# threats = self.getThreats()
+		# self.assertIsInstance(threats.get(1).getClass(),IoC_PhishTank)
 
 	#Test the ability of the module to return an object containing recorded threats
 	def  ExportThreatListTest(self):
