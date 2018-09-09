@@ -11,10 +11,9 @@
 
 import unittest
 import hashlib
-from Backend_Processor.DownloadAgent.IoC_Modules import IoC_EmergingThreats #Import EmergingThreats IoC
+from IoC_Modules import IoC_PhishTank #Import PhishTank IoC
 
-
-class IoC_Module_UnitTests(unittest.TestCase)
+class IoC_EmergingThreats_UnitTests(unittest.TestCase):
 
 	# /*
 	# Example Test Format
@@ -31,6 +30,9 @@ class IoC_Module_UnitTests(unittest.TestCase)
 	# }
 	#  */
 
+	def setUp(self):
+		print("Emerging Threats Unit Test Constructor")
+
 	#Test the ability of the module to connect with its resource via HTTP request 
 	def  CollectingResourceTest(self):
 		self.pullEmergingThreats()
@@ -45,6 +47,7 @@ class IoC_Module_UnitTests(unittest.TestCase)
 
 	#Test the ability of the module to display all recorded threats
 	def  ViewThreatsTest(self):
+		print('Under Construction')
 		# threats = self.getThreats()
 		# self.assertIsInstance(threats.get(1).getClass(),IoC_EmergingThreats)
 
@@ -64,7 +67,5 @@ class IoC_Module_UnitTests(unittest.TestCase)
 			md5strings.append(m.hexdigest())
 		self.assertNotEqual(md5string[0],md5string[1])
 
-
-
 if __name__ == '__main__':
- unittest.main()
+	unittest.main()

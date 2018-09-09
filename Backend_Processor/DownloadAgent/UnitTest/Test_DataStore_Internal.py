@@ -10,7 +10,7 @@
 # TIMS Data Store Modules
 
 import unittest
-from Backend_Processor.DownloadAgent.DataStore_Modules import DataStore_SQLite #Import SQLite Data Store Object
+from Backend_Processor.DownloadAgent.DataStore_Modules import DataStore_Internal #Import Internal Data Store Object
 
 class DataStore_Internal_UnitTests(unittest.TestCase)
 
@@ -43,11 +43,10 @@ class DataStore_Internal_UnitTests(unittest.TestCase)
 		ArrayList<HGMObject> importResult = HGMMethods.Import(uri, mockDatabase)
 		self.assertTrue(importResult.element.sourceReference == uri)
 
-	#Test -- Not Corrected From Java
+	#Test For the ability to export dictionary results
 	def  ExportThreatListTest(self):
-		ArrayList<HGMObject> threats = HGMMethods.GetThreatList()
-		ArrayList<String> exportedThreats = HGMMethods.ExportThreatlistToType(threats, HGMType.Text)
-		self.assertTrue(exportedThreats.get(1) instanceof String)
+		copy = self.getDataStore()
+		self.assertIsInstance(copy,dict())
 
 	#Test -- Not Corrected From Java
 	def  SearchAThreat(self):

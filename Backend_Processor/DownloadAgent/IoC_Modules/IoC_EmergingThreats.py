@@ -24,7 +24,7 @@ import requests
 
 import hashlib
 from hashlib import md5
-from Backend_Processor.DownloadAgent.DataStore_Modules.DataStore_SQLite import SQLiteDataStore
+# from Backend_Processor.DownloadAgent.DataStore_Modules.DataStore_SQLite import SQLiteDataStore
 
 class IoC_EmergingThreats:
 	threatCounter = 0
@@ -41,6 +41,8 @@ class IoC_EmergingThreats:
 		lineCount = 0
 		EmergingThreat = dict()
 		# sqlLogger = DataStore_Modules.DataStore_MySQL.dataStore_MySQL_Logger()
+
+		# I think it might be worth making the URI an attribute of the class - Doug
 		url = "https://rules.emergingthreats.net/blockrules/compromised-ips.txt"
 
 		dresponse = urllib.request.urlopen(url)

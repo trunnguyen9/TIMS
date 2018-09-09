@@ -36,6 +36,7 @@ class IoC_PhishTank:
         phishThreat=dict() #temp spot to hold threat info to put in recordedThreats
         lineCount = 0
 
+        # I think it might be worth making the URI an attribute of the class - Doug
         x = urllib.request.urlopen('http://data.phishtank.com/data/online-valid.json')
         results = x.read()
         results = results.decode("utf-8")
