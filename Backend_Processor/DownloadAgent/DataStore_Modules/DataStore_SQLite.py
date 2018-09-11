@@ -116,7 +116,7 @@ class SQLiteDataStore:
         print("## Done ## ")
     #end showDataInThreatDB
 
-    def showStats(self):
+    def recordStats(self):
 
         self.log['endTime']= datetime.now()
         print ("-- ============================ --")
