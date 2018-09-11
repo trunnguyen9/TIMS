@@ -90,7 +90,6 @@ PhishTank_gatherer.pullPhishtank()
 # Moves the data from the phishtank object to the main internal data object
 threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
 
-
 '''
 if (currentHour%1)==0:
 	print ("DO EVERY HOUR!")
@@ -119,3 +118,4 @@ if (currentHour%24)==0:
 # creates sql object and writes data to sqlite database
 SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore(threatDataStore.getDataStore())
 SQLiteDataStore.processNewThreats()
+SQLiteDataStore.showStats()

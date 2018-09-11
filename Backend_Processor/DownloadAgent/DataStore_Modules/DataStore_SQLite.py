@@ -42,6 +42,7 @@ class SQLiteDataStore:
         sqlString += "'" + threatkey + "'"
         cursor.execute(sqlString)
         msg = cursor.fetchone()
+        self.log['lineCount'] += 1
         if (msg):
             self.log['dupeCount'] += 1
             return 1
@@ -63,9 +64,6 @@ class SQLiteDataStore:
 
         con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         cursor = con.cursor()
-
-
-
 
         print ("--===================--")
         for item in self.threatLibrary:
@@ -117,6 +115,30 @@ class SQLiteDataStore:
         # pprint (self.threatLibrary)
         print("## Done ## ")
     #end showDataInThreatDB
+
+    def showStats(self):
+
+        self.log['endTime']= datetime.now()
+        print ("-- ============================ --")
+        print("Total Entries:" + str( self.log['lineCount']))
+        print ("New Entries:" + str( self.log['newCount']))
+        print("Duplicates:" + str( self.log['dupeCount']))
+        print("Start Time:" + str( self.log['startTime']))
+        print("End Time:" + str( self.log['endTime']) )
+        print ("Total Time Spent:" + str (self.log['endTime'] - self.log['startTime']))
+
+        con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        cursor = con.cursor()
+        cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?)",
+                       [self.log['lineCount'],
+                        self.log['newCount'],
+                        self.log['dupeCount'],
+                        str(self.log['startTime']),
+                        str(self.log['endTime']),
+                        str((self.log['endTime'] - self.log['startTime']))
+                        ])
+        con.commit()
+    # END show stats
 
 #end SQLiteDataStore
 
