@@ -12,6 +12,8 @@
 from pprint import pprint
 from datetime import datetime
 import _sqlite3
+import FrontEnd_GUI
+import PySimpleGUI as sg
 
 class SQLiteDataStore:
 
@@ -66,7 +68,10 @@ class SQLiteDataStore:
         cursor = con.cursor()
 
         print ("--===================--")
+        progressBarTicker = 0
         for item in self.threatLibrary:
+            progressBarTicker +=1
+            sg.EasyProgressMeter("Checking Database for Records",progressBarTicker,len(self.threatLibrary))
          #print (self.checkDBForDuplicate(self.threatLibrary[item]['threatkey'],con))
             if self.checkDBForDuplicate(self.threatLibrary[item]['threatkey'],con) == 0:
                 print("[", threatCounter, "/", totalThreats, "]", "Checking Database for Record:", item, ": New Threat")
@@ -126,6 +131,16 @@ class SQLiteDataStore:
         print("Start Time:" + str( self.log['startTime']))
         print("End Time:" + str( self.log['endTime']) )
         print ("Total Time Spent:" + str (self.log['endTime'] - self.log['startTime']))
+
+        sg.Popup("Import Finished",
+                 "Total Entries: " + str( self.log['lineCount']),
+                 "New Entries: " + str( self.log['newCount']),
+                 "Duplicates: " + str(self.log['dupeCount']),
+                 "Start Time:" + str(self.log['startTime']),
+                 "End Time:" + str(self.log['endTime']),
+                 "Total Time Spent:" + str(self.log['endTime'] - self.log['startTime']))
+
+
 
         con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         cursor = con.cursor()
