@@ -152,6 +152,7 @@ class SQLiteDataStore:
                         str(self.log['endTime']),
                         str((self.log['endTime'] - self.log['startTime']))
                         ])
+        print ("committing to Logging DB")
         con.commit()
     # END show stats
 

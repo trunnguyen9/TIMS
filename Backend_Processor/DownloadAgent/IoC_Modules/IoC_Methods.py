@@ -17,9 +17,16 @@ import hashlib
 from hashlib import md5
 
 class IoC_Methods:
+
 	threatCounter=0
-	recordedThreats=dict() #where threats are stored to put uploaded to database
-	uri = '' #Link to Location of Threats to be Extracted
+	TotalThreats=0     # total threats downloaded
+	NewThreats=0       # new threats not in database
+	DuplicateThreats=0 # threats downloaded that were already in database
+
+	recordedThreats=dict() # where threats are stored to put uploaded to database
+	uri = '' # Link to Location of Threats to be Extracted
+
+
 
 	def __init__(self):
 		print('Generic IoC Constructor')
@@ -44,3 +51,7 @@ class IoC_Methods:
 		md5string = m.hexdigest()
 		return md5string
 	# endcreateMD5Key
+
+	def duplicateCheck(self, indicator):
+		print ("dupe check will go here")
+	# end duplicate check

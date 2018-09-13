@@ -6,3 +6,5 @@
 from .IoC_Methods import IoC_Methods
 from .IoC_PhishTank import IoC_PhishTank
 from .IoC_EmergingThreats import IoC_EmergingThreats
+from .IoC_EmergingThreatsv2 import IoC_EmergingThreatsv2
+from .IoC_PhishTankv2 import IoC_PhishTankv2

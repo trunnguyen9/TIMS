@@ -68,27 +68,32 @@ currentHour=todayDateTime.hour
 
 # -- Emerging Threats Open Source Threat Library --
 # creates the object to connect to the Emerging Threats Open Source Library
-EmergingThreats_gatherer = IoC_Modules.IoC_EmergingThreats()
+#EmergingThreats_gatherer = IoC_Modules.IoC_EmergingThreats()
+#EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2()
 
 # performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
 # format. The data will just sit in the data dictionary until you put it into the database.
-EmergingThreats_gatherer.pullEmergingThreats()
+#EmergingThreats_gatherer.pullEmergingThreats()
+#EmergingThreats_gathererv2.pull()
 
 # Moves the data from the emerging threats object to the main internal data object
-threatDataStore.addDataToStore(EmergingThreats_gatherer.getThreats())
-
+#threatDataStore.addDataToStore(EmergingThreats_gatherer.getThreats())
+#threatDataStore.addDataToStore(EmergingThreats_gathererv2.getThreats())
 
 # HUGE database takes a WHILE to download and process.. will multithread it to speed it up drastically
 # -- Phish Tank Open Source List --
 # creates the object to connect to the phishtank opensource library
 #PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
+PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2()
 
 # performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
 # format. The data will just sit in the data dictionary until you put it into the database.
 #PhishTank_gatherer.pullPhishtank()
+PhishTank_gathererv2.pull()
 
 # Moves the data from the phishtank object to the main internal data object
 #threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
+threatDataStore.addDataToStore(PhishTank_gathererv2.getThreats())
 
 '''
 if (currentHour%1)==0:
