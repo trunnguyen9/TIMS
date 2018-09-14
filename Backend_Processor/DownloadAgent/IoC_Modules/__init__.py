@@ -8,3 +8,6 @@ from .IoC_PhishTank import IoC_PhishTank
 from .IoC_EmergingThreats import IoC_EmergingThreats
 from .IoC_EmergingThreatsv2 import IoC_EmergingThreatsv2
 from .IoC_PhishTankv2 import IoC_PhishTankv2
+from .IoC_AlienVault import IoC_AlienVault
+from .IoC_CSIRTG import IoC_CSIRTG
+from .IoC_Feodotracker import IoC_Feodotracker
