@@ -21,9 +21,24 @@ class SQLiteDataStore:
     sqlStringDict = dict()
     log = dict()
     errorLog = dict()
+    conn = 0
+    cursor = 0
 
-    def __init__(self, threatResults):
-    #def __init__(self):
+    def __init__(self):
+        print ("Building Network Connection and Connection Cursor:")
+        self.conn = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        self.cursor=self.conn.cursor()
+    # end constructor
+
+    def getDBConn(self):
+        return self.conn
+    # end getDBConn
+
+    def getDBCursor(self):
+        return self.cursor
+    # end getDBCursor
+
+    def OLD_init(self, threatResults):
         # clearing variables and setting up the log counters
         # --===========================================--
         self.log['lineCount'] = 0
@@ -110,7 +125,7 @@ class SQLiteDataStore:
         threatCounter = 1
         totalThreats = len(self.threatLibrary)
 
-        con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES, check_same_thread=False)
         cursor = con.cursor()
         print(str(datetime.now()))
         cursor.execute("SELECT * FROM RecordedThreatsDB;")

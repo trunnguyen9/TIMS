@@ -12,8 +12,8 @@ import hashlib
 from hashlib import md5
 
 class IoC_PhishTankv2(IoC_Methods):
-    def __init__(self):
-        IoC_Methods.__init__(self)
+    def __init__(self,conn):
+        IoC_Methods.__init__(self,conn)
     #END Constructor
 
     def pull(self):
@@ -60,7 +60,6 @@ class IoC_PhishTankv2(IoC_Methods):
             self.threatCounter += 1
             phishThreat.clear()
 
-        print("lineCount", lineCount)
+        self.processData("PhishTank")
         print("Completed Phish Tank Ingest!")
-        # sqlLogger.writeToLog("Phishtank",str(self.threatCounter),"phishing")
 #End EmergingThreatsv2

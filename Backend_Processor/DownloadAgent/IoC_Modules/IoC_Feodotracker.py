@@ -10,8 +10,8 @@ class IoC_Feodotracker(IoC_Methods):
     threatCounter = 0
     recordedThreats = dict()  # where threats are stored to put uploaded to database
 
-    def __init__(self):
-        IoC_Methods.__init__(self)
+    def __init__(self,conn):
+        IoC_Methods.__init__(self,conn)
     #END Constructor
 
     def pull(self):
@@ -70,6 +70,6 @@ class IoC_Feodotracker(IoC_Methods):
                     self.recordedThreats[self.threatCounter] = feodoThreat.copy()
                     self.threatCounter += 1
                     feodoThreat.clear()
+            self.processData("Feodotracker")
     #End Pull
-
 #End EmergingThreatsv2

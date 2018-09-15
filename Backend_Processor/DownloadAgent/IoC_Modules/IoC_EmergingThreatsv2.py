@@ -12,8 +12,8 @@ import hashlib
 from hashlib import md5
 
 class IoC_EmergingThreatsv2(IoC_Methods):
-    def __init__(self):
-        IoC_Methods.__init__(self)
+    def __init__(self,conn):
+        IoC_Methods.__init__(self,conn)
     #END Constructor
 
     def pull(self):
@@ -56,4 +56,5 @@ class IoC_EmergingThreatsv2(IoC_Methods):
                 self.recordedThreats[self.threatCounter] = EmergingThreat.copy()
                 self.threatCounter += 1
                 EmergingThreat.clear()
+        self.processData("Emerging Threats")
 #End EmergingThreatsv2

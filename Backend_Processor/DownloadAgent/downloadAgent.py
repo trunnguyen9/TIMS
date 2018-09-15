@@ -44,8 +44,11 @@ import IoC_Modules
 
 # __MAIN__
 
+# create SQLite DB Connection
+SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
+
 # create main DataStore for all threat information
-threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
+#threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
 
 # create a time object to obtain current time
 todayDateTime=datetime.now()
@@ -70,46 +73,26 @@ currentHour=todayDateTime.hour
 # -- Emerging Threats Open Source Threat Library --
 # creates the object to connect to the Emerging Threats Open Source Library
 
-#EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2()
-
-# performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
-# format. The data will just sit in the data dictionary until you put it into the database.
-#EmergingThreats_gathererv2.pull()
-
-# Moves the data from the emerging threats object to the main internal data object
-#threatDataStore.addDataToStore(EmergingThreats_gathererv2.getThreats())
-#pprint (EmergingThreats_gathererv2.getThreats())
+EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
+EmergingThreats_gathererv2.pull()
 
 # HUGE database takes a WHILE to download and process.. will multithread it to speed it up drastically
 # -- Phish Tank Open Source List --
 # creates the object to connect to the phishtank opensource library
-#PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
-#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2()
-
-# performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
-# format. The data will just sit in the data dictionary until you put it into the database.
-#PhishTank_gatherer.pullPhishtank()
+#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
 #PhishTank_gathererv2.pull()
 
-# Moves the data from the phishtank object to the main internal data object
-#threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
-#threatDataStore.addDataToStore(PhishTank_gathererv2.getThreats())
-
-
 #Alien Vault, another big threat library
-# AlienVault_gatherer = IoC_Modules.IoC_AlienVault()
-# AlienVault_gatherer.pull()
-# threatDataStore.addDataToStore(AlienVault_gatherer.getThreats())
+#AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+#AlienVault_gatherer.pull()
 
 #CSIRTG
-CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG()
-CSIRTG_gatherer.pull()
-threatDataStore.addDataToStore(CSIRTG_gatherer.getThreats())
+#CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+#CSIRTG_gatherer.pull()
 
 #Feodo Tracker
-#FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker()
-#FeodoTracker_gatherer.pull()
-#threatDataStore.addDataToStore(FeodoTracker_gatherer.getThreats())
+FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
+FeodoTracker_gatherer.pull()
 
 '''
 if (currentHour%1)==0:
@@ -135,8 +118,3 @@ if (currentHour%24)==0:
     # Moves the data from the phishtank object to the main internal data object
     #threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
 '''
-
-# creates sql object and writes data to sqlite database
-SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore(threatDataStore.getDataStore())
-SQLiteDataStore.processNewThreats()
-SQLiteDataStore.recordStats()

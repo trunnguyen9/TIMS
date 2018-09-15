@@ -15,8 +15,8 @@ class IoC_AlienVault(IoC_Methods):
     threatCounter = 0
     recordedThreats = dict()  # where threats are stored to put uploaded to database
 
-    def __init__(self):
-        IoC_Methods.__init__(self)
+    def __init__(self,conn):
+        IoC_Methods.__init__(self,conn)
     #END Constructor
 
     def pull(self):
@@ -62,6 +62,7 @@ class IoC_AlienVault(IoC_Methods):
                     self.recordedThreats[self.threatCounter] = AlienThreat.copy()
                     self.threatCounter += 1
                     AlienThreat.clear()
+        self.processData("AlienVault")
     #End Pull
 
 #End EmergingThreatsv2
