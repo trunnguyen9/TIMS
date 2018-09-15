@@ -21,30 +21,16 @@ class SQL_Export:
 	threatList = []
 	threatDict = dict()
 	fileString = ''
-	log = dict()
-	errorLog = dict()
-	sqlStringDict = dict()
 
-
-	def __init__(self):
-	#def __init__(self):
-		# clearing variables and setting up the log counters
-		# --===========================================--
-		self.log['lineCount'] = 0
-		self.log['newCount'] = 0
-		self.log['dupeCount'] = 0
-		self.log['startTime'] = datetime.now()
-		self.log['endTime'] = ""
-		self.log['sqlEntries'] = 0
-		self.log['SQLErrorCount'] = 0
-		# self.threatLibrary = threatResults.copy()
-		# --===========================================--
-		self.createFileString(self)
-
+	def __init__(self,writeLoc):
+		# create a timestamp string to use when writing files
+		self.fileString = writeLoc
+		if self.fileString.endswith('/') == False:
+			self.fileString = self.fileString + '/'
+		self.fileString = self.fileString + 'TIMS_Export_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 	# end constructor
 
 	def extractFromDB(self):
-
 		print ("Connecting to SQLite DB for extracting IOCs...")
 		con = _sqlite3.connect('../../../Threats.sqlite')
 		cursor = con.cursor()
@@ -61,15 +47,9 @@ class SQL_Export:
 		# 	tempKey = item.get('threatKey')
 		# 	self.threatDict[tempKey] = item
 
-	# Method to create a unique file name for exported information
-	def createFileString(self):
-		self.fileString = 'TIMS_Export_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
 	# CSV File Write Method
-	def writeCSV(self,writeLoc):
-		if writeLoc.endswith('/') == False:
-			writeLoc = writeLoc + '/'
-		fileString = writeLoc + self.fileString + '.csv'
+	def writeCSV(self):
+		fileString = self.fileString + '.csv'
 		print("Writing CSV File: " + fileString)
 		# with open(fileString,'wb') as outfile:
 		keys = self.threatList[0].keys()
@@ -79,54 +59,16 @@ class SQL_Export:
 			dict_writer.writerows(self.threatList)
 
 	#JSON File Write Method
-	def writeJSON(self,writeLoc):
-		if writeLoc.endswith('/') == False:
-			writeLoc = writeLoc + '/'
-		fileString = writeLoc + self.fileString + '.json'
+	def writeJSON(self):
+		fileString = self.fileString + '.json'
 		print("Writing JSON File: " + fileString)
-
 		with open(fileString,'w') as output_file:
 			json.dump(self.threatDict,output_file)
 
-	def recordStats(self):
-
-		self.log['endTime']= datetime.now()
-		print ("-- ============================ --")
-		print("Total Entries:" + str( self.log['lineCount']))
-		print ("New Entries:" + str( self.log['newCount']))
-		print("Duplicates:" + str( self.log['dupeCount']))
-		print("Start Time:" + str( self.log['startTime']))
-		print("End Time:" + str( self.log['endTime']) )
-		print ("Total Time Spent:" + str (self.log['endTime'] - self.log['startTime']))
-
-		sg.Popup("Import Finished",
-				 "Total Entries: " + str( self.log['lineCount']),
-				 "New Entries: " + str( self.log['newCount']),
-				 "Duplicates: " + str(self.log['dupeCount']),
-				 "Start Time:" + str(self.log['startTime']),
-				 "End Time:" + str(self.log['endTime']),
-				 "Total Time Spent:" + str(self.log['endTime'] - self.log['startTime']))
-
-
-
-		con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
-		cursor = con.cursor()
-		cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?)",
-					   [self.log['lineCount'],
-						self.log['newCount'],
-						self.log['dupeCount'],
-						str(self.log['startTime']),
-						str(self.log['endTime']),
-						str((self.log['endTime'] - self.log['startTime']))
-						])
-		print ("committing to Logging DB")
-		con.commit()
-	# END show stats
 
 if __name__ == '__main__':
 	exportObj = SQL_Export
 	exportObj.__init__(exportObj)
 	exportObj.extractFromDB(exportObj)
-	print(exportObj.fileString)
 	exportObj.writeCSV(exportObj,'/Users/Scott/Downloads')
 	exportObj.writeJSON(exportObj,'/Users/Scott/Downloads')
