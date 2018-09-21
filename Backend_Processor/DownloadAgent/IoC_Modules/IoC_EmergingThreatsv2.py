@@ -51,8 +51,11 @@ class IoC_EmergingThreatsv2(IoC_Methods):
                 EmergingThreat['entrytime'] = str(datetime.now())
                 EmergingThreat['enriched'] = 0
 
-                tempKey = EmergingThreat['indicator'] + ":" + EmergingThreat['provider']
+                #tempKey = EmergingThreat['indicator'] + ":" + EmergingThreat['provider']
+                tempKey = EmergingThreat['indicator']
+                #print ("TempKey:" , tempKey)
                 EmergingThreat['threatkey'] = self.createMD5Key(tempKey)
+                #print ("MD5 Key:", EmergingThreat['threatkey'])
                 self.recordedThreats[self.threatCounter] = EmergingThreat.copy()
                 self.threatCounter += 1
                 EmergingThreat.clear()

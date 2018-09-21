@@ -21,10 +21,10 @@ class IoC_Feodotracker(IoC_Methods):
             "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist",
             "https://feodotracker.abuse.ch/blocklist/?download=domainblocklist"
         ]
-
-        print("PULL")
         for linkItem in linkList:
             threatConfidence = 0
+            self.threatCounter=0
+            lineCount=0
             threatTags = "feodo,botnet"
             threatLoggerComment = ""
             if linkItem == "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist":
@@ -44,7 +44,7 @@ class IoC_Feodotracker(IoC_Methods):
             # print (dlist)
             for x in dlist:
                 if x.startswith('#'):
-                    print ("skipping line, just a comment")
+                    #print ("skipping line, just a comment")
                     continue  # comment line, just skipping it
                 else:
                     feodoThreat['threatkey'] = ""
@@ -65,7 +65,8 @@ class IoC_Feodotracker(IoC_Methods):
                     feodoThreat['provider'] = "feodotracker.abuse.ch"
                     feodoThreat['enriched'] = 0
 
-                    tempKey = feodoThreat['indicator'] + ":" + feodoThreat['provider']
+                    #tempKey = feodoThreat['indicator'] + ":" + feodoThreat['provider']
+                    tempKey = feodoThreat['indicator']
                     feodoThreat['threatkey'] = self.createMD5Key(tempKey)
                     self.recordedThreats[self.threatCounter] = feodoThreat.copy()
                     self.threatCounter += 1

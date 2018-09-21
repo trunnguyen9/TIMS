@@ -54,7 +54,8 @@ class IoC_PhishTankv2(IoC_Methods):
             phishThreat['gps'] = "lat and long will go here"
             phishThreat['enriched'] = 0
 
-            tempKey = phishThreat['indicator'] + ":" + phishThreat['provider']
+            #tempKey = phishThreat['indicator'] + ":" + phishThreat['provider']
+            tempKey = phishThreat['indicator']
             phishThreat['threatkey'] = self.createMD5Key(tempKey)
             self.recordedThreats[self.threatCounter] = phishThreat.copy()
             self.threatCounter += 1

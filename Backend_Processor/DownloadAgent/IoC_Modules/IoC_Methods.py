@@ -22,6 +22,7 @@ from hashlib import md5
 from multiprocessing.dummy import Pool as ThreadPool
 import multiprocessing
 import socket
+import time
 
 class IoC_Methods:
     threatCounter = 0
@@ -33,7 +34,7 @@ class IoC_Methods:
     multiThreadQueue = Queue()
     multiprocessingList = list()
     uri = ''  # Link to Location of Threats to be Extracted
-    log = dict()
+    TIMSlog = dict()
 
     conn = 0
     cursor=0
@@ -41,17 +42,19 @@ class IoC_Methods:
     hostname = ""
 
     def __init__(self, conn):
+    #def __init__(self):
         print('Generic IoC Constructor')
         self.hostname=socket.gethostname()
         self.conn=conn
         self.cursor=self.conn.cursor()
-        self.log['lineCount'] = 0
-        self.log['newCount'] = 0
-        self.log['dupeCount'] = 0
-        self.log['startTime'] = datetime.now()
-        self.log['endTime'] = ""
-        self.log['sqlEntries'] = 0
-        self.log['SQLErrorCount'] = 0
+        self.TIMSlog['lineCount'] = 0
+        self.TIMSlog['newCount'] = 0
+        self.TIMSlog['dupeCount'] = 0
+        self.TIMSlog['startTime'] = datetime.now()
+        self.TIMSlog['endTime'] = ""
+        self.TIMSlog['sqlEntries'] = 0
+        self.TIMSlog['SQLErrorCount'] = 0
+        self.TIMSlog['Error'] = None
 
 
     def pull(self):
@@ -77,45 +80,127 @@ class IoC_Methods:
 
     # endcreateMD5Key
 
-    def checkDBForDuplicate(self, threatkey, con):
-        dbConn = _sqlite3.connect('../../Threats.sqlite', check_same_thread=False, isolation_level=None)
-        dbCursor = dbConn.cursor()
+    def processData(self, providerName):
+        self.makeList()
+        self.addToDatabase2()
+        # self.multiThreadedAdd()
+        self.writeLogToDB(providerName)
+    # end makeQueue
 
-        #cursor = self.cursor
+    def addToDatabase2(self):
+        threatCounter = 1
+        totalThreats = len(self.recordedThreats)
+        currentDateTime = datetime.now()
+        cursor=self.conn.cursor()
+
+        print("--===================--")
+        progressBarTicker = 0
+        for item in self.recordedThreats:
+            self.TIMSlog['lineCount'] +=1
+            try:
+                cursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                               [self.recordedThreats[item]['tlp'],
+                                self.recordedThreats[item]['lasttime'],
+                                self.recordedThreats[item]['reporttime'],
+                                self.recordedThreats[item]['icount'],
+                                self.recordedThreats[item]['itype'],
+                                self.recordedThreats[item]['indicator'],
+                                self.recordedThreats[item]['cc'],
+                                self.recordedThreats[item]['gps'],
+                                self.recordedThreats[item]['asn'],
+                                self.recordedThreats[item]['asn_desc'],
+                                self.recordedThreats[item]['confidence'],
+                                self.recordedThreats[item]['description'],
+                                self.recordedThreats[item]['tags'],
+                                self.recordedThreats[item]['rdata'],
+                                self.recordedThreats[item]['provider'],
+                                self.recordedThreats[item]['threatkey'],
+                                str(currentDateTime),
+                                self.recordedThreats[item]['enriched'],
+                                ])
+                if threatCounter % 5000 == 0:  # saves db every 5000 records
+                    self.conn.commit()
+                self.TIMSlog['newCount'] += 1
+                #print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Added to Database - NEW")
+            except _sqlite3.Error as e:
+                #print("[", self.TIMSlog['lineCount'],"/", totalThreats,"] : Not Added to Database - Duplicate")
+                self.TIMSlog['dupeCount'] +=1
+            except Exception as e:
+                print("Exception in _query: %s" % e)
+            finally:
+                self.conn.commit()
+
+        print("--===================--")
+    # end addToDataBase
+
+    def writeLogToDB(self, providerName):
+        cursor = self.conn.cursor()
+
+        self.TIMSlog['endTime'] = datetime.now()
+        print("-- ============================ --")
+        print("Total Entries:" + str(self.TIMSlog['lineCount']))
+        print("New Entries:" + str(self.TIMSlog['newCount']))
+        print("Duplicates:" + str(self.TIMSlog['dupeCount']))
+        print("Start Time:" + str(self.TIMSlog['startTime']))
+        print("End Time:" + str(self.TIMSlog['endTime']))
+        print("Total Time Spent:" + str(self.TIMSlog['endTime'] - self.TIMSlog['startTime']))
+
+        cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?,?,?)",
+                       [self.TIMSlog['lineCount'],
+                        self.TIMSlog['newCount'],
+                        self.TIMSlog['dupeCount'],
+                        str(self.TIMSlog['startTime']),
+                        str(self.TIMSlog['endTime']),
+                        str((self.TIMSlog['endTime'] - self.TIMSlog['startTime'])),
+                        providerName,
+                        self.hostname
+                        ])
+        print("committing to Logging DB")
+        self.conn.commit()
+
+    # end writeLogToDB
+
+    def makeList(self):
+
+        for item in self.recordedThreats:
+            self.multiprocessingList.append(self.recordedThreats[item])
+        #pprint (self.multiprocessingList)
+        self.TotalThreats=len(self.multiprocessingList)
+    #end makeList
+
+    # --== OLD JUNK WILL DELETE ONCE I KNOW I DONT NEED IT ==---
+
+'''
+    def checkDBForDuplicate(self, threatkey, con):
+        dbCursor=con.cursor()
         sqlString = "SELECT * FROM `RecordedThreatsDB` WHERE `threatKey` ="
         sqlString += "'" + threatkey + "'"
         dbCursor.execute(sqlString)
         msg = dbCursor.fetchone()
-        self.log['lineCount'] += 1
+
+        self.TIMSlog['lineCount'] += 1
         if (msg):
-            self.log['dupeCount'] += 1
+            self.TIMSlog['dupeCount'] += 1
             return 1
         else:
-            self.log['newCount'] += 1
+            self.TIMSlog['newCount'] += 1
             return 0
-        dbConn.close()
     # checkDBForDuplicate
+'''
 
-    def processData(self, providerName):
-        #self.addToDatabase()
-        self.makeList()
-        self.multiThreadedAdd()
-        self.writeLogToDB(providerName)
-    # end makeQueue
 
+'''
     def addToDatabase(self):
         threatCounter = 1
         totalThreats = len(self.recordedThreats)
         currentDateTime = datetime.now()
-
-        con = self.conn
-        cursor=con.cursor()
+        cursor=self.conn.cursor()
 
         print("--===================--")
         progressBarTicker = 0
         for item in self.recordedThreats:
             progressBarTicker += 1
-            if self.checkDBForDuplicate(self.recordedThreats[item]['threatkey'], con) == 0:
+            if self.checkDBForDuplicate(self.recordedThreats[item]['threatkey'], self.conn) == 0:
                 print("[", threatCounter, "/", totalThreats, "]", "Checking Database for Record:", item, ": New Threat")
                 cursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                [self.recordedThreats[item]['tlp'],
@@ -143,50 +228,29 @@ class IoC_Methods:
                 print("[", threatCounter, "/", totalThreats, "] Checking Database for Record:", item,
                       ": Already in Database")
             threatCounter += 1
-        con.commit()
+        self.conn.commit()
         print("--===================--")
     # end addToDataBase
+'''
 
-    def writeLogToDB(self, providerName):
-        cursor = self.conn.cursor()
 
-        self.log['endTime'] = datetime.now()
-        print("-- ============================ --")
-        print("Total Entries:" + str(self.log['lineCount']))
-        print("New Entries:" + str(self.log['newCount']))
-        print("Duplicates:" + str(self.log['dupeCount']))
-        print("Start Time:" + str(self.log['startTime']))
-        print("End Time:" + str(self.log['endTime']))
-        print("Total Time Spent:" + str(self.log['endTime'] - self.log['startTime']))
 
-        cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?,?,?)",
-                       [self.log['lineCount'],
-                        self.log['newCount'],
-                        self.log['dupeCount'],
-                        str(self.log['startTime']),
-                        str(self.log['endTime']),
-                        str((self.log['endTime'] - self.log['startTime'])),
-                        providerName,
-                        self.hostname
-                        ])
-        print("committing to Logging DB")
-        self.conn.commit()
-
-    # end writeLogToDB
-
+'''
     def multiThreadedAdd(self):
-        lock = multiprocessing.dummy.Lock()
+        #lock = multiprocessing.dummy.Lock()
         pool = ThreadPool(8)
         pool.map(self.worker, self.multiprocessingList)
         pool.close()
         pool.join()
         print ("test")
+        #lock.release()
     # end multiThreadAdd
 
     def worker(self,d):
         self.testCounter+=1
-        dbConn = _sqlite3.connect('../../Threats.sqlite', check_same_thread=False, isolation_level = None)
+        dbConn = _sqlite3.connect('../../Threats.sqlite', check_same_thread=False, isolation_level = None,timeout=3)
         dbCursor = dbConn.cursor()
+
         if self.checkDBForDuplicate(d['threatkey'], dbConn) == 0:
             dbCursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                            [d['tlp'],
@@ -208,17 +272,12 @@ class IoC_Methods:
                             str(datetime.now()),
                             d['enriched'],
                             ])
-            print("[" + str(self.testCounter) + "/" + str(self.TotalThreats) + "Checking Database for Record:", d['indicator'],": NEW!!! NEW !!! NEW!! ")
+            print("[" + str(self.testCounter) + "/" + str(self.TotalThreats) + "] Checking Database for Record:", d['indicator'],": New Record! ")
         else:
-            print("[" + str(self.testCounter) + "/" + str(self.TotalThreats) + " : Checking Database for Record:", d['indicator'], ": Already in Database")
+            print("[" + str(self.testCounter) + "/" + str(self.TotalThreats) + "] : Checking Database for Record:", d['indicator'], ": Duplicate, Not Adding")
+        time.sleep(.1)
         dbConn.commit()
         dbConn.close()
     # end worker
+'''
 
-    def makeList(self):
-
-        for item in self.recordedThreats:
-            self.multiprocessingList.append(self.recordedThreats[item])
-        #pprint (self.multiprocessingList)
-        self.TotalThreats=len(self.multiprocessingList)
-    #end makeList

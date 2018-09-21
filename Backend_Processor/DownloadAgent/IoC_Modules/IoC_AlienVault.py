@@ -57,7 +57,8 @@ class IoC_AlienVault(IoC_Methods):
                     AlienThreat['provider'] = "Alienvault"
                     AlienThreat['enriched'] = 0
 
-                    tempKey = AlienThreat['indicator'] + ":" + AlienThreat['provider']
+                    #tempKey = AlienThreat['indicator'] + ":" + AlienThreat['provider']
+                    tempKey = AlienThreat['indicator']
                     AlienThreat['threatkey'] = self.createMD5Key(tempKey)
                     self.recordedThreats[self.threatCounter] = AlienThreat.copy()
                     self.threatCounter += 1

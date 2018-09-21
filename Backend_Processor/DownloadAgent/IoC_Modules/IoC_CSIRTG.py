@@ -56,8 +56,8 @@ class IoC_CSIRTG(IoC_Methods):
             count += 1
             dataDict[feed] = ret.copy()
             print ("   - Getting feed item: " + str(count))
-            if count == 5:
-                break
+            #if count == 5:
+            #    break
         #pprint(dataDict)
         print ("copying all feeds into JSON")
         js = json.dumps(dataDict)
@@ -116,7 +116,7 @@ class IoC_CSIRTG(IoC_Methods):
                 CSIRTGThreat['provider'] = "CSIRTGThreats.net"
                 CSIRTGThreat['enriched']=0
 
-                tempKey = CSIRTGThreat['indicator'] + ":" + CSIRTGThreat['provider']
+                tempKey = CSIRTGThreat['indicator']
                 CSIRTGThreat['threatkey'] = self.createMD5Key(tempKey)
                 self.recordedThreats[self.threatCounter]=CSIRTGThreat.copy()
                 self.threatCounter+=1

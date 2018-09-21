@@ -18,9 +18,9 @@
 #
 # --====================================================--
 # @TODO Read Configuration File made from GUI Front End
-# @TODO Connect to sqllite database
+# @TODO Connect to sqllite database -- DONE
 # @TODO Connect to threat databases (TDs)
-# @TODO Normalize information from TDs and put them in the same format
+# @TODO Normalize information from TDs and put them in the same format -- DONE
 # @TODO Enrich threat data - add more information to what comes from the TDs
 # @TODO          - IP addresses need DNS info, GPS info
 # @TODO          - FQDN, DNS need IP address resolved, and GPS info
@@ -70,51 +70,57 @@ currentHour=todayDateTime.hour
 # Once we get this working for one library, it will be just a matter of making modules for the other threat libraries
 #
 
-# -- Emerging Threats Open Source Threat Library --
-# creates the object to connect to the Emerging Threats Open Source Library
-
 EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
 EmergingThreats_gathererv2.pull()
 
-# HUGE database takes a WHILE to download and process.. will multithread it to speed it up drastically
-# -- Phish Tank Open Source List --
-# creates the object to connect to the phishtank opensource library
-#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
-#PhishTank_gathererv2.pull()
+AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+AlienVault_gatherer.pull()
 
-#Alien Vault, another big threat library
-#AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
-#AlienVault_gatherer.pull()
+CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+CSIRTG_gatherer.pull()
 
-#CSIRTG
-#CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-#CSIRTG_gatherer.pull()
+PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
+PhishTank_gathererv2.pull()
 
-#Feodo Tracker
 FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
 FeodoTracker_gatherer.pull()
 
-'''
 if (currentHour%1)==0:
 	print ("DO EVERY HOUR!")
 if (currentHour%2)==0:
 	print ("DO EVERY TWO HOURS!")
 if (currentHour%4)==0:
 	print ("DO EVERY FOUR HOURS")
+	#Feodo Tracker
+	#FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
+	#FeodoTracker_gatherer.pull()
 if (currentHour%6)==0:
 	print ("DO EVERY SIX HOURS!")
+
+	#Alien Vault, another big threat library
+	#AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+	#AlienVault_gatherer.pull()
+
+	# HUGE database takes a WHILE to download and process.. will multithread it to speed it up drastically
+	# -- Phish Tank Open Source List --
+	# creates the object to connect to the phishtank opensource library
+	#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
+	#PhishTank_gathererv2.pull()
+
+	#CSIRTG
+	#CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+	#CSIRTG_gatherer.pull()
+
 if (currentHour%12)==0:
-	print ("DO EVERY TWELVE HOUR!")
+	print ("DO EVERY TWELVE HOURS!")
+	# -- Emerging Threats Open Source Threat Library --
+	# creates the object to connect to the Emerging Threats Open Source Library
+	#EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
+	#EmergingThreats_gathererv2.pull()
+
 if (currentHour%24)==0:
 	print ("DO EVERY TWENTY FOUR HOURS!")
 	# -- Phish Tank Open Source List -- 
-    # creates the object to connect to the phishtank opensource library
-    #PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
-    
-    # performs actions needed to pull the data from the online resource and puts the data into a dictionary item in the right
-    # format. The data will just sit in the data dictionary until you put it into the database.
-    #PhishTank_gatherer.pullPhishtank()
-    
-    # Moves the data from the phishtank object to the main internal data object
-    #threatDataStore.addDataToStore(PhishTank_gatherer.getThreats())
-'''
+	# creates the object to connect to the phishtank opensource library
+	#PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
+	#PhishTank_gatherer.pullPhishtank()
