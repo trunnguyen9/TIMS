@@ -2,6 +2,10 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 
+body {
+    background-color: #bedade;
+}
+
 .form-signin {
     width: 100%;
     max-width: 330px;
