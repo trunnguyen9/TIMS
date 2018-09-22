@@ -7,15 +7,15 @@
 # --====================================================--
 #
 # Unit Test Object with methods for assessing functionality of
-# TIMS PhishTank
+# TIMS EmergingThreats Module
 
 from UnitTest import Test_IoC
-from IoC_Modules import IoC_PhishTankv2 #Import Emerging Threats IoC
+from IoC_Modules import IoC_AlienVault #Import Emerging Threats IoC
 
-class Test_IoC_PhishTank(Test_IoC):
+class Test_IoC_AlienVault(Test_IoC):
 
 	def setUp(self):
-		self.ThreatObject = IoC_PhishTankv2(self.SQLiteDataStore.getDBConn())	
+		self.ThreatObject = IoC_AlienVault(self.SQLiteDataStore.getDBConn())	
 
 if __name__ == '__main__':
 	unittest.main()

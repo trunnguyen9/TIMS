@@ -7,58 +7,15 @@
 # --====================================================--
 #
 # Unit Test Object with methods for assessing functionality of
-# TIMS IoC Module
-import unittest
-import hashlib
-from IoC_Modules import IoC_EmergingThreats #Import Emerging Threats IoC
-from IoC_Modules import IoC_Methods
+# TIMS EmergingThreats Module
 
-class Test_IoC_EmergingThreats(unittest.TestCase):
+from UnitTest import Test_IoC
+from IoC_Modules import IoC_EmergingThreatsv2 #Import Emerging Threats IoC
+
+class Test_IoC_EmergingThreats(Test_IoC):
 
 	def setUp(self):
-		self.ThreatObject = IoC_EmergingThreats()	
-
-	def suite():
-	    suite = unittest.TestSuite()
-	    suite.addTest(testCollectingResourceTest('testresource_connection'))
-	    suite.addTest(testParseANewResourceTest('testresource_parsing'))
-	    suite.addTest(testExportThreatListTest('testresource_return'))
-	    suite.addTest(testCreateUniqueKey('testunique_key_creation'))
-	    return suite
-
-	#Test the ability of the module to connect with its resource via HTTP request 
-	def testCollectingResourceTest(self):
-		ThreatObject = IoC_Methods()
-		ThreatObject.uri = 'http://data.EmergingThreats.com/data/online-valid.json'
-		result = ThreatObject.pull()
-		self.assertNotEqual(result,'')
-
-	#Test the ability of the module to parse the resources' response
-	def testParseANewResourceTest(self):
-		# self.ThreatObject.pullEmergingThreats()
-		self.assertIsInstance(self.ThreatObject.recordedThreats,dict)
-
-	#Test the ability of the module to display all recorded threats
-	def testViewThreatsTest(self):
-		print('Under Construction')
-		# threats = self.ThreatObject.getThreats()
-		# self.ThreatObject.assertIsInstance(threats.get(1).getClass(),IoC_EmergingThreats)
-
-	#Test the ability of the module to return an object containing recorded threats
-	def testExportThreatListTest(self):
-		# self.ThreatObject.pullEmergingThreats()
-		copy = self.ThreatObject.getThreats()
-		self.assertIsInstance(copy,dict)
-
-	# Test the ability of the module to create unique identifier keys
-	def testCreateUniqueKey(self):
-		keystrings = ['Fake Keystring1','Fake Keystring2']
-		md5strings = []
-		for entry in keystrings:
-			m = hashlib.md5()
-			m.update(entry.encode('utf-8'))
-			md5strings.append(m.hexdigest())
-		self.assertNotEqual(md5strings[0],md5strings[1])
+		self.ThreatObject = IoC_EmergingThreatsv2(self.SQLiteDataStore.getDBConn())	
 
 if __name__ == '__main__':
 	unittest.main()

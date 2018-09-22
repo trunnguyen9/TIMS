@@ -7,15 +7,15 @@
 # --====================================================--
 #
 # Unit Test Object with methods for assessing functionality of
-# TIMS PhishTank
+# TIMS CSIRTG Module
 
 from UnitTest import Test_IoC
-from IoC_Modules import IoC_PhishTankv2 #Import Emerging Threats IoC
+from IoC_Modules import IoC_CSIRTG #Import Emerging Threats IoC
 
-class Test_IoC_PhishTank(Test_IoC):
+class Test_IoC_CSIRTG(Test_IoC):
 
 	def setUp(self):
-		self.ThreatObject = IoC_PhishTankv2(self.SQLiteDataStore.getDBConn())	
+		self.ThreatObject = IoC_CSIRTG(self.SQLiteDataStore.getDBConn())	
 
 if __name__ == '__main__':
 	unittest.main()

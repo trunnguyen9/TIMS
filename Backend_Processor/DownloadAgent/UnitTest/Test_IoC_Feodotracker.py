@@ -7,15 +7,15 @@
 # --====================================================--
 #
 # Unit Test Object with methods for assessing functionality of
-# TIMS PhishTank
+# TIMS Feodotracker Module
 
 from UnitTest import Test_IoC
-from IoC_Modules import IoC_PhishTankv2 #Import Emerging Threats IoC
+from IoC_Modules import IoC_Feodotracker #Import Emerging Threats IoC
 
-class Test_IoC_PhishTank(Test_IoC):
+class Test_IoC_Feodotracker(Test_IoC):
 
 	def setUp(self):
-		self.ThreatObject = IoC_PhishTankv2(self.SQLiteDataStore.getDBConn())	
+		self.ThreatObject = IoC_Feodotracker(self.SQLiteDataStore.getDBConn())	
 
 if __name__ == '__main__':
 	unittest.main()
