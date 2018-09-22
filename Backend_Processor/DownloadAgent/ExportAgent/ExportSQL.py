@@ -16,12 +16,13 @@ import csv
 # import FrontEnd_GUI
 # import PySimpleGUI as sg
 
-class SQL_Export:
+class ExportSQL:
 
 	threatList = []
 	threatDict = dict()
 	fileString = ''
 	sqlString = "SELECT * FROM 'RecordedThreatsDB' "
+	sql_db_loc = '../../../Threats.sqlite'
 
 	def __init__(self,writeLoc):
 		# create a timestamp string to use when writing files
@@ -33,7 +34,7 @@ class SQL_Export:
 
 	def extractFromDB(self):
 		print ("Connecting to SQLite DB for extracting IOCs...")
-		con = _sqlite3.connect('../../../Threats.sqlite')
+		con = _sqlite3.connect(self.sql_db_loc)
 		cursor = con.cursor()
 		self.sqlString = self.sqlString + ";" 
 		sqlResult = cursor.execute(self.sqlString)
@@ -43,17 +44,6 @@ class SQL_Export:
 		for item in self.threatList:
 			tempKey = item.get('threatKey')
 			self.threatDict[tempKey] = item
-		# for x in range(0,2):
-		# 	item = self.threatList[x]
-		# 	tempKey = item.get('threatKey')
-		# 	self.threatDict[tempKey] = item
-
-	#Method to reduce the number of rows pulled from the database
-	# def constructSQLstring(self,):
-	# 	print('Dont do anything yet')
-	# 	self.sqlString = "SELECT * FROM 'RecordedThreatsDB' " 
-	# #end SQL string method
-
 
 	# CSV File Write Method
 	def writeCSV(self):
@@ -67,7 +57,6 @@ class SQL_Export:
 			dict_writer.writerows(self.threatList)
 	#end csv write method
 
-
 	#JSON File Write Method
 	def writeJSON(self):
 		fileString = self.fileString + '.json'
@@ -77,8 +66,12 @@ class SQL_Export:
 	#end json write method
 
 
+	def copyDict(self):
+		return self.threatDict
+
+
 if __name__ == '__main__':
-	exportObj = SQL_Export('/Users/Scott/Downloads')
+	exportObj = ExportSQL('/Users/Scott/Downloads')
 	exportObj.extractFromDB()
 	exportObj.writeCSV()
 	exportObj.writeJSON()
