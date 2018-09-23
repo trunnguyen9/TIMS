@@ -10,19 +10,19 @@
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Feed source: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck1">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1" [attr.checked] = "config.feedSources.indexOf('Source A') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck1">
                                 Source A
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck2">
+                            <input class="form-check-input" type="checkbox" id="gridCheck2" [attr.checked] = "config.feedSources.indexOf('Source B') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck2">
                                 Source B
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked] = "config.feedSources.indexOf('Source C') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck3">
                                 Source C
                             </label>
@@ -33,11 +33,11 @@
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">How often: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
                         <select class="form-control">
-                            <option>2 hours</option>
-                            <option>4 hours</option>
-                            <option>6 hours</option>
-                            <option>12 hours</option>
-                            <option>24 hours</option>
+                            <option value="2" [attr.selected] = "config.time == 2 ? '' : null">2 hours</option>
+                            <option value="4" [attr.selected] = "config.time == 4 ? '' : null">4 hours</option>
+                            <option value="6" [attr.selected] = "config.time == 6 ? '' : null">6 hours</option>
+                            <option value="12" [attr.selected] = "config.time == 12 ? '' : null">12 hours</option>
+                            <option value="24" [attr.selected] = "config.time == 24 ? '' : null">24 hours</option>
                         </select>
                     </div>
                 </div>
@@ -45,36 +45,35 @@
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Export format: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
-                                checked>
-                            <label class="form-check-label" for="gridRadios1">
+                            <input class="form-check-input" type="checkbox" id="gridCheck4" value="CVS"  [attr.checked]="config.exportFormat.indexOf('CVS') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck4">
                                 CVS
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                            <label class="form-check-label" for="gridRadios2">
+                            <input class="form-check-input" type="checkbox" id="gridCheck5" value="Tab delimited" [attr.checked]="config.exportFormat.indexOf('Tab delimited') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck5">
                                 Tab delimited
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                            <label class="form-check-label" for="gridRadios2">
+                            <input class="form-check-input" type="checkbox" id="gridCheck6" value="Bro" [attr.checked]="config.exportFormat.indexOf('Bro') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck6">
                                 Bro
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                            <label class="form-check-label" for="gridRadios2">
+                            <input class="form-check-input" type="checkbox" id="gridCheck7" value="Snort" [attr.checked]="config.exportFormat.indexOf('Snort') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck7">
                                 Snort
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                            <label class="form-check-label" for="gridRadios2">
+                            <input class="form-check-input" type="checkbox" id="gridCheck8" value="JSON" [attr.checked]="config.exportFormat.indexOf('JSON') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck8">
                                 JSON
                             </label>
-                        </div>
+                        </div>                        
                     </div>                    
                 </div>
                 <div class="form-group row">
