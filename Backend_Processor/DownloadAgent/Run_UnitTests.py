@@ -41,7 +41,7 @@ suite  = unittest.TestSuite()
 suite.addTests(loader.loadTestsFromTestCase(Test_ExportModule))
 
 # Run All Test Cases
-runner = unittest.TextTestRunner(verbosity=2)
+runner = unittest.TextTestRunner(verbosity=3)
 result = runner.run(suite)
 print("===================== END EXPORT UNIT TESTS =====================")
 
