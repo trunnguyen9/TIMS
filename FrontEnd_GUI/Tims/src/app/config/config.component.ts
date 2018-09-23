@@ -17,10 +17,6 @@ export class ConfigComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  readfile() {
-
-  }
 }
 
 interface Config {
