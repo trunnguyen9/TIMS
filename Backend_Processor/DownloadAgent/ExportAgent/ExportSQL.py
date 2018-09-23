@@ -22,7 +22,7 @@ class ExportSQL:
 	threatDict = dict()
 	fileString = ''
 	sqlString = "SELECT * FROM 'RecordedThreatsDB' "
-	sql_db_loc = '../../../Threats.sqlite'
+	sqlDBloc = '../../../Threats.sqlite'
 
 	def __init__(self,writeLoc):
 		# create a timestamp string to use when writing files
@@ -34,7 +34,7 @@ class ExportSQL:
 
 	def extractFromDB(self):
 		print ("Connecting to SQLite DB for extracting IOCs...")
-		con = _sqlite3.connect(self.sql_db_loc)
+		con = _sqlite3.connect(self.sqlDBloc)
 		cursor = con.cursor()
 		self.sqlString = self.sqlString + ";" 
 		sqlResult = cursor.execute(self.sqlString)
@@ -65,9 +65,11 @@ class ExportSQL:
 			json.dump(self.threatDict,output_file)
 	#end json write method
 
-
 	def copyDict(self):
 		return self.threatDict
+
+	def updateDBloc(self,newLoc):
+		self.sqlDBloc = newLoc
 
 
 if __name__ == '__main__':
