@@ -1,84 +1,91 @@
-<div class="col-md-8 offset-md-2">  
-  <!-- form user info -->
-  <div class="card card-outline-secondary">
-      <div class="card-header">
-          <h3 class="mb-0">Configuration</h3>
-      </div>
-      <div class="card-body">
-          <form class="form" role="form" autocomplete="off">
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="text" value="Jane">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="text" value="Bishop">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="email" value="email@gmail.com">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="text" value="">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="url" value="">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                  <div class="col-lg-9">
-                      <select id="user_time_zone" class="form-control" size="0">
-                          <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                          <option value="Alaska">(GMT-09:00) Alaska</option>
-                          <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                          <option value="Arizona">(GMT-07:00) Arizona</option>
-                          <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                          <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                          <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                          <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                      </select>
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="text" value="janeuser">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="password" value="11111122333">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
-                  <div class="col-lg-9">
-                      <input class="form-control" type="password" value="11111122333">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label"></label>
-                  <div class="col-lg-9">
-                      <input type="reset" class="btn btn-secondary" value="Cancel">
-                      <input type="button" class="btn btn-primary" value="Save Changes">
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
-  <!-- /form user info -->
+<div class="col-md-8 offset-md-2">
+    <!-- form user info -->
+    <div class="card card-outline-secondary">
+        <div class="card-header">
+            <h3 class="mb-0">Configuration</h3>
+        </div>
+        <div class="card-body">
+            <form class="form" role="form" autocomplete="off">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Feed source: </label>
+                    <div class="col-lg-9 col-md-8 col-sm-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1">
+                            <label class="form-check-label" for="gridCheck1">
+                                Source A
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck2">
+                            <label class="form-check-label" for="gridCheck2">
+                                Source B
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3">
+                            <label class="form-check-label" for="gridCheck3">
+                                Source C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">How often: </label>
+                    <div class="col-lg-9 col-md-8 col-sm-8">
+                        <select class="form-control">
+                            <option>2 hours</option>
+                            <option>4 hours</option>
+                            <option>6 hours</option>
+                            <option>12 hours</option>
+                            <option>24 hours</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Export format: </label>
+                    <div class="col-lg-9 col-md-8 col-sm-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                                checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                CVS
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                Tab delimited
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                Bro
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                Snort
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                JSON
+                            </label>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label"></label>
+                    <div class="col-lg-9 col-md-8 col-sm-8">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /form user info -->
 
 </div>

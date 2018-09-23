@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ConfigComponent } from './config/config.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { StatisticComponent } from './statistic/statistic.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     RegisterComponent,
     ConfigComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    StatisticComponent
   ],
   imports: [
     BrowserModule,
