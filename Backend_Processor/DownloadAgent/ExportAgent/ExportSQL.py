@@ -37,6 +37,7 @@ class ExportSQL:
 		con = _sqlite3.connect(self.sqlDBloc)
 		cursor = con.cursor()
 		self.sqlString = self.sqlString + ";" 
+		print(self.sqlString)
 		sqlResult = cursor.execute(self.sqlString)
 
 		# iterate through each row/entry for the resturned query, using description to fetch key names
@@ -65,6 +66,25 @@ class ExportSQL:
 			json.dump(self.threatDict,output_file)
 	#end json write method
 
+	def addValues(self,colName,valueList):
+		# Check to see if a where clause already exists, if not add it
+		if 'WHERE' not in self.sqlString:
+			self.sqlString += " WHERE "
+		else:
+			self.sqlString += " OR "
+		# Add the column name to parse through and start the acceptable list
+		if colName not in self.sqlString:
+			self.sqlString += "  " + colName + " in ("
+		# Iterate through all list items and add to list
+		for item in valueList:
+			# print(type(item))
+			self.sqlString += '\'' + item + '\','
+		# Remove final comma from string
+		if self.sqlString.endswith(','):
+			self.sqlString = self.sqlString[:-1]
+		#Close List Parenthesies
+		self.sqlString += ")" 
+
 	def copyDict(self):
 		return self.threatDict
 
@@ -74,6 +94,8 @@ class ExportSQL:
 
 if __name__ == '__main__':
 	exportObj = ExportSQL('/Users/Scott/Downloads')
+	exportObj.addValues('tlp',['green'])
+	exportObj.addValues('tags',['malware'])
 	exportObj.extractFromDB()
 	exportObj.writeCSV()
 	exportObj.writeJSON()
