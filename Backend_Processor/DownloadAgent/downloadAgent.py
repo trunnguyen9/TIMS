@@ -76,8 +76,11 @@ EmergingThreats_gathererv2.pull()
 AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
 AlienVault_gatherer.pull()
 
-CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-CSIRTG_gatherer.pull()
+try :
+	CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+	CSIRTG_gatherer.pull()
+except:
+	print ("error with CSIRTG")
 
 PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
 PhishTank_gathererv2.pull()

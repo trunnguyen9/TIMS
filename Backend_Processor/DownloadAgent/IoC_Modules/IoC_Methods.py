@@ -121,9 +121,9 @@ class IoC_Methods:
                 if threatCounter % 5000 == 0:  # saves db every 5000 records
                     self.conn.commit()
                 self.TIMSlog['newCount'] += 1
-                #print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Added to Database - NEW")
+                print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Added to Database - NEW")
             except _sqlite3.Error as e:
-                #print("[", self.TIMSlog['lineCount'],"/", totalThreats,"] : Not Added to Database - Duplicate")
+                print("[", self.TIMSlog['lineCount'],"/", totalThreats,"] : Not Added to Database - Duplicate")
                 self.TIMSlog['dupeCount'] +=1
             except Exception as e:
                 print("Exception in _query: %s" % e)
