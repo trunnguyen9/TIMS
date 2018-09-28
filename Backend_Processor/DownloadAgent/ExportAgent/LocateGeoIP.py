@@ -58,7 +58,7 @@ class LocateGeoIP(DataEnricher):
 		for item in self.recordedThreats:
 			try:
 				response = reader.city(self.recordedThreats[item]['indicator'])
-				self.recordedThreats[item]['gps'] = [response.location.longitude,response.location.latitude]
+				self.recordedThreats[item]['gps'] = [response.location.latitude,response.location.longitude]
 				self.recordedThreats[item]['country_iso'] = response.country.iso_code
 				self.recordedThreats[item]['country_name'] = response.country.name
 				self.recordedThreats[item]['city_name'] = response.city.name
