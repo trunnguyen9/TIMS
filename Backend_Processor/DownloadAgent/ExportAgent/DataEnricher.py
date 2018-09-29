@@ -6,8 +6,9 @@
 #
 # --====================================================--
 #
-# Unit Test Object with methods for assessing functionality of
-# TIMS IoC Module
+# Baseline object to provide read and update capabilities 
+# for data enrichment tools 
+# 
 from datetime import datetime
 import _sqlite3
 
@@ -24,11 +25,11 @@ class DataEnricher:
 		self.sqlDBloc = newLoc
 
 	def copyExtract(self):
-			return self.recordedThreats
+		return self.recordedThreats
 
 	def displayExtract(self):
-			for item in self.recordedThreats:
-				print(self.recordedThreats[item])
+		for item in self.recordedThreats:
+			print(self.recordedThreats[item])
 
 	def extractFromDB(self):
 		print ("Connecting to Recorded Threats DB for extracting IOCs...")
@@ -42,23 +43,72 @@ class DataEnricher:
 		for item in threatList:
 			tempKey = item.get('threatKey')
 			self.recordedThreats[tempKey] = item
+		con.commit()
+		con.close()
 	# end extractFromDB
 
 	def updateDB(self):
 		currentDateTime = datetime.now()
 		con = _sqlite3.connect(self.sqlDBloc)
 		cursor= con.cursor()
+		# sqlResult = cursor.execute("PRAGMA table_info('RecordedThreatsDB')");
 
-		progressBarTicker = 0
+		print('Pushing Enrichment to Thereat Database...')
+		example_key = list(self.recordedThreats.keys())[0]
+		# Make certain all dictionary entries have a column to be inserted into
+		for key in self.recordedThreats[example_key]:
+			try:
+				cursor.execute("ALTER TABLE 'RecordedThreatsDB' ADD COLUMN " + key + ";")
+			except:
+				pass
 		for item in self.recordedThreats:
-			sqlString = ["UPDATE RecordedThreatsDB SET"] 
-			sqlString.append("'lastTime' = " + str(currentDateTime))
-			sqlString.append(",'enriched' = 1")
-			sqlString.append(",'gps' = " + self.recordedThreats[item]['gps'])
-			sqlString.append(" WHERE 'threatKey' = " + self.recordedThreats[item]['threatKey'] + ";")
-			# print("".join(sqlString))
-			# cursor.execute(sqlString)
-    # end updateDB
+			# Set the last time to the current time
+			self.recordedThreats[item]['lastTime'] = str(currentDateTime)
+			for key in self.recordedThreats[item]:
+				try:
+					# Attempt to inset extracted value
+					sqlString = "UPDATE 'RecordedThreatsDB' SET " 
+					sqlString += key  + " = " + "\'" +  str(self.recordedThreats[item][key]) + "\'" 
+					sqlString += " WHERE threatKey = " + "\'" + self.recordedThreats[item]['threatKey'] + "\'" + " ;"
+					cursor.execute(sqlString)
+				except:
+					# If the first entry doesn't work try inserting a blank vaue
+					try:
+						sqlString = "UPDATE 'RecordedThreatsDB' SET " 
+						sqlString += key  + " = " + "\'" + "\'" 
+						sqlString += " WHERE threatKey = " + "\'" + self.recordedThreats[item]['threatKey'] + "\'" + " ;"
+						cursor.execute(sqlString)
+					except:
+						pass
+					
+		con.commit()
+		con.close()
+	# end updateDB
+
+	# def updateDB(self):
+	# 	currentDateTime = datetime.now()
+	# 	con = _sqlite3.connect(self.sqlDBloc)
+	# 	cursor= con.cursor()
+	# 	sqlResult = cursor.execute("PRAGMA table_info('RecordedThreatsDB')");
+
+	# 	progressBarTicker = 0
+	# 	print('Pushing Enrichment to Thereat Database...')
+	# 	example_key = list(self.recordedThreats.keys())[0]
+	# 	# Make certain all dictionary entries have a column to be inserted into
+	# 	for key in self.recordedThreats[example_key]:
+	# 		try:
+	# 			cursor.execute("ALTER TABLE 'RecordedThreatsDB' ADD COLUMN " + key + ";")
+	# 		except:
+	# 			pass
+		
+	# 	sqlString = ["UPDATE RecordedThreatsDB SET"] 
+	# 		for key in self.recordedThreats[item]:
+	# 		for key in self.recordedThreats[item]:
+	# 			sqlString.append(key  + str(self.recordedThreats[item][key]) + ",")
+	# 		sqlString = sqlString[:-1]
+	# 		sqlString.append(" WHERE 'threatKey' = " + self.recordedThreats[item]['threatKey'] + ";")
+	# 		cursor.execute(sqlString)
+
 
 if __name__ == '__main__':
 	test = DataEnricher()

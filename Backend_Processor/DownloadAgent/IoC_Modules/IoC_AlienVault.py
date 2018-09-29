@@ -17,6 +17,7 @@ class IoC_AlienVault(IoC_Methods):
 
     def __init__(self,conn):
         IoC_Methods.__init__(self,conn)
+        print("AlienVault")
     #END Constructor
 
     def pull(self):

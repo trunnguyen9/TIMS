@@ -21,6 +21,7 @@ class IoC_CSIRTG(IoC_Methods):
 
     def __init__(self,conn):
         IoC_Methods.__init__(self,conn)
+        print("CSIRTG")
     #END Constructor
 
     def pull(self):
@@ -49,25 +50,27 @@ class IoC_CSIRTG(IoC_Methods):
 
         # pprint the returned data structure
         #pprint(ret)
+        try :
+            for feedItem in ret:
+                feed = feedItem['name']
+                ret = Feed(cli).show(user, feed, limit=None)
+                count += 1
+                dataDict[feed] = ret.copy()
+                print ("   - Getting feed item: " + str(count))
+                #if count == 5:
+                #    break
+            #pprint(dataDict)
+            print ("copying all feeds into JSON")
+            js = json.dumps(dataDict)
 
-        for feedItem in ret:
-            feed = feedItem['name']
-            ret = Feed(cli).show(user, feed, limit=None)
-            count += 1
-            dataDict[feed] = ret.copy()
-            print ("   - Getting feed item: " + str(count))
-            #if count == 5:
-            #    break
-        #pprint(dataDict)
-        print ("copying all feeds into JSON")
-        js = json.dumps(dataDict)
+            print ("saving JSON")
+            fp = open("CSIRTG.JSON", "w")
+            fp.write(js)
+            fp.close()
 
-        print ("saving JSON")
-        fp = open("CSIRTG.JSON", "w")
-        fp.write(js)
-        fp.close()
-
-        self.readFile()
+            self.readFile()
+        except:
+            print ("ERROR: CSIRTG ")
     #End Pull
 
     def convertTime(self, strTime):

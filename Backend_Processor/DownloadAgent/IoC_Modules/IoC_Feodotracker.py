@@ -12,6 +12,7 @@ class IoC_Feodotracker(IoC_Methods):
 
     def __init__(self,conn):
         IoC_Methods.__init__(self,conn)
+        print("FeodoTracker")
     #END Constructor
 
     def pull(self):
