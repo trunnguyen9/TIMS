@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
-    return jsonify(getConfigData()), 201
+    return jsonify(getConfigData()), 200
 
 @app.route('/updateConfig',methods=['POST'])
 def updateConfig():

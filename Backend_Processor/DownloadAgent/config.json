@@ -1,5 +1,1 @@
-{
-  "time": "2",
-  "feedSources": ["Source A", "Source B"],
-  "exportFormat": ["CVS","JSON"]
-}
+{"time": "2", "feedSources": ["Source A", "Source C"], "exportFormat": ["CVS", "JSON"]}
