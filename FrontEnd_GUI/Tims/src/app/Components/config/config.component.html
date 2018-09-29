@@ -10,21 +10,63 @@
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Feed source: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck1" [attr.checked] = "config.feedSources.indexOf('Source A') !== -1 ? '' : null">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1" [attr.checked] = "config.feedSources.indexOf('AlienVault') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck1">
-                                Source A
+                                AlienVault
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck2" [attr.checked] = "config.feedSources.indexOf('Source B') !== -1 ? '' : null">
+                            <input class="form-check-input" type="checkbox" id="gridCheck2" [attr.checked] = "config.feedSources.indexOf('CSIRTG') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck2">
-                                Source B
+                                CSIRTG
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked] = "config.feedSources.indexOf('Source C') !== -1 ? '' : null">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked] = "config.feedSources.indexOf('EmergingThreats') !== -1 ? '' : null">
                             <label class="form-check-label" for="gridCheck3">
-                                Source C
+                                EmergingThreats
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('Feodotracker') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck4">
+                                Feodotracker
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('NoThink') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck5">
+                                NoThink
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('OpenPhish') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck6">
+                                OpenPhish
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('PhishTank') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck7">
+                                PhishTank
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('SANsEDU') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck8">
+                                SANsEDU
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('SpamHaus') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck9">
+                                SpamHaus
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('Zeus') !== -1 ? '' : null">
+                            <label class="form-check-label" for="gridCheck10">
+                                Zeus
                             </label>
                         </div>
                     </div>
