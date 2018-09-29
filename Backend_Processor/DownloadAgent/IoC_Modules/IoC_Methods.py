@@ -94,8 +94,8 @@ class IoC_Methods:
         currentDateTime = datetime.now()
         cursor = self.conn.cursor()
 
-        print("--===================--")
-        progressBarTicker = 0
+        #print("--===================--")
+        #progressBarTicker = 0
         for item in self.recordedThreats:
             self.TIMSlog['lineCount'] += 1
             try:

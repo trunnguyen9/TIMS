@@ -21,6 +21,7 @@ class IoC_CSIRTG(IoC_Methods):
 
     def __init__(self,conn):
         IoC_Methods.__init__(self,conn)
+        print("CSIRTG")
     #END Constructor
 
     def pull(self):

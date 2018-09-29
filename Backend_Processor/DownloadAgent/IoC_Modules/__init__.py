@@ -12,3 +12,5 @@ from .IoC_Feodotracker import IoC_Feodotracker
 from .IoC_Zeus import IoC_Zeus
 from .IoC_NoThink import IoC_NoThink
 from .IoC_OpenPhish import IoC_OpenPhish
+from .IoC_SANsEDU import IoC_SANsEDU
+from .IoC_SpamHaus import IoC_SpamHaus

@@ -14,6 +14,7 @@ from hashlib import md5
 class IoC_PhishTankv2(IoC_Methods):
     def __init__(self,conn):
         IoC_Methods.__init__(self,conn)
+        print("PhishTank")
     #END Constructor
 
     def pull(self):

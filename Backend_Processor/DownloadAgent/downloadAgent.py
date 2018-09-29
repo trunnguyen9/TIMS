@@ -69,25 +69,25 @@ currentHour=todayDateTime.hour
 # so we have some real data in the database, so everyone can see the workflow that i think will work..
 # Once we get this working for one library, it will be just a matter of making modules for the other threat libraries
 #
+'''
+EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
+EmergingThreats_gathererv2.pull()
 
-#EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
-#EmergingThreats_gathererv2.pull()
+AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+AlienVault_gatherer.pull()
 
-#AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
-#AlienVault_gatherer.pull()
-
-#try :
-#	CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-#	CSIRTG_gatherer.pull()
-#except:
-#	print ("error with CSIRTG")
+try :
+	CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+	CSIRTG_gatherer.pull()
+except:
+	print ("error with CSIRTG")
 
 
-#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
-#PhishTank_gathererv2.pull()
+PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
+PhishTank_gathererv2.pull()
 
-#FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
-#FeodoTracker_gatherer.pull()
+FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
+FeodoTracker_gatherer.pull()
 
 Zeus_gatherer = IoC_Modules.IoC_Zeus(SQLiteDataStore.getDBConn())
 Zeus_gatherer.pull()
@@ -98,42 +98,9 @@ NoThink_gatherer.pull()
 OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
 OpenPhish_gatherer.pull()
 
-if (currentHour%1)==0:
-	print ("DO EVERY HOUR!")
-if (currentHour%2)==0:
-	print ("DO EVERY TWO HOURS!")
-if (currentHour%4)==0:
-	print ("DO EVERY FOUR HOURS")
-	#Feodo Tracker
-	#FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
-	#FeodoTracker_gatherer.pull()
-if (currentHour%6)==0:
-	print ("DO EVERY SIX HOURS!")
+SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
+SANsEDU_gatherer.pull()
+'''
 
-	#Alien Vault, another big threat library
-	#AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
-	#AlienVault_gatherer.pull()
-
-	# HUGE database takes a WHILE to download and process.. will multithread it to speed it up drastically
-	# -- Phish Tank Open Source List --
-	# creates the object to connect to the phishtank opensource library
-	#PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
-	#PhishTank_gathererv2.pull()
-
-	#CSIRTG
-	#CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-	#CSIRTG_gatherer.pull()
-
-if (currentHour%12)==0:
-	print ("DO EVERY TWELVE HOURS!")
-	# -- Emerging Threats Open Source Threat Library --
-	# creates the object to connect to the Emerging Threats Open Source Library
-	#EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
-	#EmergingThreats_gathererv2.pull()
-
-if (currentHour%24)==0:
-	print ("DO EVERY TWENTY FOUR HOURS!")
-	# -- Phish Tank Open Source List -- 
-	# creates the object to connect to the phishtank opensource library
-	#PhishTank_gatherer = IoC_Modules.IoC_PhishTank()
-	#PhishTank_gatherer.pullPhishtank()
+SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
+SpamHaus_Gatherer.pull()
