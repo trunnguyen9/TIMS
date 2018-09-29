@@ -9,3 +9,6 @@ from .IoC_PhishTankv2 import IoC_PhishTankv2
 from .IoC_AlienVault import IoC_AlienVault
 from .IoC_CSIRTG import IoC_CSIRTG
 from .IoC_Feodotracker import IoC_Feodotracker
+from .IoC_Zeus import IoC_Zeus
+from .IoC_NoThink import IoC_NoThink
+from .IoC_OpenPhish import IoC_OpenPhish

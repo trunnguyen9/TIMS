@@ -24,6 +24,7 @@ import multiprocessing
 import socket
 import time
 
+
 class IoC_Methods:
     threatCounter = 0
     TotalThreats = 0  # total threats downloaded
@@ -37,16 +38,16 @@ class IoC_Methods:
     TIMSlog = dict()
 
     conn = 0
-    cursor=0
+    cursor = 0
     testCounter = 0
     hostname = ""
 
     def __init__(self, conn):
-    #def __init__(self):
+        # def __init__(self):
         print('Generic IoC Constructor')
-        self.hostname=socket.gethostname()
-        self.conn=conn
-        self.cursor=self.conn.cursor()
+        self.hostname = socket.gethostname()
+        self.conn = conn
+        self.cursor = self.conn.cursor()
         self.TIMSlog['lineCount'] = 0
         self.TIMSlog['newCount'] = 0
         self.TIMSlog['dupeCount'] = 0
@@ -55,7 +56,6 @@ class IoC_Methods:
         self.TIMSlog['sqlEntries'] = 0
         self.TIMSlog['SQLErrorCount'] = 0
         self.TIMSlog['Error'] = None
-
 
     def pull(self):
         # I think it might be worth making the URI an attribute of the class - Doug
@@ -85,18 +85,19 @@ class IoC_Methods:
         self.addToDatabase2()
         # self.multiThreadedAdd()
         self.writeLogToDB(providerName)
+
     # end makeQueue
 
     def addToDatabase2(self):
         threatCounter = 1
         totalThreats = len(self.recordedThreats)
         currentDateTime = datetime.now()
-        cursor=self.conn.cursor()
+        cursor = self.conn.cursor()
 
         print("--===================--")
         progressBarTicker = 0
         for item in self.recordedThreats:
-            self.TIMSlog['lineCount'] +=1
+            self.TIMSlog['lineCount'] += 1
             try:
                 cursor.execute("INSERT INTO RecordedThreatsDB VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                [self.recordedThreats[item]['tlp'],
@@ -121,16 +122,17 @@ class IoC_Methods:
                 if threatCounter % 5000 == 0:  # saves db every 5000 records
                     self.conn.commit()
                 self.TIMSlog['newCount'] += 1
-                print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Added to Database - NEW")
+                #print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Added to Database - NEW")
             except _sqlite3.Error as e:
-                print("[", self.TIMSlog['lineCount'],"/", totalThreats,"] : Not Added to Database - Duplicate")
-                self.TIMSlog['dupeCount'] +=1
+                #print("[", self.TIMSlog['lineCount'], "/", totalThreats, "] : Not Added to Database - Duplicate")
+                self.TIMSlog['dupeCount'] += 1
             except Exception as e:
                 print("Exception in _query: %s" % e)
             finally:
                 self.conn.commit()
 
         print("--===================--")
+
     # end addToDataBase
 
     def writeLogToDB(self, providerName):
@@ -164,11 +166,12 @@ class IoC_Methods:
 
         for item in self.recordedThreats:
             self.multiprocessingList.append(self.recordedThreats[item])
-        #pprint (self.multiprocessingList)
-        self.TotalThreats=len(self.multiprocessingList)
-    #end makeList
+        # pprint (self.multiprocessingList)
+        self.TotalThreats = len(self.multiprocessingList)
+    # end makeList
 
     # --== OLD JUNK WILL DELETE ONCE I KNOW I DONT NEED IT ==---
+
 
 '''
     def checkDBForDuplicate(self, threatkey, con):
@@ -187,7 +190,6 @@ class IoC_Methods:
             return 0
     # checkDBForDuplicate
 '''
-
 
 '''
     def addToDatabase(self):
@@ -232,8 +234,6 @@ class IoC_Methods:
         print("--===================--")
     # end addToDataBase
 '''
-
-
 
 '''
     def multiThreadedAdd(self):
@@ -280,4 +280,3 @@ class IoC_Methods:
         dbConn.close()
     # end worker
 '''
-
