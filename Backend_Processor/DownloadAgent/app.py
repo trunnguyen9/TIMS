@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import json
+from ExportAgent import ExportThreatStats
 
 app = Flask(__name__)
 
@@ -24,3 +25,7 @@ def getConfigData():
         data = json.load(configFile)
         configFile.close()
     return data
+
+@app.route('/dump',methods=['GET'])
+def dumpDatabase():
+    return ExportThreatStats.exportThreatStats()
