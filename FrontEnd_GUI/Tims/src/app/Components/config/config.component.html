@@ -5,69 +5,17 @@
             <h3 class="mb-0">Configuration</h3>
         </div>
         <div class="card-body">
-            <form class="form" role="form" autocomplete="off">
+            <form *ngIf="configObservable | async; else loading" [formGroup]="configForm" class="form" role="form" autocomplete="off">
                 <div class="form-group row">
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Feed source: </label>
-                    <div class="col-lg-9 col-md-8 col-sm-8">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck1" [attr.checked] = "config.feedSources.indexOf('AlienVault') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck1">
-                                AlienVault
+                    <div class="col-lg-9 col-md-8 col-sm-8" formArrayName="feedSources">
+                        <div *ngFor="let source of getFeedSourcesFormData().controls; let i=index">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id={{config.feedSources[i].name}} [checked] = "config.feedSources[i].selected" (change)="config.feedSources[i].selected = !config.feedSources[i].selected">
+                            <label class="form-check-label" for={{config.feedSources[i].name}}>
+                              {{config.feedSources[i].name}}
                             </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck2" [attr.checked] = "config.feedSources.indexOf('CSIRTG') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck2">
-                                CSIRTG
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked] = "config.feedSources.indexOf('EmergingThreats') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck3">
-                                EmergingThreats
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('Feodotracker') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck4">
-                                Feodotracker
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('NoThink') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck5">
-                                NoThink
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('OpenPhish') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck6">
-                                OpenPhish
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('PhishTank') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck7">
-                                PhishTank
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('SANsEDU') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck8">
-                                SANsEDU
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('SpamHaus') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck9">
-                                SpamHaus
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck3" [attr.checked]="config.feedSources.indexOf('Zeus') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck10">
-                                Zeus
-                            </label>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -85,46 +33,27 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Export format: </label>
-                    <div class="col-lg-9 col-md-8 col-sm-8">
+                    <div class="col-lg-9 col-md-8 col-sm-8" formArrayName="exportFormat">
+                      <div *ngFor="let source of getExportFormatFormData().controls; let i=index">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck4" value="CVS"  [attr.checked]="config.exportFormat.indexOf('CVS') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck4">
-                                CVS
-                            </label>
+                          <input class="form-check-input" type="checkbox" id={{config.exportFormat[i].name}} value="CVS"  [checked]="config.exportFormat[i].selected" (change)="config.exportFormat[i].selected = !config.exportFormat[i].selected">
+                          <label class="form-check-label" for={{config.exportFormat[i].name}}>
+                            {{config.exportFormat[i].name}}
+                          </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck5" value="Tab delimited" [attr.checked]="config.exportFormat.indexOf('Tab delimited') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck5">
-                                Tab delimited
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck6" value="Bro" [attr.checked]="config.exportFormat.indexOf('Bro') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck6">
-                                Bro
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck7" value="Snort" [attr.checked]="config.exportFormat.indexOf('Snort') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck7">
-                                Snort
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck8" value="JSON" [attr.checked]="config.exportFormat.indexOf('JSON') !== -1 ? '' : null">
-                            <label class="form-check-label" for="gridCheck8">
-                                JSON
-                            </label>
-                        </div>                        
+                      </div>
                     </div>                    
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label"></label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" (click)="saveConfig()" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </form>
+            <ng-template #loading>
+              Loading Config...
+            </ng-template>
         </div>
     </div>
     <!-- /form user info -->

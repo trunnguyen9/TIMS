@@ -3,13 +3,20 @@ import json
 
 app = Flask(__name__)
 
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
+
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
     return jsonify(getConfigData()), 200
 
-@app.route('/updateConfig',methods=['POST'])
+@app.route('/updateConfig',methods=['PUT'])
 def updateConfig():
-    if request.method == 'POST':
+    if request.method == 'PUT':
         content = request.get_json()
         updateConfigFile(content)
         return jsonify(content), 201
