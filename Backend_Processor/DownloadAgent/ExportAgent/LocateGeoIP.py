@@ -8,7 +8,7 @@
 #
 # Object used to enrich data by associating IP's with GeoLocations 
 # 
-from DataEnricher import DataEnricher
+from .DataEnricher import DataEnricher
 import geoip2.database
 # from datetime import datetime
 # import _sqlite3
