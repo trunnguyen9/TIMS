@@ -11,6 +11,13 @@ import {Observable} from 'rxjs';
 export class ConfigComponent implements OnInit {
 
   config: Config ;
+  timeList = [
+    {'name': '2 hours', 'value': 2},
+    {'name': '4 hours', 'value': 4},
+    {'name': '6 hours', 'value': 6},
+    {'name': '12 hours', 'value': 12},
+    {'name': '24 hours', 'value': 24}
+  ];
   configForm: FormGroup;
   configObservable: Observable<Config>;
 
@@ -30,7 +37,18 @@ export class ConfigComponent implements OnInit {
 
   addExportFormatForm() {
     const control = <FormArray>this.configForm.controls.exportFormat;
-    for (const format of this.config.exportFormat) {
+    for (const type of this.config.exportFormat) {
+      control.push(
+        this.fb.group({
+          name: ['']
+        })
+      );
+    }
+  }
+
+  addTimeForm() {
+    const control = <FormArray>this.configForm.controls.time;
+    for (const time of this.timeList) {
       control.push(
         this.fb.group({
           name: ['']
@@ -45,11 +63,13 @@ export class ConfigComponent implements OnInit {
   getExportFormatFormData() {
     return <FormArray>this.configForm.get('exportFormat');
   }
-
+  getTimeFormData() {
+    return <FormArray>this.configForm.get('time');
+  }
   ngOnInit() {
     this.configForm = this.fb.group({
       feedSources: this.fb.array([]),
-      time: [''],
+      time: this.fb.array([]),
       exportFormat: this.fb.array([])
     });
     this.getConfig();
@@ -62,11 +82,15 @@ export class ConfigComponent implements OnInit {
         this.config = { ...data };
         this.addFeedSourcesForm();
         this.addExportFormatForm();
+        this.addTimeForm();
       },
       error => {
         console.log('Error', error);
       }
     );
+  }
+  changeTime(selectedValue: number) {
+    this.config.time = selectedValue;
   }
 
   saveConfig() {

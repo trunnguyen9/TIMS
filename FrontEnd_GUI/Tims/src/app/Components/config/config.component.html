@@ -22,19 +22,15 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">How often: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8">
-                        <select class="form-control">
-                            <option value="2" [attr.selected] = "config.time == 2 ? '' : null">2 hours</option>
-                            <option value="4" [attr.selected] = "config.time == 4 ? '' : null">4 hours</option>
-                            <option value="6" [attr.selected] = "config.time == 6 ? '' : null">6 hours</option>
-                            <option value="12" [attr.selected] = "config.time == 12 ? '' : null">12 hours</option>
-                            <option value="24" [attr.selected] = "config.time == 24 ? '' : null">24 hours</option>
+                        <select class="form-control" formArrayName="time" (change)="changeTime($event.target.value)">
+                            <option *ngFor="let time of getTimeFormData().controls; let i=index" [value]="timeList[i].value" [selected]="timeList[i].value == config.time">{{timeList[i].name}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-md-4 col-sm-4 col-form-label form-control-label">Export format: </label>
                     <div class="col-lg-9 col-md-8 col-sm-8" formArrayName="exportFormat">
-                      <div *ngFor="let source of getExportFormatFormData().controls; let i=index">
+                      <div *ngFor="let type of getExportFormatFormData().controls; let i=index">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id={{config.exportFormat[i].name}} value="CVS"  [checked]="config.exportFormat[i].selected" (change)="config.exportFormat[i].selected = !config.exportFormat[i].selected">
                           <label class="form-check-label" for={{config.exportFormat[i].name}}>
