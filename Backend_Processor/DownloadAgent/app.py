@@ -23,7 +23,7 @@ def updateConfig():
 
 def updateConfigFile(content):
     with open('config.json', 'w+') as configFile:
-        configFile.write(json.dumps(content))
+        configFile.write(json.dumps(content, indent=4, sort_keys=True))
         configFile.close()
 
 def getConfigData():
