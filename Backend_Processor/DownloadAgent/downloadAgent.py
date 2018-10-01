@@ -69,7 +69,10 @@ currentHour=todayDateTime.hour
 # so we have some real data in the database, so everyone can see the workflow that i think will work..
 # Once we get this working for one library, it will be just a matter of making modules for the other threat libraries
 #
-'''
+
+SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
+SANsEDU_gatherer.pull()
+
 EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
 EmergingThreats_gathererv2.pull()
 
@@ -81,7 +84,6 @@ try :
 	CSIRTG_gatherer.pull()
 except:
 	print ("error with CSIRTG")
-
 
 PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
 PhishTank_gathererv2.pull()
@@ -97,10 +99,6 @@ NoThink_gatherer.pull()
 
 OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
 OpenPhish_gatherer.pull()
-
-SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
-SANsEDU_gatherer.pull()
-'''
 
 SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
 SpamHaus_Gatherer.pull()
