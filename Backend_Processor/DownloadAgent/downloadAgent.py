@@ -41,64 +41,81 @@ from pprint import pprint
 import DataStore_Modules
 import IoC_Modules
 
-
 # __MAIN__
 
 # create SQLite DB Connection
 SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
 
 # create main DataStore for all threat information
-#threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
+# threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
 
 # create a time object to obtain current time
-todayDateTime=datetime.now()
+todayDateTime = datetime.now()
 
 # get current hour, this will be used to determine which processes are run
-currentHour=todayDateTime.hour
-
-# python doesnt have a case statement, so you have to use a bunch of if statements
-# different threat libraries are updated at different time intervals, everything from updated every hour to once a day
-# these conditional statements will be used to download the proper threat libraries at the proper time interval. If you
-# to download too often, many will block you. So we cant annoy them too much or we'll get blocked.
-
-# -- ================ --
-# PhishTank Test Data
-# -- ================ --
-#
-# This is just a basic test to pull data from one open source threat library and dump it into the database
-# so we have some real data in the database, so everyone can see the workflow that i think will work..
-# Once we get this working for one library, it will be just a matter of making modules for the other threat libraries
-#
-
-SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
-SANsEDU_gatherer.pull()
-
-EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
-EmergingThreats_gathererv2.pull()
-
-AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
-AlienVault_gatherer.pull()
-
-try :
-	CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-	CSIRTG_gatherer.pull()
+currentHour = todayDateTime.hour
+try:
+    SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
+    SANsEDU_gatherer.pull()
 except:
-	print ("error with CSIRTG")
+    print("error with SANS")
 
-PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
-PhishTank_gathererv2.pull()
+try:
+    EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
+    EmergingThreats_gathererv2.pull()
+except:
+    print("error with Emerging Threats")
 
-FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
-FeodoTracker_gatherer.pull()
+try:
+    AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+    AlienVault_gatherer.pull()
+except:
+    print("error with Alien Vault")
 
-Zeus_gatherer = IoC_Modules.IoC_Zeus(SQLiteDataStore.getDBConn())
-Zeus_gatherer.pull()
+try:
+    CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+    CSIRTG_gatherer.pull()
+except:
+    print("error with CSIRTG")
 
-NoThink_gatherer = IoC_Modules.IoC_NoThink(SQLiteDataStore.getDBConn())
-NoThink_gatherer.pull()
+try:
+    PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
+    PhishTank_gathererv2.pull()
+except:
+    print("error with PhishTank")
 
-OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
-OpenPhish_gatherer.pull()
+try:
+    FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
+    FeodoTracker_gatherer.pull()
+except:
+    print("error with Feodo Tracker")
 
-SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
-SpamHaus_Gatherer.pull()
+try:
+    Zeus_gatherer = IoC_Modules.IoC_Zeus(SQLiteDataStore.getDBConn())
+    Zeus_gatherer.pull()
+except:
+    print("error with Zeus")
+
+try:
+    NoThink_gatherer = IoC_Modules.IoC_NoThink(SQLiteDataStore.getDBConn())
+    NoThink_gatherer.pull()
+except:
+    print("error with NoThink")
+
+try:
+    OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
+    OpenPhish_gatherer.pull()
+except:
+    print("error with OpenPhish")
+
+try:
+    SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
+    SpamHaus_Gatherer.pull()
+except:
+    print("error with SpamHaus")
+
+try:
+    NetLabs360_Gatherer = IoC_Modules.IoC_NetLabs360(SQLiteDataStore.getDBConn())
+    NetLabs360_Gatherer.pull()
+except:
+    print("error with NetLabs")
