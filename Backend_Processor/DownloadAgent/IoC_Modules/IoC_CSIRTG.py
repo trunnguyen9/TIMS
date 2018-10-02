@@ -56,21 +56,20 @@ class IoC_CSIRTG(IoC_Methods):
                 ret = Feed(cli).show(user, feed, limit=None)
                 count += 1
                 dataDict[feed] = ret.copy()
-                print ("   - Getting feed item: " + str(count))
+                print ("   - Getting feed item: " + str(count) + feedItem['name'])
                 #if count == 5:
                 #    break
             #pprint(dataDict)
             print ("copying all feeds into JSON")
             js = json.dumps(dataDict)
 
-            print ("saving JSON")
             fp = open("CSIRTG.JSON", "w")
             fp.write(js)
             fp.close()
 
-            self.readFile()
+            self.readFile(feedItem['name'])
         except:
-            print ("ERROR: CSIRTG ")
+            print ("ERROR: CSIRTG : too many requests in an hour")
     #End Pull
 
     def convertTime(self, strTime):
@@ -80,7 +79,7 @@ class IoC_CSIRTG(IoC_Methods):
         return str(datetime.datetime.strptime(strTime, "%Y-%m-%d %H:%M:%S"))
     #end convertTime
 
-    def readFile(self):
+    def readFile(self, feedName):
         csirtgAll=dict()
         csirtgIndicatorDict=dict()
         indicatorCounter=0
@@ -124,6 +123,6 @@ class IoC_CSIRTG(IoC_Methods):
                 self.recordedThreats[self.threatCounter]=CSIRTGThreat.copy()
                 self.threatCounter+=1
                 CSIRTGThreat.clear()
-        self.processData("CSIRTG")
+        self.processData(("CSIRTG : " + feedName))
 
 #End EmergingThreatsv2

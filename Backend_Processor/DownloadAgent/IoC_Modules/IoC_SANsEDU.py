@@ -37,6 +37,7 @@ class IoC_SANsEDU(IoC_Methods):
         ]
 
         for linkItem in linkList:
+            self.TIMSlog['startTime']=datetime.datetime.now()
             dresponse = urllib.request.urlopen(linkItem)
             ddata = dresponse.read()  # a `bytes` object
             dtext = ddata.decode('utf-8')  # a `str`; this step can't be used if data is binary

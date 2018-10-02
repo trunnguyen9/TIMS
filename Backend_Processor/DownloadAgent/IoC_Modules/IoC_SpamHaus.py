@@ -35,6 +35,8 @@ class IoC_SpamHaus(IoC_Methods):
         SQLLoggerComment = ""
 
         for itemLink in linkList:
+            print (itemLink)
+            self.TIMSlog['startTime'] = datetime.datetime.now()
             dresponse = urllib.request.urlopen(itemLink)
             ddata = dresponse.read()  # a `bytes` object
             dtext = ddata.decode('utf-8')  # a `str`; this step can't be used if data is binary

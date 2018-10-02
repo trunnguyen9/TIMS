@@ -44,7 +44,7 @@ class IoC_Methods:
 
     def __init__(self, conn):
         # def __init__(self):
-        print('Generic IoC Constructor')
+        print("--===================================--")
         self.hostname = socket.gethostname()
         self.conn = conn
         self.cursor = self.conn.cursor()
@@ -128,22 +128,18 @@ class IoC_Methods:
                 print("Exception in _query: %s" % e)
             finally:
                 self.conn.commit()
-
-        print("--===================--")
-
     # end addToDataBase
 
     def writeLogToDB(self, providerName):
         cursor = self.conn.cursor()
 
         self.TIMSlog['endTime'] = datetime.now()
-        print("-- ============================ --")
-        print("Total Entries:" + str(self.TIMSlog['lineCount']))
-        print("New Entries:" + str(self.TIMSlog['newCount']))
-        print("Duplicates:" + str(self.TIMSlog['dupeCount']))
-        print("Start Time:" + str(self.TIMSlog['startTime']))
-        print("End Time:" + str(self.TIMSlog['endTime']))
-        print("Total Time Spent:" + str(self.TIMSlog['endTime'] - self.TIMSlog['startTime']))
+        print(" - Total Entries:" + str(self.TIMSlog['lineCount']))
+        print(" - New Entries:" + str(self.TIMSlog['newCount']))
+        print(" - Duplicates:" + str(self.TIMSlog['dupeCount']))
+        print(" -- Start Time:" + str(self.TIMSlog['startTime']))
+        print(" -- End Time:" + str(self.TIMSlog['endTime']))
+        print(" -- Total Time Spent:" + str(self.TIMSlog['endTime'] - self.TIMSlog['startTime']))
 
         cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?,?,?)",
                        [self.TIMSlog['lineCount'],
@@ -155,7 +151,6 @@ class IoC_Methods:
                         providerName,
                         self.hostname
                         ])
-        print("committing to Logging DB")
         self.conn.commit()
         self.TIMSlog['dupeCount'] = 0
         self.TIMSlog['newCount'] = 0
@@ -167,6 +162,5 @@ class IoC_Methods:
 
         for item in self.recordedThreats:
             self.multiprocessingList.append(self.recordedThreats[item])
-        # pprint (self.multiprocessingList)
         self.TotalThreats = len(self.multiprocessingList)
     # end makeList

@@ -33,6 +33,8 @@ class IoC_NoThink(IoC_Methods):
         #sqlLogger=DataStore_Modules.DataStore_MySQL.dataStore_MySQL_Logger()
 
         for link_item in linkList:
+            print (link_item)
+            self.TIMSlog['startTime'] = datetime.datetime.now()
             NoThinkThreat = dict()
             page = requests.get(link_item).text
             pulledList=page.split('\n')

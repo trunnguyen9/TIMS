@@ -23,6 +23,8 @@ class IoC_Feodotracker(IoC_Methods):
             "https://feodotracker.abuse.ch/blocklist/?download=domainblocklist"
         ]
         for linkItem in linkList:
+            print (linkItem)
+            self.TIMSlog['startTime']=datetime.datetime.now()
             threatConfidence = 0
             self.threatCounter=0
             lineCount=0

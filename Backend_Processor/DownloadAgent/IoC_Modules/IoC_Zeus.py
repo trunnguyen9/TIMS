@@ -30,6 +30,8 @@ class IoC_Zeus(IoC_Methods):
 
         linkItemCount=0
         for linkItem in linkList:
+            print (linkItem)
+            self.TIMSlog['startTime'] = datetime.datetime.now()
             threatItype="type"
             page = requests.get(linkItem).text
             linesDownloaded=page.split('\n')
