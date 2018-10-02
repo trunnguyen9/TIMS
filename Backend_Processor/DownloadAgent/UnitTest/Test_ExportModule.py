@@ -24,7 +24,6 @@ class Test_ExportModule(unittest.TestCase):
 		suite.addTest(test_write_json('test_write_json'))
 		return suite
 
-
 	def test_extract_data(self):
 		self.exportObj.extractFromDB()
 		finish = self.exportObj.copyDict()
@@ -63,7 +62,7 @@ class Test_ExportModule(unittest.TestCase):
 	#Start by creating an export instance 
 	def setUp(self):
 		self.exportObj = ExportSQL('./')
-		self.exportObj.sql_db_loc = '../../Threats.sqlite'
+		self.exportObj.updateDBloc('../../')
 
 	#Clean up all Written Files
 	def tearDown(self):

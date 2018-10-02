@@ -20,14 +20,15 @@ class Test_IoC(unittest.TestCase):
 	# 	self.ThreatObject = IoC_PhishTank()	
 	SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
 
+	# Set up the Unit Test Suite for a Generic IoC Module
 	def suite():
-	    suite = unittest.TestSuite()
-	    # suite.addTest(test_connect_resource('test_connect_resource'))
-	    suite.addTest(test_parse_resource('test_parse_resource'))
-	    suite.addTest(test_view_threats('test_view_threats'))
-	    suite.addTest(test_create_unique_key('test_create_unique_key'))
-	    suite.addTest(test_db_insert('test_db_insert'))
-	    return suite
+		suite = unittest.TestSuite()
+		# suite.addTest(test_connect_resource('test_connect_resource'))
+		suite.addTest(test_create_unique_key('test_create_unique_key'))
+		suite.addTest(test_parse_resource('test_parse_resource'))
+		suite.addTest(test_db_insert('test_db_insert'))
+		# suite.addTest(test_view_threats('test_view_threats'))
+		return suite
 
 	# #Test the ability of the module to connect with its resource via HTTP request 
 	# def test_connect_resource(self):
@@ -35,6 +36,16 @@ class Test_IoC(unittest.TestCase):
 	# 	self.ThreatObject.pull()
 	# 	# If the dictionary does not update after the pull, the connection likely did not work
 	# 	self.assertNotEqual(start,self.ThreatObject.recordedThreats)
+
+	# Test the ability of the module to create unique identifier keys
+	def test_create_unique_key(self):
+		keystrings = ['Fake Keystring1','Fake Keystring2']
+		md5strings = []
+		for entry in keystrings:
+			m = hashlib.md5()
+			m.update(entry.encode('utf-8'))
+			md5strings.append(m.hexdigest())
+		self.assertNotEqual(md5strings[0],md5strings[1])
 
 	#Test the ability of the module to parse the resources' response
 	def test_parse_resource(self):
@@ -64,16 +75,6 @@ class Test_IoC(unittest.TestCase):
 	# #Test the ability of the module to display all recorded threats
 	# def test_view_threats(self):
 	# 	self.ThreatObject.showThreats()
-
-	# Test the ability of the module to create unique identifier keys
-	def test_create_unique_key(self):
-		keystrings = ['Fake Keystring1','Fake Keystring2']
-		md5strings = []
-		for entry in keystrings:
-			m = hashlib.md5()
-			m.update(entry.encode('utf-8'))
-			md5strings.append(m.hexdigest())
-		self.assertNotEqual(md5strings[0],md5strings[1])
 
 if __name__ == '__main__':
 	unittest.main()
