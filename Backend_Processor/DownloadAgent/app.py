@@ -4,6 +4,9 @@ from ExportAgent import ExportThreatStats
 
 app = Flask(__name__)
 
+def __init__(self):
+    pass
+
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
     return jsonify(getConfigData()), 201
@@ -28,4 +31,5 @@ def getConfigData():
 
 @app.route('/dump',methods=['GET'])
 def dumpDatabase():
-    return ExportThreatStats.exportThreatStats()
+    exportThreatStatInstance = ExportThreatStats()
+    return exportThreatStatInstance.exportThreatStats()
