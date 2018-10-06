@@ -8,7 +8,11 @@
 #
 # Object used to enrich data by associating IP's with GeoLocations 
 # 
+<<<<<<< HEAD
 from ExportAgent import DataEnricher
+=======
+from .DataEnricher import DataEnricher
+>>>>>>> origin/angularsql
 import geoip2.database
 # from datetime import datetime
 # import _sqlite3

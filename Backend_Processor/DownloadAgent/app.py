@@ -1,14 +1,20 @@
 from flask import Flask, request, jsonify
 import json
+from ExportAgent import ExportThreatStats
 
 app = Flask(__name__)
 
+<<<<<<< HEAD
 @app.after_request
 def after_request(response):
   response.headers.add('Access-Control-Allow-Origin', '*')
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
+=======
+def __init__(self):
+    pass
+>>>>>>> origin/angularsql
 
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
@@ -31,3 +37,8 @@ def getConfigData():
         data = json.load(configFile)
         configFile.close()
     return data
+
+@app.route('/dump',methods=['GET'])
+def dumpDatabase():
+    exportThreatStatInstance = ExportThreatStats()
+    return exportThreatStatInstance.exportThreatStats()
