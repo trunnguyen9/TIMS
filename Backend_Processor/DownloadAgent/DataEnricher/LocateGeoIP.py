@@ -10,12 +10,7 @@
 # 
 # This product includes GeoLite2 data created by MaxMind, available from
 # <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
-
-<<<<<<< HEAD
-from ExportAgent import DataEnricher
-=======
-from .DataEnricher import DataEnricher
->>>>>>> origin/angularsql
+from DataEnricher import DataEnricher
 import geoip2.database
 # from datetime import datetime
 # import _sqlite3
@@ -27,6 +22,7 @@ class LocateGeoIP(DataEnricher):
 	countryDBloc = ''
 
 	def __init__(self):
+		super().__init__()
 		# Connect the GeoLite object to all available databases of interest
 		self.asnDBloc = './GeoLite2/GeoLite2-ASN_20180918/GeoLite2-ASN.mmdb'
 		self.cityDBloc = './GeoLite2/GeoLite2-City_20180911/GeoLite2-City.mmdb'
@@ -39,9 +35,13 @@ class LocateGeoIP(DataEnricher):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
+		count = 1
+		count_total = len(self.recordedThreats)
 		# Iterate through each threat
 		print('Locating IP Adresses Autonomous System Details...')
 		for item in self.recordedThreats:
+			self.print_line('Updating Entry: ' + str(count) + '/' + str(count_total))
+			count = count + 1
 			try:
 				response = reader.asn(self.recordedThreats[item]['indicator'])
 				self.recordedThreats[item]['asn'] = response.autonomous_system_number
@@ -52,6 +52,7 @@ class LocateGeoIP(DataEnricher):
 				self.recordedThreats[item]['asn_desc'] = ''
 				pass
 		reader.close()
+		self.print_line('')
 
 	def searchCity(self):
 		# Connect to the Database
@@ -60,9 +61,13 @@ class LocateGeoIP(DataEnricher):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
+		count = 1
+		count_total = len(self.recordedThreats)
 		# Iterate through each threat
 		print('Locating IP Adresses City of Origin...')
 		for item in self.recordedThreats:
+			self.print_line('Updating Entry: ' + str(count) + '/' + str(count_total))
+			count = count + 1
 			try:
 				response = reader.city(self.recordedThreats[item]['indicator'])
 				self.recordedThreats[item]['gps'] = [response.location.latitude,response.location.longitude]
@@ -79,6 +84,7 @@ class LocateGeoIP(DataEnricher):
 				self.recordedThreats[item]['postal_code'] = ''
 				pass
 		reader.close()
+		self.print_line('')
 			# self.recordedThreats[item]['asn'] = [response.location.latitude,response.location.latitude]
 
 	def displayExtract(self):
@@ -109,7 +115,6 @@ class LocateGeoIP(DataEnricher):
 
 if __name__ == '__main__':
 	test = LocateGeoIP()
-	test.__init__()
 	test.searchCity()
 	test.searchASN()
 	test.updateDB()

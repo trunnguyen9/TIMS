@@ -11,6 +11,8 @@
 # 
 from datetime import datetime
 import _sqlite3
+import sys
+import time
 
 class DataEnricher:
 
@@ -63,7 +65,7 @@ class DataEnricher:
 				pass
 		for item in self.recordedThreats:
 			# Set the last time to the current time
-			self.recordedThreats[item]['lastTime'] = str(currentDateTime)
+			# self.recordedThreats[item]['lastTime'] = str(currentDateTime)
 			for key in self.recordedThreats[item]:
 				try:
 					# Attempt to inset extracted value
@@ -83,6 +85,12 @@ class DataEnricher:
 					
 		con.commit()
 		con.close()
+
+	def print_line(self,string):
+		sys.stdout.flush()
+		sys.stdout.write('\r' + string)
+		
+
 	# end updateDB
 
 	# def updateDB(self):
@@ -112,7 +120,6 @@ class DataEnricher:
 
 if __name__ == '__main__':
 	test = DataEnricher()
-	test.__init__()
 	test.extractFromDB()
 	# test.displayExtract()
 	test.updateDB()
