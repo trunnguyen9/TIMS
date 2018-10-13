@@ -24,6 +24,7 @@ import multiprocessing
 import socket
 import time
 import elasticsearch
+from elasticsearch import Elasticsearch
 
 
 class IoC_Methods:
@@ -37,6 +38,7 @@ class IoC_Methods:
     multiprocessingList = list()
     uri = ''  # Link to Location of Threats to be Extracted
     TIMSlog = dict()
+    es = 0
 
     conn = 0
     cursor = 0
@@ -57,6 +59,11 @@ class IoC_Methods:
         self.TIMSlog['sqlEntries'] = 0
         self.TIMSlog['SQLErrorCount'] = 0
         self.TIMSlog['Error'] = None
+        try:
+            self.es = Elasticsearch([{'host': '173.253.201.212', 'port': 9200}])
+            print ("ES INFO:", self.es.info())
+        except Exception as ex :
+            print ("ES ERROR:", ex)
 
     def pull(self):
         # I think it might be worth making the URI an attribute of the class - Doug
@@ -141,6 +148,8 @@ class IoC_Methods:
         print(" -- Start Time:" + str(self.TIMSlog['startTime']))
         print(" -- End Time:" + str(self.TIMSlog['endTime']))
         print(" -- Total Time Spent:" + str(self.TIMSlog['endTime'] - self.TIMSlog['startTime']))
+        self.TIMSlog['Provider']=providerName
+        self.TIMSlog['host']=self.hostname
 
         cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?,?,?)",
                        [self.TIMSlog['lineCount'],
@@ -154,10 +163,19 @@ class IoC_Methods:
                         ])
         self.conn.commit()
 
+        print("-- --  sending to ES  -- --")
+        try:
+            self.es.index(index='timslog_index', doc_type='timslog', id=self.TIMSlog['startTime'], body=self.TIMSlog)
+        except elasticsearch.ElasticsearchException as es1:
+            print("Error:" + es1)
+
 
         self.TIMSlog['dupeCount'] = 0
         self.TIMSlog['newCount'] = 0
         self.TIMSlog['lineCount'] = 0
+
+        # --==========================================--
+
 
     # end writeLogToDB
 

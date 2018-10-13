@@ -15,6 +15,9 @@ import _sqlite3
 # import FrontEnd_GUI
 # import PySimpleGUI as sg
 from elasticsearch import Elasticsearch
+import requests
+import json
+
 
 class SQLiteDataStore:
 
@@ -24,11 +27,15 @@ class SQLiteDataStore:
     errorLog = dict()
     conn = 0
     cursor = 0
+    es = 0
 
     def __init__(self):
         print ("Building Network Connection and Connection Cursor:")
         self.conn = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         self.cursor=self.conn.cursor()
+
+        self.es = Elasticsearch([{'host':'173.253.201.212', 'port':9200}])
+
     # end constructor
 
     def getDBConn(self):
@@ -170,6 +177,13 @@ class SQLiteDataStore:
                         ])
         print ("committing to Logging DB")
         con.commit()
+
+        # --==========================================--
+        print ("-- --  sending to ES  -- --")
+        self.es.index(index='timslog', doc_type='timslog', id=str(datetime.now), body=self.log)
+
+
+
     # END show stats
 
 #end SQLiteDataStore
