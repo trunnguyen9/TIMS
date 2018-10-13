@@ -13,15 +13,17 @@ from datetime import datetime
 import _sqlite3
 import sys
 import time
+import socket
 
 class DataEnricher:
 
 	recordedThreats = dict()
 	sqlDBloc = '../../../Threats.sqlite'
+	modtime = ''
 
 	def __init__(self):
 		#Collect current time to update database with
-		modtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+		self.modtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 	def updateDBloc(self,newLoc):
 		self.sqlDBloc = newLoc
@@ -89,7 +91,24 @@ class DataEnricher:
 	def print_line(self,string):
 		sys.stdout.flush()
 		sys.stdout.write('\r' + string)
-		
+
+	# Method to Check if string is IPV4 IP address
+	def is_valid_ipv4_address(self,address):
+		try:
+			socket.inet_pton(socket.AF_INET, address)
+		except AttributeError:  # no inet_pton here, sorry
+			return False
+		except socket.error:  # not a valid address
+			return False
+		return True
+
+	# Method to Check if string is IPV6 IP address
+	def is_valid_ipv6_address(self,address):
+		try:
+			socket.inet_pton(socket.AF_INET6, address)
+		except socket.error:  # not a valid address
+			return False
+		return True	
 
 	# end updateDB
 
