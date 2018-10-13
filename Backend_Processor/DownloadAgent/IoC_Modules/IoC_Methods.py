@@ -23,6 +23,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 import multiprocessing
 import socket
 import time
+import elasticsearch
 
 
 class IoC_Methods:
@@ -152,6 +153,8 @@ class IoC_Methods:
                         self.hostname
                         ])
         self.conn.commit()
+
+
         self.TIMSlog['dupeCount'] = 0
         self.TIMSlog['newCount'] = 0
         self.TIMSlog['lineCount'] = 0

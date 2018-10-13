@@ -14,6 +14,7 @@ from datetime import datetime
 import _sqlite3
 # import FrontEnd_GUI
 # import PySimpleGUI as sg
+from elasticsearch import Elasticsearch
 
 class SQLiteDataStore:
 

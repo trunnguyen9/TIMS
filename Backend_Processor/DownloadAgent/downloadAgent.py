@@ -37,9 +37,84 @@
 
 from datetime import datetime
 from pprint import pprint
+import time
 
 import DataStore_Modules
 import IoC_Modules
+
+
+def sleeper():
+    while True:
+        # get current hour, this will be used to determine which processes are run
+        currentHour = todayDateTime.hour
+        try:
+            SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
+            SANsEDU_gatherer.pull()
+        except:
+            print("error with SANS")
+
+        try:
+            EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
+            EmergingThreats_gathererv2.pull()
+        except:
+            print("error with Emerging Threats")
+
+        try:
+            AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
+            AlienVault_gatherer.pull()
+        except:
+            print("error with Alien Vault")
+
+        try:
+            CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
+            CSIRTG_gatherer.pull()
+        except:
+            print("error with CSIRTG")
+
+        try:
+            PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
+            PhishTank_gathererv2.pull()
+        except:
+            print("error with PhishTank")
+
+        try:
+            FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
+            FeodoTracker_gatherer.pull()
+        except:
+            print("error with Feodo Tracker")
+
+        try:
+            Zeus_gatherer = IoC_Modules.IoC_Zeus(SQLiteDataStore.getDBConn())
+            Zeus_gatherer.pull()
+        except:
+            print("error with Zeus")
+
+        try:
+            NoThink_gatherer = IoC_Modules.IoC_NoThink(SQLiteDataStore.getDBConn())
+            NoThink_gatherer.pull()
+        except:
+            print("error with NoThink")
+
+        try:
+            OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
+            OpenPhish_gatherer.pull()
+        except:
+            print("error with OpenPhish")
+
+        try:
+            SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
+            SpamHaus_Gatherer.pull()
+        except:
+            print("error with SpamHaus")
+
+        try:
+            NetLabs360_Gatherer = IoC_Modules.IoC_NetLabs360(SQLiteDataStore.getDBConn())
+            NetLabs360_Gatherer.pull()
+        except:
+            print("error with NetLabs")
+
+        print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
+        time.sleep(3600)
 
 # __MAIN__
 
@@ -52,70 +127,8 @@ SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
 # create a time object to obtain current time
 todayDateTime = datetime.now()
 
-# get current hour, this will be used to determine which processes are run
-currentHour = todayDateTime.hour
 try:
-    SANsEDU_gatherer = IoC_Modules.IoC_SANsEDU(SQLiteDataStore.getDBConn())
-    SANsEDU_gatherer.pull()
-except:
-    print("error with SANS")
-
-try:
-    EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
-    EmergingThreats_gathererv2.pull()
-except:
-    print("error with Emerging Threats")
-
-try:
-    AlienVault_gatherer = IoC_Modules.IoC_AlienVault(SQLiteDataStore.getDBConn())
-    AlienVault_gatherer.pull()
-except:
-    print("error with Alien Vault")
-
-try:
-    CSIRTG_gatherer = IoC_Modules.IoC_CSIRTG(SQLiteDataStore.getDBConn())
-    CSIRTG_gatherer.pull()
-except:
-    print("error with CSIRTG")
-
-try:
-    PhishTank_gathererv2 = IoC_Modules.IoC_PhishTankv2(SQLiteDataStore.getDBConn())
-    PhishTank_gathererv2.pull()
-except:
-    print("error with PhishTank")
-
-try:
-    FeodoTracker_gatherer = IoC_Modules.IoC_Feodotracker(SQLiteDataStore.getDBConn())
-    FeodoTracker_gatherer.pull()
-except:
-    print("error with Feodo Tracker")
-
-try:
-    Zeus_gatherer = IoC_Modules.IoC_Zeus(SQLiteDataStore.getDBConn())
-    Zeus_gatherer.pull()
-except:
-    print("error with Zeus")
-
-try:
-    NoThink_gatherer = IoC_Modules.IoC_NoThink(SQLiteDataStore.getDBConn())
-    NoThink_gatherer.pull()
-except:
-    print("error with NoThink")
-
-try:
-    OpenPhish_gatherer = IoC_Modules.IoC_OpenPhish(SQLiteDataStore.getDBConn())
-    OpenPhish_gatherer.pull()
-except:
-    print("error with OpenPhish")
-
-try:
-    SpamHaus_Gatherer = IoC_Modules.IoC_SpamHaus(SQLiteDataStore.getDBConn())
-    SpamHaus_Gatherer.pull()
-except:
-    print("error with SpamHaus")
-
-try:
-    NetLabs360_Gatherer = IoC_Modules.IoC_NetLabs360(SQLiteDataStore.getDBConn())
-    NetLabs360_Gatherer.pull()
-except:
-    print("error with NetLabs")
+    sleeper()
+except KeyboardInterrupt:
+    print ('\n\n Keyboard exception recieved..')
+    exit()

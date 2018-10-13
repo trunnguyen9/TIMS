@@ -57,6 +57,7 @@ class IoC_NetLabs360(IoC_Methods):
 
         linkItemCount=0
         for linkItem in linkList:
+            self.recordedThreats.clear()
             threatItype="fqdn"
             page = requests.get(linkItem).text
             linesDownloaded=page.split('\n')
@@ -95,6 +96,5 @@ class IoC_NetLabs360(IoC_Methods):
             linkItemCount=0
             print(sqlLoggerComment," : ",len(self.recordedThreats))
             self.processData(sqlLoggerComment)
-            self.recordedThreats.clear()
-#End Zeus
+#End NetLab360
 
