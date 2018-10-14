@@ -6,10 +6,6 @@ import jwt
 
 app = Flask(__name__)
 
-options = {
-    'verify_exp': True,
-}
-
 @app.after_request
 def after_request(response):
   response.headers.add('Access-Control-Allow-Origin', '*')

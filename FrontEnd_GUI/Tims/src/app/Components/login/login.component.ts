@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {AuthenticationService} from '../../Services/authentication.service';
 import {AlertService} from '../../Services/alert.service';
+import {DataService} from '../../Services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +16,17 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-
+  isUserLogin: boolean;
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.currentLoginStatus.subscribe(isUserLogin => this.isUserLogin = isUserLogin);
+
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.dataService.changeLoginStatus(true);
           this.router.navigate([this.returnUrl]);
         },
         error => {
@@ -57,5 +62,4 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         });
   }
-
 }
