@@ -42,8 +42,8 @@ class IoC_AlienVault(IoC_Methods):
                 if len(tempIndicator) > 1:
                     AlienThreat['threatkey'] = ""
                     AlienThreat['tlp'] = "white"
-                    AlienThreat['reporttime'] = str(datetime.datetime.now())
-                    AlienThreat['lasttime'] = str(datetime.datetime.now())
+                    AlienThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    AlienThreat['lasttime'] = str(datetime.datetime.utcnow())
                     AlienThreat['icount'] = 1
                     AlienThreat['itype'] = "ipv4"
                     AlienThreat['indicator'] = tempIndicator[0]

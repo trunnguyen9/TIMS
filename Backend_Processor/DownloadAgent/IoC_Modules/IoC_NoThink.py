@@ -34,7 +34,7 @@ class IoC_NoThink(IoC_Methods):
 
         for link_item in linkList:
             print (link_item)
-            self.TIMSlog['startTime'] = datetime.datetime.now()
+            self.TIMSlog['startTime'] = datetime.datetime.utcnow()
             NoThinkThreat = dict()
             page = requests.get(link_item).text
             pulledList=page.split('\n')
@@ -51,8 +51,8 @@ class IoC_NoThink(IoC_Methods):
                         sqlComment="NoThink: snmp_year:scanner"
                     NoThinkThreat['threatkey'] = ""
                     NoThinkThreat['tlp'] = "white"
-                    NoThinkThreat['reporttime'] = str(datetime.datetime.now())
-                    NoThinkThreat['lasttime'] = str(datetime.datetime.now())
+                    NoThinkThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    NoThinkThreat['lasttime'] = str(datetime.datetime.utcnow())
                     NoThinkThreat['icount'] = 1
                     NoThinkThreat['itype'] = "ipv4"
                     NoThinkThreat['indicator'] = item

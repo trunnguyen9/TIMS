@@ -24,7 +24,7 @@ class IoC_Feodotracker(IoC_Methods):
         ]
         for linkItem in linkList:
             print (linkItem)
-            self.TIMSlog['startTime']=datetime.datetime.now()
+            self.TIMSlog['startTime']=datetime.datetime.utcnow()
             threatConfidence = 0
             self.threatCounter=0
             lineCount=0
@@ -52,8 +52,8 @@ class IoC_Feodotracker(IoC_Methods):
                 else:
                     feodoThreat['threatkey'] = ""
                     feodoThreat['tlp'] = "green"
-                    feodoThreat['reporttime'] = str(datetime.datetime.now())
-                    feodoThreat['lasttime'] = str(datetime.datetime.now())
+                    feodoThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    feodoThreat['lasttime'] = str(datetime.datetime.utcnow())
                     feodoThreat['icount'] = 1
                     feodoThreat['itype'] = threatItype
                     feodoThreat['indicator'] = x

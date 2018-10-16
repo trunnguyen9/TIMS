@@ -34,8 +34,8 @@ class IoC_EmergingThreatsv2(IoC_Methods):
         for item in dlist:
             if item:
                 EmergingThreat['tlp'] = "green"
-                EmergingThreat['lasttime'] = str(datetime.now())
-                EmergingThreat['reporttime'] = str(datetime.now())
+                EmergingThreat['lasttime'] = str(datetime.utcnow())
+                EmergingThreat['reporttime'] = str(datetime.utcnow())
                 EmergingThreat['icount'] = "1"
                 EmergingThreat['itype'] = "ipv4"
                 EmergingThreat['indicator'] = item
@@ -48,7 +48,7 @@ class IoC_EmergingThreatsv2(IoC_Methods):
                 EmergingThreat['tags'] = "malware"
                 EmergingThreat['rdata'] = ""
                 EmergingThreat['provider'] = "emergingthreats.net"
-                EmergingThreat['entrytime'] = str(datetime.now())
+                EmergingThreat['entrytime'] = str(datetime.utcnow())
                 EmergingThreat['enriched'] = 0
 
                 #tempKey = EmergingThreat['indicator'] + ":" + EmergingThreat['provider']

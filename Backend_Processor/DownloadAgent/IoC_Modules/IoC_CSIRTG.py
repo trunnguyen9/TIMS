@@ -102,8 +102,8 @@ class IoC_CSIRTG(IoC_Methods):
         for x in csirtgIndicatorDict:
             for y in csirtgIndicatorDict[x]:
                 CSIRTGThreat['tlp']="green"
-                CSIRTGThreat['lasttime'] = str(datetime.datetime.now())
-                CSIRTGThreat['reporttime'] = str(datetime.datetime.now())
+                CSIRTGThreat['lasttime'] = str(datetime.datetime.utcnow())
+                CSIRTGThreat['reporttime'] = str(datetime.datetime.utcnow())
                 CSIRTGThreat['icount'] = csirtgIndicatorDict[x]['count']
                 CSIRTGThreat['itype'] = "ipv4"
                 CSIRTGThreat['indicator'] = csirtgIndicatorDict[x]['indicator']

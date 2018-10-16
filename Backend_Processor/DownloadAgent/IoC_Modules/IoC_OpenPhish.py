@@ -40,8 +40,8 @@ class IoC_OpenPhish(IoC_Methods):
         for item in dlist:
             if item:
                 OpenPhishThreat['tlp'] = "green"
-                OpenPhishThreat['lasttime'] = str(datetime.datetime.now())
-                OpenPhishThreat['reporttime'] = str(datetime.datetime.now())
+                OpenPhishThreat['lasttime'] = str(datetime.datetime.utcnow())
+                OpenPhishThreat['reporttime'] = str(datetime.datetime.utcnow())
                 OpenPhishThreat['icount'] = 1
                 OpenPhishThreat['itype'] = "fdnq"
                 OpenPhishThreat['indicator'] = item

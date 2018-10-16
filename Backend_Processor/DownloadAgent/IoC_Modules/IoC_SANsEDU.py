@@ -37,7 +37,7 @@ class IoC_SANsEDU(IoC_Methods):
         ]
 
         for linkItem in linkList:
-            self.TIMSlog['startTime']=datetime.datetime.now()
+            self.TIMSlog['startTime']=datetime.datetime.utcnow()
             dresponse = urllib.request.urlopen(linkItem)
             ddata = dresponse.read()  # a `bytes` object
             dtext = ddata.decode('utf-8')  # a `str`; this step can't be used if data is binary
@@ -57,8 +57,8 @@ class IoC_SANsEDU(IoC_Methods):
                 else:
                     SANS_Threat['threatkey'] = ""
                     SANS_Threat['tlp'] = "green"
-                    SANS_Threat['reporttime'] = str(datetime.datetime.now())
-                    SANS_Threat['lasttime'] = str(datetime.datetime.now())
+                    SANS_Threat['reporttime'] = str(datetime.datetime.utcnow())
+                    SANS_Threat['lasttime'] = str(datetime.datetime.utcnow())
                     SANS_Threat['icount'] = 1
                     SANS_Threat['itype'] = "fdnq"
                     SANS_Threat['indicator'] = x

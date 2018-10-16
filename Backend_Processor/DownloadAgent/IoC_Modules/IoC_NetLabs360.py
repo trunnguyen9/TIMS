@@ -61,7 +61,7 @@ class IoC_NetLabs360(IoC_Methods):
             threatItype="fqdn"
             page = requests.get(linkItem).text
             linesDownloaded=page.split('\n')
-            self.TIMSlog['startTime'] = datetime.datetime.now()
+            self.TIMSlog['startTime'] = datetime.datetime.utcnow()
             for item in linesDownloaded:
                 if item.startswith('#'):
                     continue
@@ -69,8 +69,8 @@ class IoC_NetLabs360(IoC_Methods):
                     sqlLoggerComment="NetLab : " + linkItem
                     NetLabThreat['threatkey'] = ""
                     NetLabThreat['tlp'] = "green"
-                    NetLabThreat['reporttime'] = str(datetime.datetime.now())
-                    NetLabThreat['lasttime'] = str(datetime.datetime.now())
+                    NetLabThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    NetLabThreat['lasttime'] = str(datetime.datetime.utcnow())
                     NetLabThreat['icount'] = 1
                     NetLabThreat['itype'] = threatItype
                     NetLabThreat['indicator'] = item

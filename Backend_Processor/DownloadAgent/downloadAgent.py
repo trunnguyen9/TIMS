@@ -52,7 +52,6 @@ def sleeper():
             SANsEDU_gatherer.pull()
         except:
             print("error with SANS")
-
         try:
             EmergingThreats_gathererv2 = IoC_Modules.IoC_EmergingThreatsv2(SQLiteDataStore.getDBConn())
             EmergingThreats_gathererv2.pull()
@@ -112,9 +111,9 @@ def sleeper():
             NetLabs360_Gatherer.pull()
         except:
             print("error with NetLabs")
-
         print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
         time.sleep(3600)
+
 
 # __MAIN__
 

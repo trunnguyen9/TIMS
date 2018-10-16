@@ -39,7 +39,7 @@ class IoC_PhishTankv2(IoC_Methods):
             dt = parse(x['submission_time'])
 
             phishThreat['lasttime'] = str(dt.strftime('%Y-%m-%d %H:%M:%S'))
-            phishThreat['reporttime'] = str(datetime.datetime.now())
+            phishThreat['reporttime'] = str(datetime.datetime.utcnow())
             phishThreat['icount'] = 1
             phishThreat['itype'] = "fqdn"
             phishThreat['indicator'] = x['url']

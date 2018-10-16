@@ -54,14 +54,14 @@ class IoC_Methods:
         self.TIMSlog['lineCount'] = 0
         self.TIMSlog['newCount'] = 0
         self.TIMSlog['dupeCount'] = 0
-        self.TIMSlog['startTime'] = datetime.now()
+        self.TIMSlog['startTime'] = datetime.utcnow()
+        print ("Start Time:", self.TIMSlog['startTime'])
         self.TIMSlog['endTime'] = ""
         self.TIMSlog['sqlEntries'] = 0
         self.TIMSlog['SQLErrorCount'] = 0
         self.TIMSlog['Error'] = None
         try:
-            self.es = Elasticsearch([{'host': '173.253.201.212', 'port': 9200}])
-            print ("ES INFO:", self.es.info())
+            self.es = Elasticsearch([{'host': '173.253.201.243', 'port': 9200}])
         except Exception as ex :
             print ("ES ERROR:", ex)
 
@@ -99,7 +99,7 @@ class IoC_Methods:
     def addToDatabase2(self):
         threatCounter = 1
         totalThreats = len(self.recordedThreats)
-        currentDateTime = datetime.now()
+        currentDateTime = datetime.utcnow()
         cursor = self.conn.cursor()
 
         for item in self.recordedThreats:
@@ -125,6 +125,13 @@ class IoC_Methods:
                                 str(currentDateTime),
                                 self.recordedThreats[item]['enriched'],
                                 ])
+                try:
+                    self.recordedThreats[item]['es_time']=datetime.utcnow()
+                    #self.es.index(index='timsthreat_index', doc_type='timsthreat', id=self.recordedThreats[item]['reporttime'],
+                    #              body=self.recordedThreats[item])
+                except elasticsearch.ElasticsearchException as es1:
+                    print("RT Error:" + es1)
+
                 if threatCounter % 5000 == 0:  # saves db every 5000 records
                     self.conn.commit()
                 self.TIMSlog['newCount'] += 1
@@ -141,7 +148,8 @@ class IoC_Methods:
     def writeLogToDB(self, providerName):
         cursor = self.conn.cursor()
 
-        self.TIMSlog['endTime'] = datetime.now()
+        self.TIMSlog['endTime'] = datetime.utcnow()
+        print ("End Time:", self.TIMSlog['endTime'] )
         print(" - Total Entries:" + str(self.TIMSlog['lineCount']))
         print(" - New Entries:" + str(self.TIMSlog['newCount']))
         print(" - Duplicates:" + str(self.TIMSlog['dupeCount']))
@@ -167,7 +175,7 @@ class IoC_Methods:
         try:
             self.es.index(index='timslog_index', doc_type='timslog', id=self.TIMSlog['startTime'], body=self.TIMSlog)
         except elasticsearch.ElasticsearchException as es1:
-            print("Error:" + es1)
+            print("TL Error:" + es1)
 
 
         self.TIMSlog['dupeCount'] = 0

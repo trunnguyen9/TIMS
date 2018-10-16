@@ -36,7 +36,7 @@ class IoC_SpamHaus(IoC_Methods):
 
         for itemLink in linkList:
             print (itemLink)
-            self.TIMSlog['startTime'] = datetime.datetime.now()
+            self.TIMSlog['startTime'] = datetime.datetime.utcnow()
             dresponse = urllib.request.urlopen(itemLink)
             ddata = dresponse.read()  # a `bytes` object
             dtext = ddata.decode('utf-8')  # a `str`; this step can't be used if data is binary
@@ -56,8 +56,8 @@ class IoC_SpamHaus(IoC_Methods):
                     tempIndicator = x.split(';')
                     SpamHausThreat['threatkey'] = ""
                     SpamHausThreat['tlp'] = "green"
-                    SpamHausThreat['reporttime'] = str(datetime.datetime.now())
-                    SpamHausThreat['lasttime'] = str(datetime.datetime.now())
+                    SpamHausThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    SpamHausThreat['lasttime'] = str(datetime.datetime.utcnow())
                     SpamHausThreat['icount'] = 1
                     SpamHausThreat['itype'] = "cidr"
                     SpamHausThreat['indicator'] = tempIndicator[0].replace(' ', '')

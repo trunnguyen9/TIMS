@@ -31,7 +31,7 @@ class IoC_Zeus(IoC_Methods):
         linkItemCount=0
         for linkItem in linkList:
             print (linkItem)
-            self.TIMSlog['startTime'] = datetime.datetime.now()
+            self.TIMSlog['startTime'] = datetime.datetime.utcnow()
             threatItype="type"
             page = requests.get(linkItem).text
             linesDownloaded=page.split('\n')
@@ -51,8 +51,8 @@ class IoC_Zeus(IoC_Methods):
                         sqlLoggerComment="Zeus : compromised BlockList:Zeus Botnet"
                     ZeusThreat['threatkey'] = ""
                     ZeusThreat['tlp'] = "green"
-                    ZeusThreat['reporttime'] = str(datetime.datetime.now())
-                    ZeusThreat['lasttime'] = str(datetime.datetime.now())
+                    ZeusThreat['reporttime'] = str(datetime.datetime.utcnow())
+                    ZeusThreat['lasttime'] = str(datetime.datetime.utcnow())
                     ZeusThreat['icount'] = 1
                     ZeusThreat['itype'] = threatItype
                     ZeusThreat['indicator'] = item
