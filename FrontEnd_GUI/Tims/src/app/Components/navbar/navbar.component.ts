@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from '../../Services/data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  isUserLogin: boolean;
 
-  constructor() { }
+  constructor( private dataService: DataService ) {
+  }
 
   ngOnInit() {
+    this.dataService.currentLoginStatus.subscribe(isUserLogin => this.isUserLogin = isUserLogin);
   }
 
 }
