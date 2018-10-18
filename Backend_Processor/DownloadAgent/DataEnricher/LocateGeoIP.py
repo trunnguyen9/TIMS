@@ -28,15 +28,52 @@ class LocateGeoIP(DataEnricher):
 
 	def __init__(self):
 		super().__init__()
-		# If there is no data in the dictionary, extract it
-		if not self.recordedThreats:
-			self.extractFromDB()
 		# Connect the GeoLite object to all available databases of interest
 		self.asnDBloc = './GeoLite2/GeoLite2-ASN_20180918/GeoLite2-ASN.mmdb'
 		self.cityDBloc = './GeoLite2/GeoLite2-City_20180911/GeoLite2-City.mmdb'
 		self.countryDBloc = './GeoLite2/GeoLite2-Country_20180911/GeoLite2-Country.mmdb'
 
+		# Only Extract Values that are not enriched
+		self.addValues('enriched','0')
+		# If there is no data in the dictionary, extract it
+		if not self.recordedThreats:
+			self.extractFromDB()
+		# # Restrict Number of Tests
+		# tmp = dict();
+		# keys = list(self.recordedThreats.keys())
+		# for count in range(100):
+		# 	tmp[keys[count]] = self.recordedThreats[keys[count]]
+		# self.recordedThreats = tmp
+
 	def searchASN(self,item):
+		# Search for IP address
+		address = self.recordedThreats[item]['indicator'] 
+		if self.is_valid_ipv4_address(address) != True and self.is_valid_ipv6_address(address) != True:
+			address = self.recordedThreats[item]['rData']
+			if address.find('IP:') != -1:
+				address = address.split('IP:',1);
+				if len(address[1]) < 12:
+					address = address[1][0:len(address)-1]
+				else:
+					address = address[1]
+		# Set Keys and List for Values
+		keys = ['asn','asn_desc'] 
+		# Attempt to Collect Values
+		values = []
+		try:
+			response = self.reader.asn(address)
+			values.append(str(response.autonomous_system_number))
+			values.append(str(response.autonomous_system_organization))
+			print_str = ' - Success'
+		except:
+			values.append('')
+			values.append('')
+			print_str = ' - Failure'
+		# Return Data
+		return [print_str,item,keys,values]
+
+	def searchCity(self,item):
+		# Search for IP address
 		address = self.recordedThreats[item]['indicator'] 
 		if self.is_valid_ipv4_address(address) != True or self.is_valid_ipv6_address(address) != True:
 			address = self.recordedThreats[item]['rData']
@@ -46,100 +83,149 @@ class LocateGeoIP(DataEnricher):
 					address = address[1][0:len(address)-1]
 				else:
 					address = address[1]
+		# Set Keys and List for Values
+		keys = ['gps','country_iso','country_name','city_name','postal_code'] 
+		# Attempt to Collect Values
+		values = []
 		try:
-			response = self.asnreader.asn(address)
-			self.recordedThreats[item]['asn'] = response.autonomous_system_number
-			self.recordedThreats[item]['asn_desc'] = response.autonomous_system_organization
-			self.recordedThreats[item]['Enriched'] = 1
-			self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Failure')
+			response = self.reader.city(address)
+			values.append(str(response.location.latitude)+','+str(response.location.longitude))
+			values.append(str(response.country.iso_code))
+			values.append(str(response.country.name))
+			values.append(str(response.city.name))
+			values.append(str(response.postal.code))
+			print_str = ' - Success'
 		except:
-			self.recordedThreats[item]['asn'] = ''
-			self.recordedThreats[item]['asn_desc'] = ''
-			self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Success')
+			values.append('')
+			values.append('')
+			values.append('')
+			values.append('')
+			values.append('')
+			print_str = ' - Failure'
+		# Return Data
+		return [print_str,item,keys,values]
 
-	def searchCity(self,item):
-		address = self.recordedThreats[item]['indicator'] 
-		if self.is_valid_ipv4_address(address) != True or self.is_valid_ipv6_address(address) != True:
-			address = self.recordedThreats[item]['rData']
-			if address.find('IP:') != -1:
-				address = address.split('IP:',1);
-				if len(address) < 12:
-					address = address[0:len(address)]
-		try:
-			
-			response = self.cityreader.city(address)
-			self.recordedThreats[item]['gps'] = [response.location.latitude,response.location.longitude]
-			self.recordedThreats[item]['country_iso'] = response.country.iso_code
-			self.recordedThreats[item]['country_name'] = response.country.name
-			self.recordedThreats[item]['city_name'] = response.city.name
-			self.recordedThreats[item]['postal_code'] = response.postal.code
-			self.recordedThreats[item]['Enriched'] = 1
-			self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Success')
-		except:
-			self.recordedThreats[item]['gps'] = ''
-			self.recordedThreats[item]['country_iso'] = ''
-			self.recordedThreats[item]['country_name'] = ''
-			self.recordedThreats[item]['city_name'] = ''
-			self.recordedThreats[item]['postal_code'] = ''
-			self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Failure')
-
-	def searchDB(self):
-		print('Connecting to GeoLite 2 Autonomous System Database...')
-		self.asnreader = geoip2.database.Reader(self.asnDBloc)
-		print('Connecting to GeoIP City Database...\n')
-		self.cityreader = geoip2.database.Reader(self.cityDBloc)
-
+	def searchDB_standard(self):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
-
-		# Set Counter
-		self.count = 1
+		# Count the Total Number of Threats
 		self.count_total = len(self.recordedThreats)
 
+		# Connect to the ASN Database
+		print('Connecting to GeoLite 2 Autonomous System Database...')
+		self.reader = geoip2.database.Reader(self.asnDBloc)
+
+		# Set Counter
+		self.count = 0
 		# Iterate through the dictionary
 		for item in self.recordedThreats:
-			self.searchASN(item)
-			self.searchCity(item)
+			# Submit Entry Indicator
+			rtn = self.searchASN(item)
+			# Update Counter
 			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# Update Database
+			self.updateValues(rtn[1],rtn[2],rtn[3])
+		print('\n')
+		#Close the Reader
+		self.reader.close()
 
-		#Close the Readers
-		self.asnreader.close()
-		self.cityreader.close()
+		# Connect to the City Database
+		print('Connecting to GeoIP City Database...\n')
+		self.reader = geoip2.database.Reader(self.cityDBloc)
+
+		# Set Counter
+		self.count = 0
+		# Iterate through the dictionary
+		for item in self.recordedThreats:
+			# Submit Entry Indicator
+			rtn = self.searchCity(item)
+			# Update Counter
+			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# Update Database
+			self.updateValues(rtn[1],rtn[2],rtn[3])
+		print('\n')
+		#Close the Reader
+		self.reader.close()
+
 
 	def searchDB_threaded(self):
-		# Connect to the Database
-		print('Connecting to GeoLite 2 Autonomous System Database...')
-		self.asnreader = geoip2.database.Reader(self.asnDBloc)
-		print('Connecting to GeoIP City Database...\n')
-		self.cityreader = geoip2.database.Reader(self.cityDBloc)
-
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
-
-		# Set Counter
-		self.count = 1
+		# Count the Total Number of Threats
 		self.count_total = len(self.recordedThreats)
-
-		# Set up Multiprocessing Pool
-		num_proc = 15
-		pool = Pool(processes=num_proc)
-
-		# Iterate through all keys
+		# Construct Key List
 		self.keyList = []
 		for item in self.recordedThreats:
+			# Append Key to Processes List
 			self.keyList.append(item)
-			self.count = self.count + 1
-			# When the Pool is full, run the processes
-			if num_proc%self.count == 0:
-				pool.map(self.searchASN,self.keyList)
-				pool.map(self.searchCity,self.keyList)
-				self.keyList = []
 
+		# Connect to the ASN Database
+		print('Connecting to GeoLite 2 Autonomous System Database...')
+		# Set Counter
+		self.count = 0
+		self.reader = geoip2.database.Reader(self.asnDBloc)
+		# Set up Multiprocessing Pool
+		num_proc = 30
+		pool = Pool(processes=num_proc)
+		# Call the processing pool to execute the function
+		for rtn in pool.imap_unordered(self.searchASN,self.keyList):
+			# Update Counter
+			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# Update Database
+			self.updateValues(rtn[1],rtn[2],rtn[3])
+		# Close the Pool
+		pool.close()
+		# Wait for Processes to Finish
+		pool.join()
 		#Close the Readers
-		self.asnreader.close()
-		self.cityreader.close()
+		self.reader.close()
+		print('\n')
+
+		# Connect to the City Database
+		print('Connecting to GeoIP City Database...\n')
+		# Set Counter
+		self.count = 0
+		self.reader = geoip2.database.Reader(self.cityDBloc)
+		# Set up Multiprocessing Pool
+		num_proc = 30
+		pool = Pool(processes=num_proc)
+		# Call the processing pool to execute the function
+		for rtn in pool.imap_unordered(self.searchASN,self.keyList):
+			# Update Counter
+			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
+			# Update Database
+			self.updateValues(rtn[1],rtn[2],rtn[3])
+		# Close the Pool
+		pool.close()
+		# Wait for Processes to Finish
+		pool.join()
+		#Close the Readers
+		self.reader.close()
+		print('\n')
+
+	def updateValues(self,item,keys,values):
+		self.recordedThreats[item]['enriched'] = 1
+		for i in range(len(keys)):
+			try:
+				self.recordedThreats[item][keys[i]] = values[i]
+				# print('Update Success')
+			except:
+				self.recordedThreats[item][keys[i]] = ''
+				# print('Update Failure')
 
 	def displayExtract(self):
 		for item in self.recordedThreats:
