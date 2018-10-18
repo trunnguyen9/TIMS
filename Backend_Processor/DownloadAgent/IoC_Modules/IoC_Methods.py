@@ -158,6 +158,10 @@ class IoC_Methods:
         print(" -- Total Time Spent:" + str(self.TIMSlog['endTime'] - self.TIMSlog['startTime']))
         self.TIMSlog['Provider']=providerName
         self.TIMSlog['host']=self.hostname
+        timediff= (self.TIMSlog['endTime'] - self.TIMSlog['startTime'])
+
+        self.TIMSlog['timeSpent'] = timediff.total_seconds()
+
 
         cursor.execute("INSERT INTO ThreatStatsDB VALUES (?,?,?,?,?,?,?,?)",
                        [self.TIMSlog['lineCount'],
@@ -172,11 +176,12 @@ class IoC_Methods:
         self.conn.commit()
 
         print("-- --  sending to ES  -- --")
-        try:
-            self.es.index(index='timslog_index', doc_type='timslog', id=self.TIMSlog['startTime'], body=self.TIMSlog)
-        except elasticsearch.ElasticsearchException as es1:
-            print("TL Error:" + es1)
-
+        if (self.TIMSlog['newCount'] >0 ):
+            print (self.TIMSlog['Provider'], " has new entries: ", self.TIMSlog['newCount'])
+            try:
+                self.es.index(index='timslog_index', doc_type='timslog', id=self.TIMSlog['startTime'], body=self.TIMSlog)
+            except elasticsearch.ElasticsearchException as es1:
+                print("TL Error:" + es1)
 
         self.TIMSlog['dupeCount'] = 0
         self.TIMSlog['newCount'] = 0
