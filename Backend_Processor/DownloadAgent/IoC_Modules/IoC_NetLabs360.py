@@ -24,8 +24,6 @@ class IoC_NetLabs360(IoC_Methods):
         NetLabThreat = dict()
         linkList=[
             "http://data.netlab.360.com/feeds/dga/bamital.txt",
-            "http://data.netlab.360.com/feeds/dga/banjori.txt",
-            "http://data.netlab.360.com/feeds/dga/banjori.txt",
             "http://data.netlab.360.com/feeds/dga/chinad.txt",
             "http://data.netlab.360.com/feeds/dga/conficker.txt",
             "http://data.netlab.360.com/feeds/dga/cryptolocker.txt",
@@ -53,6 +51,7 @@ class IoC_NetLabs360(IoC_Methods):
             "http://data.netlab.360.com/feeds/dga/tofsee.txt",
             "http://data.netlab.360.com/feeds/dga/vawtrak.txt",
             "http://data.netlab.360.com/feeds/dga/vidro.txt"
+   #         "http://data.netlab.360.com/feeds/dga/banjori.txt",
         ]
 
         linkItemCount=0

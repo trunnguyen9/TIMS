@@ -189,7 +189,6 @@ class IoC_Methods:
 
         # --==========================================--
 
-
     # end writeLogToDB
 
     def makeList(self):
