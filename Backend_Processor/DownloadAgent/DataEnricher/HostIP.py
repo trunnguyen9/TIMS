@@ -11,7 +11,7 @@
 # 
 from DataEnricher import DataEnricher
 from datetime import datetime
-from multiprocessing import Pool
+from multiprocessing import Pool, Queue
 import socket
 import requests
 
@@ -25,32 +25,49 @@ class HostIP(DataEnricher):
 		super().__init__()
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
-			self.extractFromDB()   
+			self.extractFromDB() 
+		# # Restrict Number of Tests
+		# tmp = dict();
+		# keys = list(self.recordedThreats.keys())
+		# for count in range(100):
+		# 	tmp[keys[count]] = self.recordedThreats[keys[count]]
+		# self.recordedThreats = tmp
 
 	def searchHostname(self,item):
 		# Indicate Change in Entry
-		self.count = self.count + 1
+		address = 'IP:'
 		try: 
 			# Search hostname name for IP address
 			response = socket.gethostbyname(self.recordedThreats[item]['indicator'])
 			if not response:
-				self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - nReturn')
+				print_str = ' - nReturn'
 			else:
+				print_str = ' - Success'
 				# Update Data Entry
-				self.recordedThreats[item]['rData'] = self.recordedThreats[item]['rData'] + 'IP:' + response
-				self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Success')
+				address += response
 		except: 
-			self.print_line('Entry: ' + item + ' | #' + str(self.count) + '/' + str(self.count_total) + ' - Failure')
+			print_str = ' - Failure'
+		return [item,address,print_str]
 
 	def getIP_standard(self):
-		self.count = 1
+		# Set Counter
+		self.count = 0
 		self.count_total = len(self.recordedThreats)
 		# Iterate through each threat
 		print('Retrieving IP Addresses from Hostname Indicators...')
 		# Iterate through dictionary
 		for item in self.recordedThreats:
 			# Submit Entry Indicator
-			self.searchHostname(item)
+			ip = self.searchHostname(item)
+			# Update Counter
+			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + ip[0] + ' | #' + str(self.count) + '/' + str(self.count_total) + ip[2])
+			# Update Database
+			if self.recordedThreats[ip[0]]['rData'].find('IP:') == -1:
+				self.recordedThreats[ip[0]]['rData'] = self.recordedThreats[ip[0]]['rData'] + ip[1]
+		print('\n')
+
 
 	def getIP_threaded(self):
 		# If there is no data in the dictionary, extract it
@@ -58,22 +75,33 @@ class HostIP(DataEnricher):
 			self.extractFromDB()
 
 		# Set Counter
-		self.count = 1
+		self.count = 0
 		self.count_total = len(self.recordedThreats)
 
 		# Set up Multiprocessing Pool
-		num_proc = 15
+		num_proc = 100
 		pool = Pool(processes=num_proc)
+		queue = Queue()
 
-		# Iterate through all keys
+		# Construct Key List
 		self.keyList = []
 		for item in self.recordedThreats:
 			# Append Key to Processes List
 			self.keyList.append(item)
-			# When the Pool is full, run the processes
-			if self.count%num_proc == 0:
-				pool.map(self.searchHostname,self.keyList)
-				self.keyList = []
+
+		# Call the processing pool to execute the function
+		for ip in pool.imap_unordered(self.searchHostname,self.keyList):
+			# Update Counter
+			self.count = self.count + 1
+			# Print Result to Screen
+			self.print_line('Entry: ' + ip[0] + ' | #' + str(self.count) + '/' + str(self.count_total) + ip[2])
+			# Update Database
+			if self.recordedThreats[ip[0]]['rData'].find('IP:') == -1:
+				self.recordedThreats[ip[0]]['rData'] = self.recordedThreats[ip[0]]['rData'] + ip[1]
+
+		pool.close()
+		pool.join()
+		print('\n')
 
 	def displayExtract(self):
 		for item in self.recordedThreats:
@@ -86,9 +114,10 @@ class HostIP(DataEnricher):
 if __name__ == '__main__':
 	test = HostIP()
 	test.getIP_threaded()
+	test.updateDB()
 	# test.displayExtract()
 	# test.getIP_standard()
-	# test.updateDB()
+	
 
 
 
