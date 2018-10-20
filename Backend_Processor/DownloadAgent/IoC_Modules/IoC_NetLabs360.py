@@ -50,8 +50,8 @@ class IoC_NetLabs360(IoC_Methods):
             "http://data.netlab.360.com/feeds/dga/tinba.txt",
             "http://data.netlab.360.com/feeds/dga/tofsee.txt",
             "http://data.netlab.360.com/feeds/dga/vawtrak.txt",
-            "http://data.netlab.360.com/feeds/dga/vidro.txt"
-   #         "http://data.netlab.360.com/feeds/dga/banjori.txt",
+            "http://data.netlab.360.com/feeds/dga/vidro.txt",
+            "http://data.netlab.360.com/feeds/dga/banjori.txt"
         ]
 
         linkItemCount=0

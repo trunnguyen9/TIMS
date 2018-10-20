@@ -111,8 +111,8 @@ def sleeper():
             NetLabs360_Gatherer.pull()
         except:
             print("error with NetLabs")
-        print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
-        time.sleep(14400)
+        #print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
+        #time.sleep(14400)
 
 
 # __MAIN__
