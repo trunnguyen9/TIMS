@@ -48,16 +48,12 @@ def authenticate():
     userStoreInstance = UserStore()
     data = request.get_json()
     msg = userStoreInstance.retrieveUser(data['username'], data['password'] )
-    if msg is None:
-        return jsonify({'Error' : 'Username or password is incorrect'}), 200
-    else:
-        encoded = jwt.encode({'username': msg[1]}, 'secret', algorithm='HS256').decode('utf-8')
-        user = {
-            'id' : msg[0],
-            'username': msg[1],
-            'firstname': msg[2],
-            'lastname': msg[3],
-            'token': encoded
-        }
-        json.dumps(user)
-        return jsonify(user), 200
+    json.dumps(msg)
+    return jsonify(msg), 200
+
+@app.route('/users/register',methods=['POST'])
+def createUser():
+    userStoreInstance = UserStore()
+    data = request.get_json()
+    msg = userStoreInstance.createUser(data['firstName'], data['lastName'], data['username'], data['password'])
+    return jsonify(msg), 200

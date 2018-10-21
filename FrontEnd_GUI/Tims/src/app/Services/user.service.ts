@@ -18,7 +18,8 @@ export class UserService {
   }
 
   register(user: User) {
-    return this.http.post('/users/register', user);
+    console.log(user);
+    return this.http.post('http://127.0.0.1:5000/users/register', user);
   }
 
   update(user: User) {
