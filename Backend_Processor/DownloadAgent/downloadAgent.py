@@ -111,8 +111,8 @@ def sleeper():
             NetLabs360_Gatherer.pull()
         except:
             print("error with NetLabs")
-        #print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
-        #time.sleep(14400)
+        print ("Waiting an Hour to Run again.. Please wait... and wait.. ")
+        time.sleep(14400)
 
 
 # __MAIN__
@@ -127,7 +127,10 @@ SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
 todayDateTime = datetime.now()
 
 try:
+    startTime=datetime.utcnow()
     sleeper()
+    endtime=datetime.utcnow()
+    print ("Total time taken:", endtime-startTime)
 except KeyboardInterrupt:
     print ('\n\n Keyboard exception recieved..')
     exit()
