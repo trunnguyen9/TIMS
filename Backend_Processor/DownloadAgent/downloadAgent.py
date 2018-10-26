@@ -13,6 +13,8 @@
 # - http://www.covert.io/threat-intelligence/
 # - https://github.com/mlsecproject/combine/wiki/Threat-Intelligence-Feeds-Gathered-by-Combine
 # This is the "hunter/gatherer" of this system. It will go through multiple sites and pull the information
+
+# Total Rewrite of Download Agent so its multithreaded
 # --====================================================--
 #
 #
