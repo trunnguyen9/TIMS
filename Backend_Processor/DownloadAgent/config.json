@@ -61,6 +61,10 @@
         {
             "name": "Zeus",
             "selected": false
+        },
+        {
+            "name": "NetLab360",
+            "selected": false
         }
     ],
     "time": "4"
