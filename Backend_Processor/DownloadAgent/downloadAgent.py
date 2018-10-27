@@ -81,7 +81,7 @@ if __name__ == '__main__':
                 sourceItem = item['name']+":"+str(item['selected'])
                 sourceList.append(sourceItem)
 
-            if "NetLabs360:True" in sourceList:
+            if "NetLab360:True" in sourceList:
                 NetLabs360_Gatherer = modules.IoC_NetLabs360()
                 objQueue.put(NetLabs360_Gatherer)
             if "AlienVault:True" in sourceList:
