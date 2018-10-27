@@ -38,6 +38,7 @@
 from datetime import datetime
 import modules
 from threading import Thread
+from queue import Queue
 
 from pprint import pprint
 import time
@@ -55,6 +56,8 @@ import time
 todayDateTime = datetime.now()
 
 try:
+    objQueue = Queue()
+
     startTime= datetime.utcnow()
     NetLabs360_Gatherer = modules.IoC_NetLabs360()
     AlienVault_Gatherer = modules.IoC_AlienVault()
@@ -67,42 +70,30 @@ try:
     SpamHaus_Gatherer = modules.IoC_SpamHaus()
     Zeus_Gatherer = modules.IoC_Zeus()
 
-    t1 = Thread(target=EmergingThreats_gatherer.run())
-    t2 = Thread(target=AlienVault_Gatherer.run())
-    t3 = Thread(target=FedoTracker_Gatherer.run())
-    t4 = Thread(target=NetLabs360_Gatherer.run())
-    t5 = Thread(target=NoThink_Gatherer.run())
-    t6 = Thread(target=OpenPhish_Gatherer.run())
-    t7 = Thread(target=SANSEDU_Gatherer.run())
-    t8 = Thread(target=SpamHaus_Gatherer.run())
-    t9 = Thread(target=Zeus_Gatherer.run())
-    t10 = Thread(target=PhishTank_Gatherer.run())
+    objQueue.put(NetLabs360_Gatherer)
+    objQueue.put(AlienVault_Gatherer)
+    objQueue.put(EmergingThreats_gatherer)
+    objQueue.put(FedoTracker_Gatherer)
+    objQueue.put(NoThink_Gatherer)
+    objQueue.put(PhishTank_Gatherer)
+    objQueue.put(OpenPhish_Gatherer)
+    objQueue.put(SANSEDU_Gatherer)
+    objQueue.put(SpamHaus_Gatherer)
+    objQueue.put(Zeus_Gatherer)
 
-    t1.start()
-    t2.start()
-    t3.start()
-    t4.start()
-    t5.start()
-    t6.start()
-    t7.start()
-    t8.start()
-    t9.start()
-    t10.start()
+    print ("Objects in Queue:", objQueue.qsize())
 
-    t1.join()
-    t2.join()
-    t3.join()
-    t4.join()
-    t5.join()
-    t6.join()
-    t7.join()
-    t8.join()
-    t9.join()
-    t10.join()
+    objThreadsList = []
 
-    endTime=datetime.utcnow()
-    diffTime=endTime-startTime
-    print ("Total Time Taken:", diffTime)
+    for i in range (11):
+        while not objQueue.empty():
+            tempObject=objQueue.get()
+            objThread=Thread(target=tempObject.multiThreader)
+            objThreadsList.append(objThread)
+
+    for x in objThreadsList:
+        x.run()
+
 except KeyboardInterrupt:
     print ('\n\n Keyboard exception recieved..')
     exit()
