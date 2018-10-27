@@ -39,6 +39,7 @@ from datetime import datetime
 import modules
 from threading import Thread
 from queue import Queue
+import json
 
 from pprint import pprint
 import time
@@ -52,49 +53,81 @@ import time
 # create main DataStore for all threat information
 # threatDataStore = DataStore_Modules.DataStore_Internal.interalDataStore()
 
-# create a time object to obtain current time
-todayDateTime = datetime.now()
+if __name__ == '__main__':
+    # create a time object to obtain current time
+    todayDateTime = datetime.now()
+    sourceList =[]
+    currentHour = datetime.utcnow().hour
 
-try:
-    objQueue = Queue()
 
-    startTime= datetime.utcnow()
-    NetLabs360_Gatherer = modules.IoC_NetLabs360()
-    AlienVault_Gatherer = modules.IoC_AlienVault()
-    EmergingThreats_gatherer = modules.IoC_EmergingThreats()
-    FedoTracker_Gatherer = modules.IoC_Feodotracker()
-    NoThink_Gatherer = modules.IoC_NoThink()
-    PhishTank_Gatherer = modules.IoC_PhishTank()
-    OpenPhish_Gatherer = modules.IoC_OpenPhish()
-    SANSEDU_Gatherer = modules.IoC_SANsEDU()
-    SpamHaus_Gatherer = modules.IoC_SpamHaus()
-    Zeus_Gatherer = modules.IoC_Zeus()
+    try:
+        objQueue = Queue()
 
-    objQueue.put(NetLabs360_Gatherer)
-    objQueue.put(AlienVault_Gatherer)
-    objQueue.put(EmergingThreats_gatherer)
-    objQueue.put(FedoTracker_Gatherer)
-    objQueue.put(NoThink_Gatherer)
-    objQueue.put(PhishTank_Gatherer)
-    objQueue.put(OpenPhish_Gatherer)
-    objQueue.put(SANSEDU_Gatherer)
-    objQueue.put(SpamHaus_Gatherer)
-    objQueue.put(Zeus_Gatherer)
+        with open('config.json', 'r') as configFile:
+            data = json.load(configFile)
 
-    print ("Objects in Queue:", objQueue.qsize())
+        hourInterval = int(data['time'])
 
-    objThreadsList = []
+        # for testing
+        # hourInterval=1
 
-    for i in range (11):
-        while not objQueue.empty():
-            tempObject=objQueue.get()
-            objThread=Thread(target=tempObject.multiThreader)
-            objThreadsList.append(objThread)
+        if currentHour % hourInterval ==0 :
+            print ("its the right time to process!: processing!!!")
+            startTime= datetime.utcnow()
 
-    for x in objThreadsList:
-        x.run()
+            pprint(data)
 
-except KeyboardInterrupt:
-    print ('\n\n Keyboard exception recieved..')
-    exit()
+            for item in data['feedSources']:
+                sourceItem = item['name']+":"+str(item['selected'])
+                sourceList.append(sourceItem)
+
+            if "NetLabs360:True" in sourceList:
+                NetLabs360_Gatherer = modules.IoC_NetLabs360()
+                objQueue.put(NetLabs360_Gatherer)
+            if "AlienVault:True" in sourceList:
+                AlienVault_Gatherer = modules.IoC_AlienVault()
+                objQueue.put(AlienVault_Gatherer)
+            if "Emerging:True" in sourceList:
+                EmergingThreats_gatherer = modules.IoC_EmergingThreats()
+                objQueue.put(EmergingThreats_gatherer)
+            if "Feodotracker:True" in sourceList:
+                FedoTracker_Gatherer = modules.IoC_Feodotracker()
+                objQueue.put(FedoTracker_Gatherer)
+            if "NoThink:True" in sourceList:
+                NoThink_Gatherer = modules.IoC_NoThink()
+                objQueue.put(NoThink_Gatherer)
+            if "PhishTank:True" in sourceList:
+                PhishTank_Gatherer = modules.IoC_PhishTank()
+                objQueue.put(PhishTank_Gatherer)
+            if "OpenPhish:True" in sourceList:
+                OpenPhish_Gatherer = modules.IoC_OpenPhish()
+                objQueue.put(OpenPhish_Gatherer)
+            if "SANSEDU:True" in sourceList:
+                SANSEDU_Gatherer = modules.IoC_SANsEDU()
+                objQueue.put(SANSEDU_Gatherer)
+            if "SpamHaus:True" in sourceList:
+                SpamHaus_Gatherer = modules.IoC_SpamHaus()
+                objQueue.put(SpamHaus_Gatherer)
+            if "Zeus:True" in sourceList:
+                Zeus_Gatherer = modules.IoC_Zeus()
+                objQueue.put(Zeus_Gatherer)
+
+            print ("Objects in Queue:", objQueue.qsize())
+
+            objThreadsList = []
+
+            for i in range (11):
+                while not objQueue.empty():
+                    tempObject=objQueue.get()
+                    objThread=Thread(target=tempObject.multiThreader)
+                    objThreadsList.append(objThread)
+
+            for x in objThreadsList:
+                x.run()
+        else:
+            print ("Nope not the right time to process, will try back in an hour..")
+
+    except KeyboardInterrupt:
+        print ('\n\n Keyboard exception recieved..')
+        exit()
 
