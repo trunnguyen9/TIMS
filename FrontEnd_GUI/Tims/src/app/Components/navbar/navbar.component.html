@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark ">
   <a class="navbar-brand" routerLink="/home">
     <img src="assets/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     TIMS
@@ -9,7 +9,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
       </li>
       <li class="nav-item" *ngIf = isUserLogin>
@@ -18,6 +18,9 @@
       <li class="nav-item" *ngIf = isUserLogin>
         <a class="nav-link" routerLink="/statistics" routerLinkActive="active">Statistics</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/aboutus" routerLinkActive="active">Team</a>
+      </li>
       <li class="nav-item" *ngIf = !isUserLogin >
         <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
       </li>
@@ -25,7 +28,7 @@
         <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
       </li>
       <li class="nav-item" *ngIf = isUserLogin >
-        <a class="nav-link" href="#" (click)="logout()" routerLinkActive="active">Logout</a>
+        <a class="nav-link" href="/login" (click)="logout()" routerLinkActive="active">Logout</a>
       </li>
     </ul>
   </div>
