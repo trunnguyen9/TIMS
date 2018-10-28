@@ -59,75 +59,77 @@ if __name__ == '__main__':
     sourceList =[]
     currentHour = datetime.utcnow().hour
 
-
     try:
-        objQueue = Queue()
+        while 1:
 
-        with open('config.json', 'r') as configFile:
-            data = json.load(configFile)
+            objQueue = Queue()
 
-        hourInterval = int(data['time'])
+            with open('config.json', 'r') as configFile:
+                data = json.load(configFile)
 
-        # for testing
-        # hourInterval=1
+            hourInterval = int(data['time'])
 
-        if currentHour % hourInterval ==0 :
-            print ("its the right time to process!: processing!!!")
-            startTime= datetime.utcnow()
+            # for testing
+            hourInterval=1
 
-            pprint(data)
+            if currentHour % hourInterval ==0 :
+                print ("its the right time to process!: processing!!!")
+                startTime= datetime.utcnow()
 
-            for item in data['feedSources']:
-                sourceItem = item['name']+":"+str(item['selected'])
-                sourceList.append(sourceItem)
+                pprint(data)
 
-            if "NetLab360:True" in sourceList:
-                NetLabs360_Gatherer = modules.IoC_NetLabs360()
-                objQueue.put(NetLabs360_Gatherer)
-            if "AlienVault:True" in sourceList:
-                AlienVault_Gatherer = modules.IoC_AlienVault()
-                objQueue.put(AlienVault_Gatherer)
-            if "Emerging:True" in sourceList:
-                EmergingThreats_gatherer = modules.IoC_EmergingThreats()
-                objQueue.put(EmergingThreats_gatherer)
-            if "Feodotracker:True" in sourceList:
-                FedoTracker_Gatherer = modules.IoC_Feodotracker()
-                objQueue.put(FedoTracker_Gatherer)
-            if "NoThink:True" in sourceList:
-                NoThink_Gatherer = modules.IoC_NoThink()
-                objQueue.put(NoThink_Gatherer)
-            if "PhishTank:True" in sourceList:
-                PhishTank_Gatherer = modules.IoC_PhishTank()
-                objQueue.put(PhishTank_Gatherer)
-            if "OpenPhish:True" in sourceList:
-                OpenPhish_Gatherer = modules.IoC_OpenPhish()
-                objQueue.put(OpenPhish_Gatherer)
-            if "SANSEDU:True" in sourceList:
-                SANSEDU_Gatherer = modules.IoC_SANsEDU()
-                objQueue.put(SANSEDU_Gatherer)
-            if "SpamHaus:True" in sourceList:
-                SpamHaus_Gatherer = modules.IoC_SpamHaus()
-                objQueue.put(SpamHaus_Gatherer)
-            if "Zeus:True" in sourceList:
-                Zeus_Gatherer = modules.IoC_Zeus()
-                objQueue.put(Zeus_Gatherer)
+                for item in data['feedSources']:
+                    sourceItem = item['name']+":"+str(item['selected'])
+                    sourceList.append(sourceItem)
 
-            print ("Objects in Queue:", objQueue.qsize())
+                if "NetLab360:True" in sourceList:
+                    NetLabs360_Gatherer = modules.IoC_NetLabs360()
+                    objQueue.put(NetLabs360_Gatherer)
+                if "AlienVault:True" in sourceList:
+                    AlienVault_Gatherer = modules.IoC_AlienVault()
+                    objQueue.put(AlienVault_Gatherer)
+                if "Emerging:True" in sourceList:
+                    EmergingThreats_gatherer = modules.IoC_EmergingThreats()
+                    objQueue.put(EmergingThreats_gatherer)
+                if "Feodotracker:True" in sourceList:
+                    FedoTracker_Gatherer = modules.IoC_Feodotracker()
+                    objQueue.put(FedoTracker_Gatherer)
+                if "NoThink:True" in sourceList:
+                    NoThink_Gatherer = modules.IoC_NoThink()
+                    objQueue.put(NoThink_Gatherer)
+                if "PhishTank:True" in sourceList:
+                    PhishTank_Gatherer = modules.IoC_PhishTank()
+                    objQueue.put(PhishTank_Gatherer)
+                if "OpenPhish:True" in sourceList:
+                    OpenPhish_Gatherer = modules.IoC_OpenPhish()
+                    objQueue.put(OpenPhish_Gatherer)
+                if "SANSEDU:True" in sourceList:
+                    SANSEDU_Gatherer = modules.IoC_SANsEDU()
+                    objQueue.put(SANSEDU_Gatherer)
+                if "SpamHaus:True" in sourceList:
+                    SpamHaus_Gatherer = modules.IoC_SpamHaus()
+                    objQueue.put(SpamHaus_Gatherer)
+                if "Zeus:True" in sourceList:
+                    Zeus_Gatherer = modules.IoC_Zeus()
+                    objQueue.put(Zeus_Gatherer)
 
-            objThreadsList = []
+                print ("Objects in Queue:", objQueue.qsize())
 
-            for i in range (11):
-                while not objQueue.empty():
-                    tempObject=objQueue.get()
-                    objThread=Thread(target=tempObject.multiThreader)
-                    objThreadsList.append(objThread)
+                objThreadsList = []
 
-            for x in objThreadsList:
-                x.run()
-        else:
-            print ("Nope not the right time to process, will try back in an hour..")
+                for i in range (11):
+                    while not objQueue.empty():
+                        tempObject=objQueue.get()
+                        objThread=Thread(target=tempObject.multiThreader)
+                        objThreadsList.append(objThread)
 
+                for x in objThreadsList:
+                    x.run()
+                print ("Process Complete: waiting an hour to run again")
+                time.sleep(3600)
+            else:
+                print ("Nope not the right time to process, will wait an hour and try again..")
+                time.sleep(3600)
     except KeyboardInterrupt:
-        print ('\n\n Keyboard exception recieved..')
+        print('\n\n Keyboard exception recieved..')
         exit()
-
