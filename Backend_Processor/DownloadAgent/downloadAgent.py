@@ -17,19 +17,6 @@
 #
 #
 # --====================================================--
-# @TODO Read Configuration File made from GUI Front End
-# @TODO Connect to sqllite database -- DONE
-# @TODO Connect to threat databases (TDs)
-# @TODO Normalize information from TDs and put them in the same format -- DONE
-# @TODO Enrich threat data - add more information to what comes from the TDs
-# @TODO          - IP addresses need DNS info, GPS info
-# @TODO          - FQDN, DNS need IP address resolved, and GPS info
-# @TODO          - email address : no idea how we can enrich
-# @TODO          - MD5/SHA1 hash of malware/virus: no idea how we can enrich
-# @TODO   * Don't know if we can do this as we ingest the data, or if it will take too long. Might be better
-# @TODO   * to ingest quickly then have another agent that goes back and enriches the data, as another process
-# @TODO lots and lots of error checking
-
 
 # --====================================================--
 # Import Necessary Libraries
