@@ -9,7 +9,7 @@
 # Object used to enrich data by associating Hostnames with
 # IP Addresses
 # 
-from .DataEnricher import DataEnricher
+from DataEnricher import DataEnricher
 from datetime import datetime
 from multiprocessing import Pool, Queue
 import socket
@@ -80,7 +80,7 @@ class HostIP(DataEnricher):
 		self.count_total = len(self.recordedThreats)
 
 		# Set up Multiprocessing Pool
-		num_proc = 100
+		num_proc = 500
 		pool = Pool(processes=num_proc)
 		queue = Queue()
 
