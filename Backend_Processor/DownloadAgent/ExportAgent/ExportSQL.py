@@ -86,6 +86,39 @@ class ExportSQL:
 			print("No information was successfully extracted for writing")
 	#end csv write method
 
+	# CSV File Write Method
+	def writeTabDeliminated(self):
+		if self.threatList:
+			fileString = self.fileString + '.txt'
+			print("Writing CSV File: " + fileString)
+			# with open(fileString,'wb') as outfile:
+			keys = self.threatList[0].keys()
+			with open(fileString, 'w') as output_file:
+				dict_writer = csv.DictWriter(output_file,keys,delimiter='\t')
+				dict_writer.writeheader()
+				dict_writer.writerows(self.threatList)
+		else:
+			print("No information was successfully extracted for writing")
+	#end csv write method
+
+
+	def writeBro(self):
+		if self.threatList:
+			fileString = self.fileString + '.bro'
+			keys = self.threatList[0].keys()
+			with open(fileString, 'w') as output_file:
+				# Write Field Names to the File
+				hdrString = '#fields'
+				for key in keys:
+					hdrString += '\t' + key + '\n'
+				output_file.write(hdrString)
+				# Write all Rows
+				dict_writer = csv.DictWriter(output_file,keys,delimiter='\t')
+				dict_writer.writerows(self.threatList)
+		else:
+			print("No information was successfully extracted for writing")
+
+
 	#JSON File Write Method
 	def writeJSON(self):
 		if self.threatDict:
@@ -140,5 +173,4 @@ class ExportSQL:
 if __name__ == '__main__':
 	exportObj = ExportSQL('./')
 	exportObj.extractFromDB()
-	exportObj.writeCSV()
-	exportObj.writeJSON()
+	exportObj.writeBro()

@@ -62,21 +62,21 @@ class DataEnricher:
 		cursor= con.cursor()
 
 		# Construct SQL String to Get the First Line of the Database
-		pullString = "SELECT * FROM RecordedThreatsDB ORDER BY ROWID ASC LIMIT 1;"
+		colNameString = "SELECT * FROM RecordedThreatsDB ORDER BY ROWID ASC LIMIT 1;"
 		# Get the Existing Column Names
-		pullResult = cursor.execute(pullString)
+		pullResult = cursor.execute(colNameString)
 		# iterate through each row/entry for the resturned query, using description to fetch key names
 		threatList = [dict(zip([key[0] for key in cursor.description],row)) for row in pullResult]
 		# Find the Existing Keys in the Database
 		currentKeys = threatList[0].keys()
 
 		# Begin SQL String
-		sqlString = "UPDATE 'RecordedThreatsDB' SET "
+		updateString = "UPDATE 'RecordedThreatsDB' SET "
 		# Make certain all dictionary entries have a column to be inserted into
 		example_key = list(self.recordedThreats.keys())[0]
 		for key in self.recordedThreats[example_key]:
 			# Add Key to SQL Update String
-			sqlString +=  str(key) + "=?,"
+			updateString +=  str(key) + "=?,"
 			# If the Given Key is Not in the Current Database, Add it
 			if not key in currentKeys:
 				try:
@@ -85,8 +85,8 @@ class DataEnricher:
 					pass
 
 		# Remove trailing comma and finish string
-		sqlString = sqlString[:-1]
-		sqlString += " WHERE threatKey=? ;"
+		updateString = updateString[:-1]
+		updateString += " WHERE threatKey=? ;"
 
 		# Construct a tuple to insert into the database
 		entries = []
@@ -104,7 +104,7 @@ class DataEnricher:
 
 		# Push Update SQL Requests
 		print('Pushing Enrichment to Thereat Database...')
-		cursor.executemany(sqlString, entries)
+		cursor.executemany(updateString, entries)
 
 		# Close the SQL Connection
 		con.commit()
