@@ -11,6 +11,9 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { StatisticComponent } from './Components/statistic/statistic.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { ChartModule } from 'angular-highcharts';
+import { FooterComponent } from './Components/footer/footer.component';
+import { AboutusComponent } from './Components/aboutus/aboutus.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { HttpModule } from '@angular/http';
     ConfigComponent,
     HomeComponent,
     NavbarComponent,
-    StatisticComponent
+    StatisticComponent,
+    FooterComponent,
+    AboutusComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +33,7 @@ import { HttpModule } from '@angular/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ChartModule,
     HttpModule
   ],
   providers: [],
