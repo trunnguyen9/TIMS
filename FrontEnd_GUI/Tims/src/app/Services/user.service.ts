@@ -9,14 +9,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
-    return this.http.get<User[]>('/users');
-  }
-
-  getById(id: number) {
-    return this.http.get('/users' + id);
-  }
-
   register(user: User) {
     console.log(user);
     return this.http.post('http://127.0.0.1:5000/users/register', user);

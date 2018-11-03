@@ -13,6 +13,7 @@ import json
 import csv
 import os
 from ExportAgent import *
+from brothon import bro_log_reader
 
 class Test_ExportModule(unittest.TestCase):
 
@@ -58,6 +59,18 @@ class Test_ExportModule(unittest.TestCase):
 		#Check for equality
 		self.assertEqual(json_data,self.exportObj.threatDict)
 
+	def test_write_bro(self):
+		# Extract Data
+		self.exportObj.extractFromDB()
+		# Write Test File
+		self.exportObj.writeBro()
+		# Load the test file into a new expected format
+		bro_file = self.exportObj.fileString + '.bro'
+
+		# Run the bro reader on a given log file
+		reader = bro_log_reader.BroLogReader(bro_file)
+		for row in reader.readrows():
+			pprint(row)
 
 	#Start by creating an export instance 
 	def setUp(self):

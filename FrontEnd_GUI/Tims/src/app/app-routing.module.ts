@@ -6,6 +6,7 @@ import { ConfigComponent } from './Components/config/config.component';
 import { StatisticComponent } from './Components/statistic/statistic.component';
 import {AuthGuard} from './Guards/auth.guard';
 import {RegisterComponent} from './Components/register/register.component';
+import {AboutusComponent} from './Components/aboutus/aboutus.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+      path: 'aboutus',
+      component: AboutusComponent
     },
     {
         path: 'login',
