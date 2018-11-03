@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
 import json
-from ExportAgent import ExportThreatStats
+from ExportAgent import ExportThreatStats, ExportRecordedThreats
 from UserStore_Module import UserStore
-import jwt
+import logging
 
 app = Flask(__name__)
+
+handler = logging.FileHandler('app.log')
+handler.setLevel(logging.ERROR)
 
 @app.after_request
 def after_request(response):
@@ -38,11 +41,6 @@ def getConfigData():
         configFile.close()
     return data
 
-@app.route('/dump',methods=['GET'])
-def dumpDatabase():
-    exportThreatStatInstance = ExportThreatStats()
-    return exportThreatStatInstance.exportThreatStats()
-
 @app.route('/users/authenticate',methods=['POST'])
 def authenticate():
     userStoreInstance = UserStore()
@@ -57,3 +55,16 @@ def createUser():
     data = request.get_json()
     msg = userStoreInstance.createUser(data['firstName'], data['lastName'], data['username'], data['password'])
     return jsonify(msg), 200
+
+@app.route('/statisticByProvider',methods=['GET'])
+def statisticByProvider():
+    exportThreatStatInstance = ExportRecordedThreats()
+    return exportThreatStatInstance.exportRTStatisticByProvider()
+
+@app.route('/dump',methods=['GET'])
+def dumpDatabase():
+    exportThreatStatInstance = ExportThreatStats()
+    return exportThreatStatInstance.exportThreatStats()
+
+
+app.logger.addHandler(handler)

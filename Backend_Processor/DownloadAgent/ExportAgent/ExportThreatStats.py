@@ -1,19 +1,19 @@
-import _sqlite3
+import sqlite3
+import DataStore_Modules
 
 class ExportThreatStats:
-    sqlString = "SELECT * FROM ThreatStatsDB"
-    #sqlString = "SELECT * FROM RecordedThreatsDB"
-    sqlDBloc = '../../Threats.sqlite'
+    sqlString = "SELECT * FROM ThreatStatsDB;"
+    conn = 0
 
     def __init__(self):
-        self = self
+        sqliteDataStoreInstance = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
+        self.conn = sqliteDataStoreInstance.getDBConn()
 
     def exportThreatStats(self):
         print("Connecting to SQLite DB for extracting ThreatStats")
-        con = _sqlite3.connect(self.sqlDBloc)
-        cursor = con.cursor()
-        self.sqlString = self.sqlString + ";"
-        cursor.execute(self.sqlString)
+        cursor = self.conn.cursor()
+        sqlString = "SELECT * FROM ThreatStatsDB;"
+        cursor.execute(sqlString)
         rows = cursor.fetchall()
         retString = ''.join(map(str,rows))
         return retString

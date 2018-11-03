@@ -2,7 +2,7 @@
     "exportFormat": [
         {
             "name": "CVS",
-            "selected": false
+            "selected": true
         },
         {
             "name": "Tab delimited",
@@ -10,7 +10,7 @@
         },
         {
             "name": "Bro",
-            "selected": true
+            "selected": false
         },
         {
             "name": "Snort",
@@ -24,15 +24,15 @@
     "feedSources": [
         {
             "name": "AlienVault",
-            "selected": false
+            "selected": true
         },
         {
             "name": "CSIRTG",
-            "selected": false
+            "selected": true
         },
         {
             "name": "EmergingThreats",
-            "selected": false
+            "selected": true
         },
         {
             "name": "Feodotracker",
@@ -48,19 +48,19 @@
         },
         {
             "name": "PhishTank",
-            "selected": false
+            "selected": true
         },
         {
             "name": "SANsEDU",
-            "selected": false
+            "selected": true
         },
         {
             "name": "SpamHaus",
-            "selected": false
+            "selected": true
         },
         {
             "name": "Zeus",
-            "selected": false
+            "selected": true
         }
     ],
     "time": "4"

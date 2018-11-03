@@ -57,20 +57,22 @@ if __name__ == '__main__':
     # create a time object to obtain current time
     todayDateTime = datetime.now()
     sourceList =[]
-    currentHour = datetime.utcnow().hour
+
 
     try:
         while 1:
-
             objQueue = Queue()
 
             with open('config.json', 'r') as configFile:
                 data = json.load(configFile)
 
-            hourInterval = int(data['time'])
+            pprint (data)
 
+            hourInterval = int(data['time'])
+            currentHour = datetime.utcnow().hour
             # for testing
-            hourInterval=1
+            # hourInterval=1
+            print ("currentHour", currentHour,"interval:",data['time'],"mod:", (currentHour % hourInterval))
 
             if currentHour % hourInterval ==0 :
                 print ("its the right time to process!: processing!!!")
@@ -85,9 +87,15 @@ if __name__ == '__main__':
                 if "NetLab360:True" in sourceList:
                     NetLabs360_Gatherer = modules.IoC_NetLabs360()
                     objQueue.put(NetLabs360_Gatherer)
+
                 if "AlienVault:True" in sourceList:
                     AlienVault_Gatherer = modules.IoC_AlienVault()
                     objQueue.put(AlienVault_Gatherer)
+
+                    #just temp until bug fixed:
+                    NetLabs360_Gatherer = modules.IoC_NetLabs360()
+                    objQueue.put(NetLabs360_Gatherer)
+
                 if "Emerging:True" in sourceList:
                     EmergingThreats_gatherer = modules.IoC_EmergingThreats()
                     objQueue.put(EmergingThreats_gatherer)
@@ -131,5 +139,5 @@ if __name__ == '__main__':
                 print ("Nope not the right time to process, will wait an hour and try again..")
                 time.sleep(3600)
     except KeyboardInterrupt:
-        print('\n\n Keyboard exception recieved..')
+        print('\n\n Keyboard exception received..')
         exit()

@@ -196,8 +196,8 @@ class IoC_Methods:
 
         threads = []
         intQueueCount = self.urlQueue.qsize()
-        if (intQueueCount > 6):
-            intQueueCount = 6
+        if (intQueueCount > 50):
+            intQueueCount = 50
 
         # print("Queue Size:", intQueueCount)
         for i in range(intQueueCount):
