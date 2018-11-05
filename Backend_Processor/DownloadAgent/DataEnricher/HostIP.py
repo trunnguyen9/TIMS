@@ -24,7 +24,7 @@ class HostIP(DataEnricher):
 	def __init__(self):
 		super().__init__()
 		# If there is no data in the dictionary, extract it
-		self.sqlString += "WHERE 'rData' NOT LIKE" + '\''  + ' %' + 'IP:' + '% ' + '\''
+		self.sqlString += "WHERE rData NOT LIKE" + '\''  + ' %' + 'IP:' + '% ' + '\''
 		if not self.recordedThreats:
 			self.extractFromDB() 
 		# # Restrict Number of Tests

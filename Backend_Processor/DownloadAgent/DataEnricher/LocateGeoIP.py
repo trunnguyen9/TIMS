@@ -34,7 +34,7 @@ class LocateGeoIP(DataEnricher):
 		self.countryDBloc = './GeoLite2/GeoLite2-Country_20180911/GeoLite2-Country.mmdb'
 
 		# Only Extract Values that are not enriched
-		self.sqlString += "WHERE 'enriched'=0"
+		self.sqlString += "WHERE enriched=0"
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
@@ -254,7 +254,7 @@ class LocateGeoIP(DataEnricher):
 
 if __name__ == '__main__':
 	test = LocateGeoIP()
-	test.segmentPush_threaded()
+	test.segmentPush()
 
 
 
