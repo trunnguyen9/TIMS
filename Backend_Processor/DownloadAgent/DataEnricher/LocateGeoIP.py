@@ -105,7 +105,7 @@ class LocateGeoIP(DataEnricher):
 		# Return Data
 		return [print_str,item,keys,values]
 
-	def searchDB_standard(self):
+	def enrichData(self):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
@@ -155,7 +155,7 @@ class LocateGeoIP(DataEnricher):
 		self.reader.close()
 
 
-	def searchDB_threaded(self):
+	def enrichData_threaded(self):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
@@ -241,22 +241,20 @@ class LocateGeoIP(DataEnricher):
 				pass
 
 	# Update Location of ASN database
-	def updateDBloc_asn(self,newLoc):
+	def set_asnDBloc(self,newLoc):
 		self.asnDBloc = newLoc
 
 	# Update Location of City Database
-	def updateDBloc_city(self,newLoc):
+	def set_cityDBloc(self,newLoc):
 		self.cityDBloc = newLoc
 
 	# Update Location of Country Database
-	def updateDBloc_country(self,newLoc):
+	def set_countryDBloc(self,newLoc):
 		self.countryDBloc = newLoc
 
 if __name__ == '__main__':
 	test = LocateGeoIP()
-	test.searchDB_threaded()
-	# test.searchDB()
-	# test.updateDB()
+	test.segmentPush_threaded()
 
 
 

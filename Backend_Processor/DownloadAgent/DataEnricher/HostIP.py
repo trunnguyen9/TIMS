@@ -50,7 +50,7 @@ class HostIP(DataEnricher):
 			print_str = ' - Failure'
 		return [item,address,print_str]
 
-	def getIP_standard(self):
+	def enrichData(self):
 		# Set Counter
 		self.count = 0
 		self.count_total = len(self.recordedThreats)
@@ -70,7 +70,7 @@ class HostIP(DataEnricher):
 		print('\n')
 
 
-	def getIP_threaded(self):
+	def enrichData_threaded(self):
 		# If there is no data in the dictionary, extract it
 		if not self.recordedThreats:
 			self.extractFromDB()
@@ -80,7 +80,7 @@ class HostIP(DataEnricher):
 		self.count_total = len(self.recordedThreats)
 
 		# Set up Multiprocessing Pool
-		num_proc = 500
+		num_proc = 50
 		pool = Pool(processes=num_proc)
 		queue = Queue()
 
@@ -114,11 +114,7 @@ class HostIP(DataEnricher):
 
 if __name__ == '__main__':
 	test = HostIP()
-	test.getIP_threaded()
-	test.updateDB()
-	# test.displayExtract()
-	# test.getIP_standard()
-	
+	test.segmentPush_threaded()
 
 
 

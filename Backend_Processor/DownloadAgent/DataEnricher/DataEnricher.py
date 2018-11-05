@@ -21,12 +21,14 @@ class DataEnricher:
 	sqlDBloc = '../../../Threats.sqlite'
 	modtime = ''
 	sqlString = "SELECT * FROM 'RecordedThreatsDB' "
+	segment = 1000
+
 
 	def __init__(self):
 		#Collect current time to update database with
 		self.modtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-	def updateDBloc(self,newLoc):
+	def set_sqlDBloc(self,newLoc):
 		self.sqlDBloc = newLoc
 
 	def copyExtract(self):
@@ -35,6 +37,14 @@ class DataEnricher:
 	def displayExtract(self):
 		for item in self.recordedThreats:
 			print(self.recordedThreats[item])
+
+	# Parent Enrich Data Method to be overwritten by sub classes
+	def enrichData(self):
+		pass
+
+	# Parent Enrich Data Method to be overwritten by sub classes for threading
+	def enrichData_threaded(self):
+		pass
 
 	def extractFromDB(self):
 		print ("Connecting to Recorded Threats DB for extracting IOCs...")
@@ -110,6 +120,72 @@ class DataEnricher:
 		con.commit()
 		con.close()		
 
+	#Method to break the recorded threats push into segments of a specific number
+	def segmentPush(self):
+		# If there is no data in the dictionary, extract it
+		if not self.recordedThreats:
+			self.extractFromDB()
+
+		# Move compelte list of recorded threats to a different variable
+		recordedThreats_all = self.recordedThreats
+		self.recordedThreats = dict()
+
+		# Add threats to the dictionary until segment length is met
+		count = 0
+		for key in recordedThreats_all:
+			self.recordedThreats[key] = recordedThreats_all[key]
+			count = count + 1
+			#When segment length is reached
+			if count == self.segment:
+				#Enrich the data
+				self.enrichData()
+				#Push to the database
+				self.updateDB()
+				#Reset dictionary and counter
+				self.recordedThreats = dict()
+				count = 0
+		#Push the last < segment entires to the table
+		#Enrich the data
+		self.enrichData()
+		#Push to the database
+		self.updateDB()
+
+		#reset variable recordedThreats
+		self.recordedThreats = recordedThreats_all
+
+	#Method to break the recorded threats push into segments of a specific number
+	def segmentPush_threaded(self):
+		# If there is no data in the dictionary, extract it
+		if not self.recordedThreats:
+			self.extractFromDB()
+
+		# Move compelte list of recorded threats to a different variable
+		recordedThreats_all = self.recordedThreats
+		self.recordedThreats = dict()
+
+		# Add threats to the dictionary until segment length is met
+		count = 0
+		for key in recordedThreats_all:
+			self.recordedThreats[key] = recordedThreats_all[key]
+			count = count + 1
+			#When segment length is reached
+			if count == self.segment:
+				#Enrich the data
+				self.enrichData_threaded()
+				#Push to the database
+				self.updateDB()
+				#Reset dictionary and counter
+				self.recordedThreats = dict()
+				count = 0
+		#Push the last < segment entires to the table
+		#Enrich the data
+		self.enrichData()
+		#Push to the database
+		self.updateDB()
+
+		#reset variable recordedThreats
+		self.recordedThreats = recordedThreats_all
+
 	def addValues(self,colName,valueList):
 		# Check to see if a where clause already exists, if not add it
 		if 'WHERE' not in self.sqlString:
@@ -151,6 +227,10 @@ class DataEnricher:
 			return False
 		return True	
 	# end updateDB
+
+	#Method to change segment number extenally
+	def set_segment(self,number):
+		self.segment = number
 
 
 if __name__ == '__main__':
