@@ -20,194 +20,251 @@ import csv
 # import PySimpleGUI as sg
 
 class ExportSQL:
-    threatList = []
-    threatDict = dict()
-    fileString = ''
-    sqlDBloc = os.getcwd() + '/Threats.sqlite'
-    sqlTableName = 'RecordedThreatsDB'
-    sqlString = "SELECT * FROM "
+	threatList = []
+	threatDict = dict()
+	fileString = ''
+	sqlDBloc = os.getcwd() + '/Threats.sqlite'
+	sqlTableName = 'RecordedThreatsDB'
+	sqlString = "SELECT * FROM "
 
-    def __init__(self, writeLoc):
-        # Set Up SQL databse request
-        print(self.sqlDBloc)
-        self.sqlString = self.sqlString + self.sqlTableName
-        # create a timestamp string to use when writing files
-        self.fileString = writeLoc
-        if self.fileString.endswith('/') == False:
-            self.fileString = self.fileString + '/'
-        self.fileString = self.fileString + 'TIMS_Export_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+	def __init__(self, writeLoc):
+		# Set Up SQL databse request
+		print(self.sqlDBloc)
+		self.sqlString = self.sqlString + self.sqlTableName
+		# create a timestamp string to use when writing files
+		self.fileString = writeLoc
+		if self.fileString.endswith('/') == False:
+			self.fileString = self.fileString + '/'
+		self.fileString = self.fileString + 'TIMS_Export_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # end constructor
+	# end constructor
 
-    def extractFromDB(self):
-        # Attempt to open a connection and verify that the database is there
-        # print ("Connecting to SQLite Database...")
-        print('Attempting to Connect to: ' + self.sqlDBloc)
-        count = 0
-        while not os.path.isfile(self.sqlDBloc) and count < 3:
-            print('Database not found, searching up directory structure...')
-            newLoc = os.path.split(self.sqlDBloc)[0]
-            newLoc = os.path.split(newLoc)[0]
-            self.updateDBloc(newLoc)
-            count = count + 1;
+	def extractFromDB(self):
+		# Attempt to open a connection and verify that the database is there
+		# print ("Connecting to SQLite Database...")
+		print('Attempting to Connect to: ' + self.sqlDBloc)
+		count = 0
+		while not os.path.isfile(self.sqlDBloc) and count < 3:
+			print('Database not found, searching up directory structure...')
+			newLoc = os.path.split(self.sqlDBloc)[0]
+			newLoc = os.path.split(newLoc)[0]
+			self.updateDBloc(newLoc)
+			count = count + 1;
 
-        if os.path.isfile(self.sqlDBloc):
-            con = _sqlite3.connect(self.sqlDBloc)
-            print('Connected to: ' + self.sqlDBloc)
-            cursor = con.cursor()
-            try:
-                self.sqlString = self.sqlString + ";"
-                # print(self.sqlString)
-                sqlResult = cursor.execute(self.sqlString)
+		if os.path.isfile(self.sqlDBloc):
+			con = _sqlite3.connect(self.sqlDBloc)
+			print('Connected to: ' + self.sqlDBloc)
+			cursor = con.cursor()
+			try:
+				self.sqlString = self.sqlString + ";"
+				# print(self.sqlString)
+				sqlResult = cursor.execute(self.sqlString)
 
-                # iterate through each row/entry for the resturned query, using description to fetch key names
-                self.threatList = [dict(zip([key[0] for key in cursor.description], row)) for row in sqlResult]
-                for item in self.threatList:
-                    tempKey = item.get('threatKey')
-                    self.threatDict[tempKey] = item
-            except:
-                print('Table was not located in database, extract aborted')
-            cursor.close()
-            con.close()
-        else:
-            print('Database File Could Not Be Located.')
+				# iterate through each row/entry for the resturned query, using description to fetch key names
+				self.threatList = [dict(zip([key[0] for key in cursor.description], row)) for row in sqlResult]
+				for item in self.threatList:
+					tempKey = item.get('threatKey')
+					self.threatDict[tempKey] = item
+			except:
+				print('Table was not located in database, extract aborted')
+			cursor.close()
+			con.close()
+		else:
+			print('Database File Could Not Be Located.')
 
-    # CSV File Write Method
-    def writeCSV(self):
-        if self.threatList:
-            fileString = self.fileString + '.csv'
-            print("Writing CSV File: " + fileString)
-            # with open(fileString,'wb') as outfile:
-            keys = self.threatList[0].keys()
-            with open(fileString, 'w') as output_file:
-                dict_writer = csv.DictWriter(output_file, keys)
-                dict_writer.writeheader()
-                dict_writer.writerows(self.threatList)
-        else:
-            print("No information was successfully extracted for writing")
+	# CSV File Write Method
+	def writeCSV(self):
+		if self.threatList:
+			fileString = self.fileString + '.csv'
+			print("Writing CSV File: " + fileString)
+			# with open(fileString,'wb') as outfile:
+			keys = self.threatList[0].keys()
+			with open(fileString, 'w') as output_file:
+				dict_writer = csv.DictWriter(output_file, keys)
+				dict_writer.writeheader()
+				dict_writer.writerows(self.threatList)
+		else:
+			print("No information was successfully extracted for writing")
 
-    # end csv write method
+	# end csv write method
 
-    # CSV File Write Method
-    def writeTabDeliminated(self):
-        if self.threatList:
-            fileString = self.fileString + '.txt'
-            print("Writing CSV File: " + fileString)
-            # with open(fileString,'wb') as outfile:
-            keys = self.threatList[0].keys()
-            with open(fileString, 'w') as output_file:
-                dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
-                dict_writer.writeheader()
-                dict_writer.writerows(self.threatList)
-        else:
-            print("No information was successfully extracted for writing")
+	# CSV File Write Method
+	def writeTab(self):
+		if self.threatList:
+			fileString = self.fileString + '.txt'
+			print("Writing CSV File: " + fileString)
+			# with open(fileString,'wb') as outfile:
+			keys = self.threatList[0].keys()
+			with open(fileString, 'w') as output_file:
+				dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
+				dict_writer.writeheader()
+				dict_writer.writerows(self.threatList)
+		else:
+			print("No information was successfully extracted for writing")
 
-    # end csv write method
+	# end csv write method
 
-    def writeBro(self):
-        # -- info on bro intelligence framework format --
-        # -- fields:  (tab between fields) --
-        # indicator     indicator_type    meta.source     meta.desc       meta.url
-        #
-        # -- indicator types: --
-        # Intel::ADDR
-        # Intel::SUBNET
-        # Intel::URL
-        # Intel::SOFTWARE
-        # Intel::EMAIL
-        # Intel::DOMAIN
-        # Intel::USER_NAME
-        # Intel::CERT_HASH (SHA1 HASH)
-        # Intel::PUBKEY_HASH (MD5 HASH)
-        # Intel::FILE_HASH (GENERIC HASH)
-        # Intel::FILE_NAME
-        #
-        # -- Relationships to Database Fields: --
-        # indicator <-> indicator
-        # Indicator_type -> itype
-        #       ipv4 -> Intel::ADDR
-        #       ipv6 -> Intel::ADDR
-        #       fqdn -> Intel::DOMAIN
-        #       url -> Intel::URL
-        #       email -> Intel::EMAIL
-        #       cidr -> Intel::SUBNET
-        #       md5 -> Intel::PUBKEY_HASH
-        #       sha1 -> Intel::CERT_HASH
-        #
-        # meta.source <-> provider
-        # meta.desc <-> description + tags
-        # meta.url <-> provider + rdata (maybe?)
-        #
+	def writeBro(self):
+		# -- info on bro intelligence framework format --
+		# -- fields:  (tab between fields) --
+		# indicator     indicator_type    meta.source     meta.desc       meta.url
+		#
+		# -- indicator types: --
+		# Intel::ADDR
+		# Intel::SUBNET
+		# Intel::URL
+		# Intel::SOFTWARE
+		# Intel::EMAIL
+		# Intel::DOMAIN
+		# Intel::USER_NAME
+		# Intel::CERT_HASH (SHA1 HASH)
+		# Intel::PUBKEY_HASH (MD5 HASH)
+		# Intel::FILE_HASH (GENERIC HASH)
+		# Intel::FILE_NAME
+		#
+		# -- Relationships to Database Fields: --
+		# indicator <-> indicator
+		# Indicator_type -> itype
+		#       ipv4 -> Intel::ADDR
+		#       ipv6 -> Intel::ADDR
+		#       fqdn -> Intel::DOMAIN
+		#       url -> Intel::URL
+		#       email -> Intel::EMAIL
+		#       cidr -> Intel::SUBNET
+		#       md5 -> Intel::PUBKEY_HASH
+		#       sha1 -> Intel::CERT_HASH
+		#
+		# meta.source <-> provider
+		# meta.desc <-> description + tags
+		# meta.url <-> provider + rdata (maybe?)
+		#
 
-        if self.threatList:
-            fileString = self.fileString + '.bro'
-            keys = self.threatList[0].keys()
-            with open(fileString, 'w') as output_file:
-                # Write Field Names to the File
-                hdrString = '#fields'
-                for key in keys:
-                    hdrString += '\t' + key + '\n'
-                output_file.write(hdrString)
-                # Write all Rows
-                dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
-                dict_writer.writerows(self.threatList)
-        else:
-            print("No information was successfully extracted for writing")
+		if self.threatList:
+			# Add file extension
+			fileString = self.fileString + '.bro'
+			# Set header string
+			hdrString = '#fields\tindicator\tindicator_type\tmeta.source\tmeta.desc\tmeta.url\n'
 
-    # JSON File Write Method
-    def writeJSON(self):
-        if self.threatDict:
-            fileString = self.fileString + '.json'
-            print("Writing JSON File: " + fileString)
-            with open(fileString, 'w') as output_file:
-                json.dump(self.threatDict, output_file)
-        else:
-            print("No information was successfully extracted for writing")
+			#Create itype conversion lists
+			sql_itype = ['ipv4','ipv6','fdnq',\
+						'url','email','cidr',\
+						'md5','sha1']
+			bro_itype = ['Intel::ADDR','Intel::ADDR','Intel::DOMAIN',\
+						'Intel::URL','Intel::EMAIL','Intel::SUBNET',\
+						'Intel::PUBKEY_HASH','Intel::CERT_HASH']
 
-    # end json write method
+			# Set up dictionary keys to extract as a list of lists
+			fields = []
+			fields.append(['indicator'])
+			fields.append(['iType'])
+			fields.append(['provider'])
+			fields.append(['description','tags'])
+			fields.append(['provider','rData'])
 
-    def addValues(self, colName, valueList):
-        # Check to see if a where clause already exists, if not add it
-        if 'WHERE' not in self.sqlString:
-            self.sqlString += " WHERE "
-        else:
-            self.sqlString += " OR "
-        # Add the column name to parse through and start the acceptable list
-        if colName not in self.sqlString:
-            self.sqlString += "  " + colName + " in ("
-        # Iterate through all list items and add to list
-        for item in valueList:
-            # print(type(item))
-            self.sqlString += '\'' + item + '\','
-        # Remove final comma from string
-        if self.sqlString.endswith(','):
-            self.sqlString = self.sqlString[:-1]
-        # Close List Parenthesies
-        self.sqlString += ")"
+			wkeys = ['indicator','indicator_type','meta.source','meta.desc','meta.url']
 
-    # Getter Methods
-    def copyDict(self):
-        return self.threatDict
+			#Construct a list of new dictionaries to write to the file
+			writeList = []
+			#Iterate through all entires in the dictionary
+			for threat in self.threatList:
+				tmp = dict()
+				#Iterate through fields list for writing data to bro format
+				for k in range(0,len(fields)):
+					line = []
+					for key in fields[k]:
+						#Extract Dictionary Entires of Interest
+						line.append(str(threat[key]))
+						# If iType field, replace with approriate string
+						if 'iType' in key:
+							for i in range(0,len(sql_itype)-1):
+								line = [w.replace(sql_itype[i],bro_itype[i]) for w in line]
+					# Set entry in writing dictionary and update list				
+					tmp[wkeys[k]] = ', '.join(line)
+				writeList.append(tmp)
 
-    def copyDBloc(self):
-        return self.sqlDBloc
+			with open(fileString, 'w') as output_file:
+				# Write all valyes of the dictionary to the file
+				print("Writing BRO File: " + fileString)
+				# # Write Field Names to the File
+				output_file.write(hdrString)
+				# Call dictionary writer
+				dict_writer = csv.DictWriter(output_file,fieldnames=wkeys,delimiter='\t')
+				dict_writer.writerows(writeList)
+		else:
+			print("No information was successfully extracted for writing")
 
-    def copyDBname(self):
-        return self.sqlTableName
+	# def writeBro(self):
+	# 	if self.threatList:
+	# 		# Add file extension
+	# 		fileString = self.fileString + '.bro'
 
-    # Setter Methods
-    def updateDBloc(self, newLoc):
-        self.sqlDBloc = newLoc + '/' + os.path.split(self.sqlDBloc)[1]
-        self.sqlDBloc.replace('//', '/')
-        print('Database Location Updated to: ' + self.sqlDBloc)
+	# 		keys = self.threatList[0].keys()
+	# 		with open(fileString, 'w') as output_file:
+	# 			# # Write Field Names to the File
+	# 			hdrString = '#fields'
+	# 			for key in keys:
+	# 				hdrString += '\t' + key + '\n'
+	# 			output_file.write(hdrString)
+	# 			# Write all Rows
+	# 			dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
+	# 			dict_writer.writerows(self.threatList)
+	# 	else:
+	# 		print("No information was successfully extracted for writing")	
 
-    def updateTablename(self, newName):
-        self.sqlString.replace(self.sqlTableName, newName)
-        self.sqlTableName = newName
-        print('Table Name Updated to: ' + self.sqlTableName)
+	# JSON File Write Method
+	def writeJSON(self):
+		if self.threatDict:
+			fileString = self.fileString + '.json'
+			print("Writing JSON File: " + fileString)
+			with open(fileString, 'w') as output_file:
+				json.dump(self.threatDict, output_file)
+		else:
+			print("No information was successfully extracted for writing")
+
+	# end json write method
+
+	def addValues(self, colName, valueList):
+		# Check to see if a where clause already exists, if not add it
+		if 'WHERE' not in self.sqlString:
+			self.sqlString += " WHERE "
+		else:
+			self.sqlString += " OR "
+		# Add the column name to parse through and start the acceptable list
+		if colName not in self.sqlString:
+			self.sqlString += "  " + colName + " in ("
+		# Iterate through all list items and add to list
+		for item in valueList:
+			# print(type(item))
+			self.sqlString += '\'' + item + '\','
+		# Remove final comma from string
+		if self.sqlString.endswith(','):
+			self.sqlString = self.sqlString[:-1]
+		# Close List Parenthesies
+		self.sqlString += ")"
+
+	# Getter Methods
+	def copyDict(self):
+		return self.threatDict
+
+	def copyDBloc(self):
+		return self.sqlDBloc
+
+	def copyDBname(self):
+		return self.sqlTableName
+
+	# Setter Methods
+	def updateDBloc(self, newLoc):
+		self.sqlDBloc = newLoc + '/' + os.path.split(self.sqlDBloc)[1]
+		self.sqlDBloc.replace('//', '/')
+		print('Database Location Updated to: ' + self.sqlDBloc)
+
+	def updateTablename(self, newName):
+		self.sqlString.replace(self.sqlTableName, newName)
+		self.sqlTableName = newName
+		print('Table Name Updated to: ' + self.sqlTableName)
 
 
 if __name__ == '__main__':
-    exportObj = ExportSQL('./')
-    exportObj.extractFromDB()
-    exportObj.writeBro()
+	exportObj = ExportSQL('./')
+	exportObj.extractFromDB()
+	exportObj.writeBro()
