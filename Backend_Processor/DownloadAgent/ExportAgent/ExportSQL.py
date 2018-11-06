@@ -92,7 +92,7 @@ class ExportSQL:
 	def writeTab(self):
 		if self.threatList:
 			fileString = self.fileString + '.txt'
-			print("Writing CSV File: " + fileString)
+			print("Writing Tab Text File: " + fileString)
 			# with open(fileString,'wb') as outfile:
 			keys = self.threatList[0].keys()
 			with open(fileString, 'w') as output_file:
@@ -361,4 +361,9 @@ class ExportSQL:
 if __name__ == '__main__':
 	exportObj = ExportSQL('./')
 	exportObj.extractFromDB()
+	exportObj.writeCSV()
+	exportObj.writeTab()
+	exportObj.writeJSON()
+	exportObj.writeBro()
 	exportObj.writeSNORT()
+
