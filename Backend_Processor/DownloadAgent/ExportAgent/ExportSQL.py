@@ -14,7 +14,7 @@ import os
 import _sqlite3
 import json
 import csv
-
+import socket
 
 # import FrontEnd_GUI
 # import PySimpleGUI as sg
@@ -193,23 +193,99 @@ class ExportSQL:
 		else:
 			print("No information was successfully extracted for writing")
 
-	# def writeBro(self):
-	# 	if self.threatList:
-	# 		# Add file extension
-	# 		fileString = self.fileString + '.bro'
+	def writeSNORT(self):
+		# If no data in the threat list, return error
+		if self.threatList:
+			# Add file extension
+			fileString = self.fileString + '.snort'
 
-	# 		keys = self.threatList[0].keys()
-	# 		with open(fileString, 'w') as output_file:
-	# 			# # Write Field Names to the File
-	# 			hdrString = '#fields'
-	# 			for key in keys:
-	# 				hdrString += '\t' + key + '\n'
-	# 			output_file.write(hdrString)
-	# 			# Write all Rows
-	# 			dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
-	# 			dict_writer.writerows(self.threatList)
-	# 	else:
-	# 		print("No information was successfully extracted for writing")	
+			# Create an list for containing Snort rules
+			writeList = []
+			# Start signature ID number
+			sid = 999999;
+
+			# Iterate through threat list
+			for item in self.threatList:
+				# Assume flag should not be written
+				writeFlag = 0
+				# Set the sections of the snort rule as a list
+				# [action,protocol,IP,Port,Direction,IP,Port,start action]
+				write = ['alert','TCP','any','any','->','any','any','(']
+				
+				# Check the indicator was an IPv4 address, if so update rule
+				if self.is_valid_ipv4_address(item['indicator']) == True: 
+					write[5] = item['indicator']
+					# write[6] = 'none'
+					writeFlag = 1
+				# Check the indicator was an IPv6 address, if so update rule
+				elif self.is_valid_ipv6_address(item['indicator']) == True: 
+					write[5] = item['indicator']
+					# write[6] = 'none'
+					writeFlag = 1
+				# Otherwise check if the hostIP enrichment located an IP address
+				else:
+					address = item['rData']
+					if address.find('IP:') != -1:
+						# Attempt to parse the IP from the rData field
+						address = address.split('IP:',1);
+						if len(address[1]) < 12:
+							address = address[1][0:len(address)-1]
+						else:
+							address = address[1]
+						# If address is vald
+						if address:
+							write[5] = address
+							# write[6] = 'none'
+							writeFlag = 1
+
+				# If write list has been updated, add to list
+				if writeFlag == 1:
+					# Update Rule Signature ID
+					sid = sid + 1
+
+					# References Rule
+					if item['iType'] == 'url':
+						write.append('reference:url,' + item['indicator'] + ';')
+						writeFlag = 1
+
+					# Priority Rule
+					if item['tlp'] == 'green':
+						write.append('priority: 1;')
+					else:
+						write.append('priority: 0;')
+
+					# Threashold Rule
+					write.append('threshold: type limit,track by_src,count 1,seconds 3600;')
+
+					# SID Rule
+					write.append('sid: ' +str(sid) + ';')
+
+					# msg rule
+					key_list = ['provider','tlp','tags','description']
+					action_list = ['msg:"']
+					for key in key_list:
+						if item[key]:
+							action_list.append(str(item[key]) + ' - ')
+					if len(action_list) == 1:
+						action_list.append('General Threat')
+					# Construct MSG string
+					msg = ''.join(action_list)
+					write.append(msg[:-3])
+					msg = msg  +  '";'
+
+					# Close snort actions
+					write.append(')\n')
+					writeList.append(' '.join(write))
+
+			# Open File
+			with open(fileString, 'w') as output_file:
+				print("Writing SNORT File: " + fileString)
+				# Write all rules to file
+				for item in writeList:
+					output_file.write(item)
+		else:
+			print("No information was successfully extracted for writing")
+	
 
 	# JSON File Write Method
 	def writeJSON(self):
@@ -263,8 +339,26 @@ class ExportSQL:
 		self.sqlTableName = newName
 		print('Table Name Updated to: ' + self.sqlTableName)
 
+	# Method to Check if string is IPV4 IP address
+	def is_valid_ipv4_address(self,address):
+		try:
+			socket.inet_pton(socket.AF_INET, address)
+		except AttributeError:  # no inet_pton here, sorry
+			return False
+		except socket.error:  # not a valid address
+			return False
+		return True
+
+	# Method to Check if string is IPV6 IP address
+	def is_valid_ipv6_address(self,address):
+		try:
+			socket.inet_pton(socket.AF_INET6, address)
+		except socket.error:  # not a valid address
+			return False
+		return True	
+	# end updateDB
 
 if __name__ == '__main__':
 	exportObj = ExportSQL('./')
 	exportObj.extractFromDB()
-	exportObj.writeBro()
+	exportObj.writeSNORT()
