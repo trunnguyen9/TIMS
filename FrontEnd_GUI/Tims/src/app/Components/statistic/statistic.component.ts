@@ -12,7 +12,7 @@ export class StatisticComponent implements OnInit {
 
   dataByProviderObservable: Observable<any>;
   dataByProvider: DataByProvider[] = [];
-  private chart: Chart;
+  chart: Chart;
   constructor(private statistic: StatisticService) { }
 
   ngOnInit() {

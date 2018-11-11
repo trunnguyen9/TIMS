@@ -1,13 +1,15 @@
-import sqlite3
+import _sqlite3
 import DataStore_Modules
 import jwt
+from datetime import timedelta, datetime
 
 class UserStore:
     conn = 0
 
     def __init__(self):
-        sqliteDataStoreInstance = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
-        self.conn = sqliteDataStoreInstance.getDBConn()
+        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+
+
 
     def retrieveUser(self, username, password):
         cursor = self.conn.cursor()
@@ -18,7 +20,7 @@ class UserStore:
             msg = cursor.fetchone()
             if msg is None:
                 return {'Error': 'username or password is incorrect'}
-            encoded = jwt.encode({'username': msg[1]}, 'secret', algorithm='HS256').decode('utf-8')
+            encoded = jwt.encode({'username': msg[1], 'exp': datetime.utcnow() + timedelta(seconds=10)}, 'secret', algorithm='HS256').decode('utf-8')
             user = {
                 'id': msg[0],
                 'username': msg[1],
@@ -26,7 +28,7 @@ class UserStore:
                 'lastname': msg[3],
                 'token': encoded
             }
-        except sqlite3.Error as er:
+        except _sqlite3.Error as er:
             return {'error': 'Error occurred in retrieve user.'}
 
         return user
@@ -38,6 +40,6 @@ class UserStore:
         try:
             cursor.execute(sqlString, params)
             self.conn.commit()
-        except sqlite3.Error as er:
+        except _sqlite3.Error as er:
             return {'error' : 'Error occurred in creating user.Please try another username.'}
         return { 'lastrowid' : cursor.lastrowid }

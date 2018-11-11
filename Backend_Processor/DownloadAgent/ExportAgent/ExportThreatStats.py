@@ -1,4 +1,4 @@
-import sqlite3
+import _sqlite3
 import DataStore_Modules
 
 
@@ -50,11 +50,10 @@ def formatHtml(retRows):
 class ExportThreatStats:
     sqlString = "SELECT * FROM ThreatStatsDB;"
     conn = 0
-    sqlDBloc = '../../Threats.sqlite'
+    sqlDBloc = './Threats.sqlite'
 
     def __init__(self):
-        sqliteDataStoreInstance = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
-        self.conn = sqliteDataStoreInstance.getDBConn()
+        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
 
     def exportThreatStats(self):
         print("Connecting to SQLite DB for extracting ThreatStats")

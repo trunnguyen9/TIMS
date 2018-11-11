@@ -28,7 +28,7 @@ class SQLiteDataStore:
 
     def __init__(self):
         #print ("Building Network Connection and Connection Cursor:")
-        self.conn = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         #self.conn = _sqlite3.connect('Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         self.cursor=self.conn.cursor()
         self.es = Elasticsearch([{'host':'173.253.201.212', 'port':9200}])
@@ -48,7 +48,7 @@ class SQLiteDataStore:
         threatCounter = 1
         totalThreats = len(self.threatLibrary)
 
-        con = _sqlite3.connect('../../Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+        con = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES, check_same_thread=False)
         cursor = con.cursor()
         print(str(datetime.now()))
         cursor.execute("SELECT * FROM RecordedThreatsDB;")

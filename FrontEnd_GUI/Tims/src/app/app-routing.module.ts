@@ -11,12 +11,12 @@ import {AboutusComponent} from './Components/aboutus/aboutus.component';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/home',
+        component: HomeComponent,
         pathMatch: 'full'
     },
     {
-        path: 'home',
-        component: HomeComponent
+      path: 'home',
+      redirectTo: '/'
     },
     {
       path: 'aboutus',
