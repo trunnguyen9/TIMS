@@ -12,13 +12,14 @@
 from datetime import datetime
 import _sqlite3
 import sys
+import os
 import time
 import socket
 
 class DataEnricher:
 
 	recordedThreats = dict()
-	sqlDBloc = '../../../Threats.sqlite'
+	sqlDBloc = os.getcwd() + '/Threats.sqlite'
 	modtime = ''
 	sqlString = "SELECT * FROM 'RecordedThreatsDB' "
 	segment = 1000
@@ -47,7 +48,15 @@ class DataEnricher:
 		pass
 
 	def extractFromDB(self):
-		print ("Connecting to Recorded Threats DB for extracting IOCs...")
+		# Attempt to open a connection and verify that the database is there
+		print('Attempting to Connect to: ' + self.sqlDBloc)
+		count = 0
+		while not os.path.isfile(self.sqlDBloc) and count < 3:
+			print('Database not found, searching up directory structure...')
+			newLoc = os.path.split(self.sqlDBloc)[0]
+			newLoc = os.path.split(newLoc)[0]
+			self.set_sqlDBloc(newLoc)
+			count = count + 1;
 		# Construct SQL String
 		self.sqlString = self.sqlString + ";"
 		# Connect to SQL Database
@@ -228,7 +237,7 @@ class DataEnricher:
 		return True	
 	# end updateDB
 
-	#Method to change segment number extenally
+	#Method to change segment number externaly
 	def set_segment(self,number):
 		self.segment = number
 
