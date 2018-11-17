@@ -2,6 +2,20 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/DataEnricher" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/DataStore_Modules" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/ExportAgent" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/IoC_Modules" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/modules" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/UnitTest" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/UnitTest/Legacy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/UserStore_Module" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/DataEnricher/GeoLite2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backend_Processor/DownloadAgent/ExportAgent/GeoLite2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/FrontEnd_GUI" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
