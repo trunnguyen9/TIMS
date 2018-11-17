@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Config } from '../Components/config/config.component';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -10,15 +11,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ConfigService {
-  configUrl = 'http://127.0.0.1:5000/';
-
   constructor(private http: HttpClient) {  }
 
   getConfig() {
-    return this.http.get<Config>(this.configUrl + 'getConfig');
+    return this.http.get<Config>(environment.apiEndpoint + '/getConfig');
   }
 
   updateConfig(config: Config) {
-    return this.http.put(this.configUrl + 'updateConfig', config , httpOptions);
+    return this.http.put(environment.apiEndpoint + '/updateConfig', config , httpOptions);
   }
 }

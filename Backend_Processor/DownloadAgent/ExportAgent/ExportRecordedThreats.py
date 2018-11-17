@@ -1,11 +1,11 @@
 import DataStore_Modules
 import json
+import _sqlite3
 
 class ExportRecordedThreats:
     conn = 0
     def __init__(self):
-        sqliteDataStoreInstance = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
-        self.conn = sqliteDataStoreInstance.getDBConn()
+        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
 
     def exportRTStatisticByProvider(self):
         cursor = self.conn.cursor()

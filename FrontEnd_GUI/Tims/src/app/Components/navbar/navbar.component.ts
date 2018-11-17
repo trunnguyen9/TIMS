@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../../Services/data.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../Services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class NavbarComponent implements OnInit {
   isUserLogin: boolean;
 
-  constructor( private dataService: DataService, private route: ActivatedRoute, private router: Router, ) {
+  constructor( private dataService: DataService,
+               private route: ActivatedRoute,
+               private router: Router,
+               private authService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -18,8 +22,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this.authService.logout();
     this.dataService.changeLoginStatus(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
 }
