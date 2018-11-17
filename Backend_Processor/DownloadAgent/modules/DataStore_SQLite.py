@@ -27,9 +27,7 @@ class SQLiteDataStore:
     es = 0
 
     def __init__(self):
-        #print ("Building Network Connection and Connection Cursor:")
-        self.conn = _sqlite3.connect('../Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
-        #self.conn = _sqlite3.connect('Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        self.conn = _sqlite3.connect('./Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
         self.cursor=self.conn.cursor()
         self.es = Elasticsearch([{'host':'173.253.201.212', 'port':9200}])
 
