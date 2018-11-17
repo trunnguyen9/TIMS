@@ -19,7 +19,7 @@ import socket
 class DataEnricher:
 
 	recordedThreats = dict()
-	sqlDBloc = os.getcwd() + '/Threats.sqlite'
+	sqlDBloc = '../Database/Threats.sqlite'
 	modtime = ''
 	sqlString = "SELECT * FROM 'RecordedThreatsDB' "
 	segment = 1000

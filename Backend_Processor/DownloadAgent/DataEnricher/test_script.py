@@ -7,7 +7,7 @@ from datetime import datetime
 testHostname = HostIP()
 print('Threaded Approach:')
 print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
-testHostname.getIP_threaded()
+testHostname.enrichData_threaded()
 #testHostname.getIP_standard()
 print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 testHostname.displayExtract()

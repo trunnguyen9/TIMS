@@ -23,7 +23,7 @@ class ExportSQL:
 	threatList = []
 	threatDict = dict()
 	fileString = ''
-	sqlDBloc = os.getcwd() + '/Threats.sqlite'
+	sqlDBloc = '../Database/Threats.sqlite'
 	sqlTableName = 'RecordedThreatsDB'
 	sqlString = "SELECT * FROM "
 
