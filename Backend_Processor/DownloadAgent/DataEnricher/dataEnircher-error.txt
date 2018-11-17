@@ -1,0 +1,253 @@
+C:\Users\Trung\PycharmProjects\TIMS\venv\Scripts\python.exe C:/Users/Trung/PycharmProjects/TIMS/Backend_Processor/DownloadAgent/DataEnricher/test_script.py
+Attempting to Connect to: ../Database/Threats.sqlite
+Threaded Approach:
+2018-11-17 16:35:33
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Attempting to Connect to: ../Database/Threats.sqlite
+Threaded Approach:
+2018-11-17 16:36:29
+Threaded Approach:
+Threaded Approach:
+2018-11-17 16:36:36
+Threaded Approach:
+2018-11-17 16:36:35
+2018-11-17 16:36:37
+Threaded Approach:
+2018-11-17 16:36:39
+Threaded Approach:Threaded Approach:
+
+2018-11-17 16:36:44
+2018-11-17 16:36:44
+Threaded Approach:
+2018-11-17 16:36:49
+Threaded Approach:
+2018-11-17 16:36:51
+Threaded Approach:
+2018-11-17 16:36:53
+Threaded Approach:
+2018-11-17 16:36:55
+Threaded Approach:
+2018-11-17 16:36:55
+Threaded Approach:
+Threaded Approach:
+2018-11-17 16:36:56
+2018-11-17 16:36:56
+Threaded Approach:
+2018-11-17 16:36:56
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exitcode = _main(fd)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+    exitcode = _main(fd)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+    prepare(preparation_data)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+    run_name="__mp_main__")
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 263, in run_path
+    prepare(preparation_data)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+    run_name="__mp_main__")
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 263, in run_path
+    pkg_name=pkg_name, script_name=fname)
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\test_script.py", line 10, in <module>
+    pkg_name=pkg_name, script_name=fname)
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 85, in _run_code
+    testHostname.enrichData_threaded()
+  File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\HostIP.py", line 84, in enrichData_threaded
+    exitcode = _main(fd)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+    pool = Pool(processes=num_proc)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\context.py", line 119, in Pool
+    prepare(preparation_data)        exitcode = _main(fd)
+exec(code, run_globals)
+
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+    prepare(preparation_data)  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+    context=self.get_context())
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\pool.py", line 176, in __init__
+    run_name="__mp_main__")
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 263, in run_path
+    self._repopulate_pool()
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\pool.py", line 241, in _repopulate_pool
+    pkg_name=pkg_name, script_name=fname)
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)Threaded Approach:
+2018-11-17 16:36:59
+      File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\test_script.py", line 10, in <module>
+    Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+    Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+
+w.start()_fixup_main_from_path(data['init_main_from_path'])  File "<string>", line 1, in <module>
+  File "<string>", line 1, in <module>
+exitcode = _main(fd)  File "<string>", line 1, in <module>
+      File "<string>", line 1, in <module>
+  File "<string>", line 1, in <module>
+  File "<string>", line 1, in <module>
+  File "C:\Program Files (x86)\Python37-32\Lib\runpy.py", line 85, in _run_code
+
+  File "<string>", line 1, in <module>
+
+
+testHostname.enrichData_threaded()  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\process.py", line 112, in start
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+  File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\HostIP.py", line 84, in enrichData_threaded
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exec(code, run_globals)
+  File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\test_script.py", line 10, in <module>
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exitcode = _main(fd)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+    exitcode = _main(fd)    prepare(preparation_data)
+
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+    prepare(preparation_data)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+    pool = Pool(processes=num_proc)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\context.py", line 119, in Pool
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exitcode = _main(fd)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 114, in _main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 105, in spawn_main
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\context.py", line 322, in _Popen
+    testHostname.enrichData_threaded()
+  File "C:\Users\Trung\PycharmProjects\TIMS\Backend_Processor\DownloadAgent\DataEnricher\HostIP.py", line 84, in enrichData_threaded
+    pool = Pool(processes=num_proc)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\context.py", line 119, in Pool
+    context=self.get_context())
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\pool.py", line 176, in __init__
+    self._repopulate_pool()
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\pool.py", line 241, in _repopulate_pool
+    w.start()
+    return Popen(process_obj)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\popen_spawn_win32.py", line 33, in __init__
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\process.py", line 112, in start
+    self._popen = self._Popen(self)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\context.py", line 322, in _Popen
+    return Popen(process_obj)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\popen_spawn_win32.py", line 33, in __init__
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+    _fixup_main_from_path(data['init_main_from_path'])
+    prep_data = spawn.get_preparation_data(process_obj._name)  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 277, in _fixup_main_from_path
+    prep_data = spawn.get_preparation_data(process_obj._name)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 143, in get_preparation_data
+    _check_not_importing_main()
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 136, in _check_not_importing_main
+    is not going to be frozen to produce an executable.''')
+
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 143, in get_preparation_data
+    _check_not_importing_main()
+    run_name="__mp_main__")
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 136, in _check_not_importing_main
+RuntimeError:
+        An attempt has been made to start a new process before the
+        current process has finished its bootstrapping phase.
+
+        This probably means that you are not using fork to start your
+        child processes and you have forgotten to use the proper idiom
+        in the main module:
+
+            if __name__ == '__main__':
+                freeze_support()
+                ...
+
+        The "freeze_support()" line can be omitted if the program
+        is not going to be frozen to produce an executable.
+    exitcode = _main(fd)
+    prepare(preparation_data)
+  File "C:\Program Files (x86)\Python37-32\Lib\multiprocessing\spawn.py", line 225, in prepare
+Threaded Approach:
+2018-11-17 16:37:05
+Threaded Approach:
+2018-11-17 16:37:06
+Threaded Approach:
+2018-11-17 16:37:07
+Threaded Approach:
+2018-11-17 16:37:07
+Threaded Approach:
+2018-11-17 16:37:08
+Threaded Approach:
