@@ -4,7 +4,7 @@ from LocateGeoIP import *
 from datetime import datetime
 
 if __name__ == '__main__':
-testHostname = HostIP()
+    testHostname = HostIP()
 	print('Threaded Approach:')
 	print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
 	testHostname.enrichData_threaded()
