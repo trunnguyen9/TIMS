@@ -80,7 +80,7 @@ class ExportSQL:
 			print("Writing CSV File: " + fileString)
 			# with open(fileString,'wb') as outfile:
 			keys = self.threatList[0].keys()
-			with open(fileString, 'w') as output_file:
+			with open(fileString, 'w', encoding='utf8') as output_file:
 				dict_writer = csv.DictWriter(output_file, keys)
 				dict_writer.writeheader()
 				dict_writer.writerows(self.threatList)
@@ -96,7 +96,7 @@ class ExportSQL:
 			print("Writing Tab Text File: " + fileString)
 			# with open(fileString,'wb') as outfile:
 			keys = self.threatList[0].keys()
-			with open(fileString, 'w') as output_file:
+			with open(fileString, 'w', encoding='utf8') as output_file:
 				dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
 				dict_writer.writeheader()
 				dict_writer.writerows(self.threatList)
@@ -183,7 +183,7 @@ class ExportSQL:
 					tmp[wkeys[k]] = ', '.join(line)
 				writeList.append(tmp)
 
-			with open(fileString, 'w') as output_file:
+			with open(fileString, 'w', encoding='utf8') as output_file:
 				# Write all valyes of the dictionary to the file
 				print("Writing BRO File: " + fileString)
 				# # Write Field Names to the File
@@ -279,7 +279,7 @@ class ExportSQL:
 					writeList.append(' '.join(write))
 
 			# Open File
-			with open(fileString, 'w') as output_file:
+			with open(fileString, 'w', encoding='utf8') as output_file:
 				print("Writing SNORT File: " + fileString)
 				# Write all rules to file
 				for item in writeList:
@@ -293,7 +293,7 @@ class ExportSQL:
 		if self.threatDict:
 			fileString = self.fileString + '.json'
 			print("Writing JSON File: " + fileString)
-			with open(fileString, 'w') as output_file:
+			with open(fileString, 'w', encoding='utf8') as output_file:
 				json.dump(self.threatDict, output_file)
 		else:
 			print("No information was successfully extracted for writing")
