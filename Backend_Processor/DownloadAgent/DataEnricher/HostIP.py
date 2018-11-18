@@ -110,11 +110,10 @@ class HostIP(DataEnricher):
 				print(self.recordedThreats[item]['rData'])
 			except:
 				pass
-
-
-if __name__ == '__main__':
-	test = HostIP()
-	test.segmentPush_threaded()
+# 
+# if __name__ == '__main__':
+# 	test = HostIP()
+# 	test.segmentPush_threaded()
 
 
 

@@ -359,12 +359,12 @@ class ExportSQL:
 		return True	
 	# end updateDB
 
-if __name__ == '__main__':
-	exportObj = ExportSQL('./')
-	exportObj.extractFromDB()
-	exportObj.writeCSV()
-	exportObj.writeTab()
-	exportObj.writeJSON()
-	exportObj.writeBro()
-	exportObj.writeSNORT()
+# if __name__ == '__main__':
+# 	exportObj = ExportSQL('./')
+# 	exportObj.extractFromDB()
+# 	exportObj.writeCSV()
+# 	exportObj.writeTab()
+# 	exportObj.writeJSON()
+# 	exportObj.writeBro()
+# 	exportObj.writeSNORT()
 

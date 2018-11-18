@@ -242,11 +242,11 @@ class DataEnricher:
 		self.segment = number
 
 
-if __name__ == '__main__':
-	test = DataEnricher()
-	test.extractFromDB()
-	# test.displayExtract()
-	test.updateDB()
+# if __name__ == '__main__':
+# 	test = DataEnricher()
+# 	test.extractFromDB()
+# 	# test.displayExtract()
+# 	test.updateDB()
 
 
 
