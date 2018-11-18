@@ -11,7 +11,7 @@
 
 from datetime import datetime
 import _sqlite3
-from elasticsearch import Elasticsearch
+# from elasticsearch import Elasticsearch
 import requests
 import json
 

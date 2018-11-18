@@ -2,10 +2,10 @@
 # UnitTest
 # This Module will connect to various UnitTests to Their Relative Modules
 from .Test_ExportModule import Test_ExportModule
-from .Test_IoC import Test_IoC
-from .Test_IoC_All import *
-# from .Test_IoC_EmergingThreats import Test_IoC_EmergingThreats
-# from .Test_IoC_PhishTank import Test_IoC_PhishTank
-# from .Test_IoC_AlienVault import Test_IoC_AlienVault
-# from .Test_IoC_Feodotracker import Test_IoC_Feodotracker
-# from .Test_IoC_CSIRTG import Test_IoC_CSIRTG
+from .Test_IoT import Test_IoT
+from .Test_IoT_All import *
+# from .Test_IoT_EmergingThreats import Test_IoT_EmergingThreats
+# from .Test_IoT_PhishTank import Test_IoT_PhishTank
+# from .Test_IoT_AlienVault import Test_IoT_AlienVault
+# from .Test_IoT_Feodotracker import Test_IoT_Feodotracker
+# from .Test_IoT_CSIRTG import Test_IoT_CSIRTG
