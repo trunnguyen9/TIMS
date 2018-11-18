@@ -21,8 +21,11 @@ class Test_ExportModule(unittest.TestCase):
 		suite = unittest.TestSuite()
 		# suite.addTest(test_connect_resource('test_connect_resource'))
 		suite.addTest(test_extract_data('test_extract_data'))
-		suite.addTest(test_write_csv('test_write_csv'))
-		suite.addTest(test_write_json('test_write_json'))
+		# suite.addTest(test_write_csv('test_write_csv'))
+		# suite.addTest(test_write_tab('test_write_tab'))
+		# suite.addTest(test_write_json('test_write_json'))
+		# suite.addTest(test_write_bro('test_write_bro'))
+		suite.addTest(test_write_snort('test_write_snort'))
 		return suite
 
 	def test_extract_data(self):
@@ -49,6 +52,13 @@ class Test_ExportModule(unittest.TestCase):
 				tmp_dict = dict()
 				tmp_dict.update(row)
 				full_list.append(tmp_dict)
+
+		# Convert all entires of the main dictionary to strings
+		for item in self.exportObj.threatList:
+			keys = list(item.keys())
+			for key in keys:
+				item[key] = str(item[key])
+
 		# self.assertNotEqual(full_list,[])
 		self.assertEqual(full_list,self.exportObj.threatList)
 
@@ -66,11 +76,18 @@ class Test_ExportModule(unittest.TestCase):
 		# Load the test file into a new expected format
 		full_list = []
 		with open(file_string, "r") as infile:
-			reader = csv.DictReader(infile)
+			reader = csv.DictReader(infile, delimiter='\t')
 			for row in reader:
 				tmp_dict = dict()
 				tmp_dict.update(row)
 				full_list.append(tmp_dict)
+
+		# Convert all entires of the main dictionary to strings
+		for item in self.exportObj.threatList:
+			keys = list(item.keys())
+			for key in keys:
+				item[key] = str(item[key])
+
 		# self.assertNotEqual(full_list,[])
 		self.assertEqual(full_list,self.exportObj.threatList)
 
@@ -88,6 +105,7 @@ class Test_ExportModule(unittest.TestCase):
 		# Load the test file into a new expected format
 		json_io = open(file_string)
 		json_data = json.loads(json_io.read())
+
 		#Check for equality
 		self.assertEqual(json_data,self.exportObj.threatDict)
 
@@ -103,11 +121,20 @@ class Test_ExportModule(unittest.TestCase):
 		
 		# Load the test file into a new expected format
 		reader = bro_log_reader.BroLogReader(file_string)
+
+		# Add each imported dictionary into a list
+		full_list = []
 		for row in reader.readrows():
-			pprint(row)
+			tmp_dict = dict()
+			tmp_dict.update(row)
+			full_list.append(tmp_dict)
+
+		# Test Dictionary
+		self.assertNotEqual(full_list,[])
 
 	def test_write_snort(self):
 		# Extract Data
+		self.exportObj.addValues('iType',['ipv4'])
 		self.exportObj.extractFromDB()
 		# Reduce Threats
 		self.prune_threats()
@@ -115,6 +142,14 @@ class Test_ExportModule(unittest.TestCase):
 		self.exportObj.writeSNORT()
 		# Set the file string name
 		file_string = self.exportObj.fileString + '.snort'
+
+		# Load the test file into a new expected format
+		full_list = []
+		with open(file_string, "r") as infile:
+			full_list = infile.readlines()
+		print(len(full_list))
+		# Test Dictionary
+		self.assertNotEqual(full_list,[])
 
 	# Method to reduce the Number of Threats to the first 15 entries
 	def prune_threats(self):
@@ -126,7 +161,7 @@ class Test_ExportModule(unittest.TestCase):
 		keys = list(self.exportObj.threatDict.keys())
 		# Sort through first X threats
 		for count in range(num_threats):
-			tmp_list[count] = self.exportObj.threatList[count]
+			tmp_list.append(self.exportObj.threatList[count])
 			tmp_dict[keys[count]] = self.exportObj.threatDict[keys[count]]
 		# Store new dictionary and lists
 		self.exportObj.threatList = tmp_list
@@ -140,7 +175,7 @@ class Test_ExportModule(unittest.TestCase):
 
 	#Clean up all Written Files
 	def tearDown(self):
-		extensions = ['.csv','.json','bro','.snort','.txt']
+		extensions = ['.csv','.json','.bro','.txt']
 		for ext in extensions:
 			file_str = self.exportObj.fileString + ext
 			if os.path.exists(file_str):

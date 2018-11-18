@@ -11,31 +11,21 @@
 import unittest
 import hashlib
 import _sqlite3
-import DataStore_Modules
-import IoC_Modules
+from modules import *
 
 class Test_IoC(unittest.TestCase):
 
-	# def setUp(self):
-	# 	self.ThreatObject = IoC_PhishTank()	
-	SQLiteDataStore = DataStore_Modules.DataStore_SQLite.SQLiteDataStore()
+	SQLiteDataStore = SQLiteDataStore()
 
 	# Set up the Unit Test Suite for a Generic IoC Module
 	def suite():
 		suite = unittest.TestSuite()
 		# suite.addTest(test_connect_resource('test_connect_resource'))
 		suite.addTest(test_create_unique_key('test_create_unique_key'))
-		suite.addTest(test_parse_resource('test_parse_resource'))
-		suite.addTest(test_db_insert('test_db_insert'))
+		# suite.addTest(test_parse_resource('test_parse_resource'))
+		# suite.addTest(test_db_insert('test_db_insert'))
 		# suite.addTest(test_view_threats('test_view_threats'))
 		return suite
-
-	# #Test the ability of the module to connect with its resource via HTTP request 
-	# def test_connect_resource(self):
-	# 	start = self.ThreatObject.recordedThreats
-	# 	self.ThreatObject.pull()
-	# 	# If the dictionary does not update after the pull, the connection likely did not work
-	# 	self.assertNotEqual(start,self.ThreatObject.recordedThreats)
 
 	# Test the ability of the module to create unique identifier keys
 	def test_create_unique_key(self):
@@ -59,7 +49,7 @@ class Test_IoC(unittest.TestCase):
 		self.ThreatObject.pull()
 		self.ThreatObject.addToDatabase2()
 		# Connect to SQL database
-		con = _sqlite3.connect('../../Threats.sqlite')
+		con = _sqlite3.connect('./Database/Threats.sqlite')
 		cursor = con.cursor()
 		count = 0
 		# Extract the key from each threat to search for

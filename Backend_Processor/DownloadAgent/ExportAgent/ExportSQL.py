@@ -271,8 +271,8 @@ class ExportSQL:
 						action_list.append('General Threat')
 					# Construct MSG string
 					msg = ''.join(action_list)
-					write.append(msg[:-3])
-					msg = msg  +  '";'
+					msg = msg[:-3] +  '";'
+					write.append(msg)
 
 					# Close snort actions
 					write.append(')\n')
@@ -308,7 +308,7 @@ class ExportSQL:
 			self.sqlString += " OR "
 		# Add the column name to parse through and start the acceptable list
 		if colName not in self.sqlString:
-			self.sqlString += "  " + colName + " in ("
+			self.sqlString += "  " + colName + " IN ("
 		# Iterate through all list items and add to list
 		for item in valueList:
 			# print(type(item))
@@ -362,9 +362,9 @@ class ExportSQL:
 # if __name__ == '__main__':
 # 	exportObj = ExportSQL('./')
 # 	exportObj.extractFromDB()
-# 	exportObj.writeCSV()
-# 	exportObj.writeTab()
-# 	exportObj.writeJSON()
-# 	exportObj.writeBro()
-# 	exportObj.writeSNORT()
+	# exportObj.writeCSV()
+	# exportObj.writeTab()
+	# exportObj.writeJSON()
+	# exportObj.writeBro()
+	# exportObj.writeSNORT()
 

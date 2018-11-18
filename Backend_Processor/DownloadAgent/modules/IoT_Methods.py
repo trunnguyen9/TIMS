@@ -10,12 +10,12 @@
 from pprint import pprint
 from datetime import datetime
 from queue import Queue
-# from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch
 from .DataStore_SQLite import SQLiteDataStore
 import _sqlite3
 import hashlib
 import socket
-# import elasticsearch
+import elasticsearch
 import urllib.request
 import urllib.parse
 
