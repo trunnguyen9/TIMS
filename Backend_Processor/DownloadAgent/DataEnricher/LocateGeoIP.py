@@ -252,9 +252,10 @@ class LocateGeoIP(DataEnricher):
 	def set_countryDBloc(self,newLoc):
 		self.countryDBloc = newLoc
 # 
-# if __name__ == '__main__':
-# 	test = LocateGeoIP()
-# 	test.segmentPush()
+if __name__ == '__main__':
+	pass
+	# test = LocateGeoIP()
+	# test.segmentPush()
 
 
 
