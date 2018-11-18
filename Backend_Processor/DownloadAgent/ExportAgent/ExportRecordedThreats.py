@@ -1,11 +1,10 @@
-import modules
 import json
 import _sqlite3
 
 class ExportRecordedThreats:
     conn = 0
     def __init__(self):
-        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        self.conn = _sqlite3.connect('./Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
 
     def exportRTStatisticByProvider(self):
         cursor = self.conn.cursor()

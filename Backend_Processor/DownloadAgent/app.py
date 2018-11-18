@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import json
 from ExportAgent import ExportThreatStats, ExportRecordedThreats
 from UserStore_Module import UserStore
+from flask import send_file
 import logging
 
 app = Flask(__name__)
@@ -65,6 +66,16 @@ def statisticByProvider():
 def dumpDatabase():
     exportThreatStatInstance = ExportThreatStats()
     return exportThreatStatInstance.exportThreatStats()
+
+@app.route('/download/<path>')
+def downloadFile (path = None):
+    if path is None:
+        self.Error(400)
+    try:
+        return send_file('./ExportedFiles/' + path, as_attachment=True)
+    except Exception as e:
+        self.log.exception(e)
+        self.Error(400)
 
 
 app.logger.addHandler(handler)

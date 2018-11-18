@@ -7,6 +7,7 @@ import { StatisticComponent } from './Components/statistic/statistic.component';
 import {AuthGuard} from './Guards/auth.guard';
 import {RegisterComponent} from './Components/register/register.component';
 import {AboutusComponent} from './Components/aboutus/aboutus.component';
+import {DownloadComponent} from './Components/download/download.component';
 
 const routes: Routes = [
     {
@@ -39,6 +40,11 @@ const routes: Routes = [
         path: 'statistics',
         component: StatisticComponent,
         canActivate: [AuthGuard]
+    },
+    {
+      path: 'download',
+      component: DownloadComponent,
+      canActivate: [AuthGuard]
     },
     { path: '**', redirectTo: '/home' }
 ];

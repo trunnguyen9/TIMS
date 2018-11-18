@@ -14,6 +14,7 @@ import { HttpModule } from '@angular/http';
 import { ChartModule } from 'angular-highcharts';
 import { FooterComponent } from './Components/footer/footer.component';
 import { AboutusComponent } from './Components/aboutus/aboutus.component';
+import { DownloadComponent } from './Components/download/download.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AboutusComponent } from './Components/aboutus/aboutus.component';
     NavbarComponent,
     StatisticComponent,
     FooterComponent,
-    AboutusComponent
+    AboutusComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,
