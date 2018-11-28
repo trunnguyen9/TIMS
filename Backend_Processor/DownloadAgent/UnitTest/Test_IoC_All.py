@@ -22,7 +22,7 @@ class Test_IoC_CSIRTG(Test_IoC):
 
 class Test_IoC_EmergingThreats(Test_IoC):
 	def setUp(self):
-		self.ThreatObject = IoC_EmergingThreatsv2()	
+		self.ThreatObject = IoC_EmergingThreats()	
 
 class Test_IoC_Feodotracker(Test_IoC):
 	def setUp(self):

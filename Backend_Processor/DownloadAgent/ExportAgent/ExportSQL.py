@@ -81,9 +81,12 @@ class ExportSQL:
 			# with open(fileString,'wb') as outfile:
 			keys = self.threatList[0].keys()
 			with open(fileString, 'w', encoding='utf8') as output_file:
-				dict_writer = csv.DictWriter(output_file, keys)
-				dict_writer.writeheader()
-				dict_writer.writerows(self.threatList)
+				try:
+					dict_writer = csv.DictWriter(output_file, keys)
+					dict_writer.writeheader()
+					dict_writer.writerows(self.threatList)
+				except:
+					pass
 		else:
 			print("No information was successfully extracted for writing")
 
@@ -97,49 +100,19 @@ class ExportSQL:
 			# with open(fileString,'wb') as outfile:
 			keys = self.threatList[0].keys()
 			with open(fileString, 'w', encoding='utf8') as output_file:
-				dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
-				dict_writer.writeheader()
-				dict_writer.writerows(self.threatList)
+				try:
+					dict_writer = csv.DictWriter(output_file, keys, delimiter='\t')
+					dict_writer.writeheader()
+					dict_writer.writerows(self.threatList)
+				except:
+					pass
 		else:
 			print("No information was successfully extracted for writing")
 
 	# end csv write method
 
 	def writeBro(self):
-		# -- info on bro intelligence framework format --
-		# -- fields:  (tab between fields) --
-		# indicator     indicator_type    meta.source     meta.desc       meta.url
-		#
-		# -- indicator types: --
-		# Intel::ADDR
-		# Intel::SUBNET
-		# Intel::URL
-		# Intel::SOFTWARE
-		# Intel::EMAIL
-		# Intel::DOMAIN
-		# Intel::USER_NAME
-		# Intel::CERT_HASH (SHA1 HASH)
-		# Intel::PUBKEY_HASH (MD5 HASH)
-		# Intel::FILE_HASH (GENERIC HASH)
-		# Intel::FILE_NAME
-		#
-		# -- Relationships to Database Fields: --
-		# indicator <-> indicator
-		# Indicator_type -> itype
-		#       ipv4 -> Intel::ADDR
-		#       ipv6 -> Intel::ADDR
-		#       fqdn -> Intel::DOMAIN
-		#       url -> Intel::URL
-		#       email -> Intel::EMAIL
-		#       cidr -> Intel::SUBNET
-		#       md5 -> Intel::PUBKEY_HASH
-		#       sha1 -> Intel::CERT_HASH
-		#
-		# meta.source <-> provider
-		# meta.desc <-> description + tags
-		# meta.url <-> provider + rdata (maybe?)
-		#
-
+		# If the threat list is not empty, write data
 		if self.threatList:
 			# Add file extension
 			fileString = self.fileString + '.bro'
@@ -184,13 +157,16 @@ class ExportSQL:
 				writeList.append(tmp)
 
 			with open(fileString, 'w', encoding='utf8') as output_file:
-				# Write all valyes of the dictionary to the file
-				print("Writing BRO File: " + fileString)
-				# # Write Field Names to the File
-				output_file.write(hdrString)
-				# Call dictionary writer
-				dict_writer = csv.DictWriter(output_file,fieldnames=wkeys,delimiter='\t')
-				dict_writer.writerows(writeList)
+				try:
+					# Write all valyes of the dictionary to the file
+					print("Writing BRO File: " + fileString)
+					# # Write Field Names to the File
+					output_file.write(hdrString)
+					# Call dictionary writer
+					dict_writer = csv.DictWriter(output_file,fieldnames=wkeys,delimiter='\t')
+					dict_writer.writerows(writeList)
+				except:
+					pass
 		else:
 			print("No information was successfully extracted for writing")
 
@@ -280,10 +256,13 @@ class ExportSQL:
 
 			# Open File
 			with open(fileString, 'w', encoding='utf8') as output_file:
-				print("Writing SNORT File: " + fileString)
-				# Write all rules to file
-				for item in writeList:
-					output_file.write(item)
+				try:
+					print("Writing SNORT File: " + fileString)
+					# Write all rules to file
+					for item in writeList:
+						output_file.write(item)
+				except:
+					pass
 		else:
 			print("No information was successfully extracted for writing")
 	
@@ -294,7 +273,10 @@ class ExportSQL:
 			fileString = self.fileString + '.json'
 			print("Writing JSON File: " + fileString)
 			with open(fileString, 'w', encoding='utf8') as output_file:
-				json.dump(self.threatDict, output_file)
+				try:
+					json.dump(self.threatDict, output_file)
+				except:
+					pass
 		else:
 			print("No information was successfully extracted for writing")
 

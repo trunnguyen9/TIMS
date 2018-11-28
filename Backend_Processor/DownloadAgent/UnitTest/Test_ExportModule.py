@@ -20,12 +20,12 @@ class Test_ExportModule(unittest.TestCase):
 	def suite():
 		suite = unittest.TestSuite()
 		# suite.addTest(test_connect_resource('test_connect_resource'))
-		suite.addTest(test_extract_data('test_extract_data'))
+		# suite.addTest(test_extract_data('test_extract_data'))
 		# suite.addTest(test_write_csv('test_write_csv'))
 		# suite.addTest(test_write_tab('test_write_tab'))
 		# suite.addTest(test_write_json('test_write_json'))
 		# suite.addTest(test_write_bro('test_write_bro'))
-		suite.addTest(test_write_snort('test_write_snort'))
+		# suite.addTest(test_write_snort('test_write_snort'))
 		return suite
 
 	def test_extract_data(self):
@@ -133,7 +133,7 @@ class Test_ExportModule(unittest.TestCase):
 		self.assertNotEqual(full_list,[])
 
 	def test_write_snort(self):
-		# Extract Data
+		# Extract Data with legitimate ipv4 values
 		self.exportObj.addValues('iType',['ipv4'])
 		self.exportObj.extractFromDB()
 		# Reduce Threats
@@ -151,6 +151,19 @@ class Test_ExportModule(unittest.TestCase):
 		# Test Dictionary
 		self.assertNotEqual(full_list,[])
 
+	def test_ExportRecordedThreats(self):
+		# Overwrite existing export object
+		self.exportObj = ExportRecordedThreats()
+		# Call only function
+		result = self.exportObj.exportRTStatisticByProvider()
+		print(type(result))
+		self.assertNotEqual(result,dict())
+
+	def test_ExportThreatStats(self):
+		self.exportObj = ExportThreatStats()
+		sqlReturn = self.exportObj.exportThreatStats()
+		self.assertNotEqual(sqlReturn,'')
+
 	# Method to reduce the Number of Threats to the first 15 entries
 	def prune_threats(self):
 		num_threats = 15
@@ -167,7 +180,6 @@ class Test_ExportModule(unittest.TestCase):
 		self.exportObj.threatList = tmp_list
 		self.exportObj.threatDict = tmp_dict
 
-
 	#Start by creating an export instance 
 	def setUp(self):
 		self.exportObj = ExportSQL('./')
@@ -175,17 +187,19 @@ class Test_ExportModule(unittest.TestCase):
 
 	#Clean up all Written Files
 	def tearDown(self):
-		extensions = ['.csv','.json','.bro','.txt']
-		for ext in extensions:
-			file_str = self.exportObj.fileString + ext
-			if os.path.exists(file_str):
-				os.remove(file_str)
-		self.exportObj = None
-		self.exportObj = ExportSQL('./')
+		try:
+			extensions = ['.csv','.json','.bro','.txt','.snort']
+			for ext in extensions:
+				file_str = self.exportObj.fileString + ext
+				if os.path.exists(file_str):
+					os.remove(file_str)
+		except:
+			pass
 
 		
 
 if __name__ == '__main__':
 	unittest.main()
+
 
 	

@@ -9,6 +9,7 @@
 # Basic Run Script to Execute unite tests for defined test cases
 
 import unittest
+import nose
 # from DataStore_Modules import *
 from modules import *
 from UnitTest import Test_ExportModule, Test_IoC,Test_IoC_All
@@ -32,7 +33,7 @@ suite  = unittest.TestSuite()
 # suite.addTests(loader.loadTestsFromTestCase(Test_IoC_All.Test_IoC_PhishTank))
 # suite.addTests(loader.loadTestsFromTestCase(Test_IoC_All.Test_IoC_SANsEDU))
 # suite.addTests(loader.loadTestsFromTestCase(Test_IoC_All.Test_IoC_SpamHaus))
-# suite.addTests(loader.loadTestsFromTestCase(Test_IoC_All.Test_IoC_Zeus))
+suite.addTests(loader.loadTestsFromTestCase(Test_IoC_All.Test_IoC_Zeus))
 
 # Run All Test Cases
 runner = unittest.TextTestRunner(verbosity=3)
@@ -45,7 +46,7 @@ print("================ BEGIN EXPORT MODULE UNIT TESTS ================")
 suite  = unittest.TestSuite()
 
 # Extract Tests from TestCases
-suite.addTests(loader.loadTestsFromTestCase(Test_ExportModule))
+# suite.addTests(loader.loadTestsFromTestCase(Test_ExportModule))
 
 # Run All Test Cases
 runner = unittest.TextTestRunner(verbosity=3)
