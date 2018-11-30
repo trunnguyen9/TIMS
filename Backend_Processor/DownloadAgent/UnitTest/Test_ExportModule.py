@@ -20,9 +20,12 @@ class Test_ExportModule(unittest.TestCase):
 	def suite():
 		suite = unittest.TestSuite()
 		# suite.addTest(test_connect_resource('test_connect_resource'))
-		suite.addTest(test_extract_data('test_extract_data'))
-		suite.addTest(test_write_csv('test_write_csv'))
-		suite.addTest(test_write_json('test_write_json'))
+		# suite.addTest(test_extract_data('test_extract_data'))
+		# suite.addTest(test_write_csv('test_write_csv'))
+		# suite.addTest(test_write_tab('test_write_tab'))
+		# suite.addTest(test_write_json('test_write_json'))
+		# suite.addTest(test_write_bro('test_write_bro'))
+		# suite.addTest(test_write_snort('test_write_snort'))
 		return suite
 
 	def test_extract_data(self):
@@ -34,123 +37,169 @@ class Test_ExportModule(unittest.TestCase):
 	def test_write_csv(self):
 		#Extract Data
 		self.exportObj.extractFromDB()
-		# Restrict Number of Tests to the first 15 entries
-		tmp = dict();
-		keys = list(self.exportObj.threatDict.keys())
-		for count in range(15):
-			tmp[keys[count]] = self.exportObj.threatDict[keys[count]]
-		self.exportObj.threatDict = tmp
+		#Reduce Threats
+		self.prune_threats()
 		#Write Test File
 		self.exportObj.writeCSV()
-		csv_string = self.exportObj.fileString + '.csv'
-		# with open(csv_string) as f:
+		#Set the file string name
+		file_string = self.exportObj.fileString + '.csv'
+		
+		# Load the test file into a new expected format
 		full_list = []
-		with open(csv_string, "r") as infile:
+		with open(file_string, "r") as infile:
 			reader = csv.DictReader(infile)
 			for row in reader:
 				tmp_dict = dict()
 				tmp_dict.update(row)
 				full_list.append(tmp_dict)
-		self.assertNotEqual(full_list,[])
+
+		# Convert all entires of the main dictionary to strings
+		for item in self.exportObj.threatList:
+			keys = list(item.keys())
+			for key in keys:
+				item[key] = str(item[key])
+
+		# self.assertNotEqual(full_list,[])
+		self.assertEqual(full_list,self.exportObj.threatList)
 
 	#Test the ability of the module to parse the resources' response
-	def test_write_csv(self):
+	def test_write_tab(self):
 		#Extract Data
 		self.exportObj.extractFromDB()
-		# Restrict Number of Tests to the first 15 entries
-		tmp = dict();
-		keys = list(self.exportObj.threatDict.keys())
-		for count in range(15):
-			tmp[keys[count]] = self.exportObj.threatDict[keys[count]]
-		self.exportObj.threatDict = tmp
+		#Reduce Threats
+		self.prune_threats()
 		#Write Test File
-		self.exportObj.writeCSV()
-		csv_string = self.exportObj.fileString + '.txt'
-		# with open(csv_string) as f:
+		self.exportObj.writeTab()
+		#Set the file string name
+		file_string = self.exportObj.fileString + '.txt'
+		
+		# Load the test file into a new expected format
 		full_list = []
-		with open(csv_string, "r") as infile:
-			reader = csv.DictReader(infile)
+		with open(file_string, "r") as infile:
+			reader = csv.DictReader(infile, delimiter='\t')
 			for row in reader:
 				tmp_dict = dict()
 				tmp_dict.update(row)
 				full_list.append(tmp_dict)
-		self.assertNotEqual(full_list,[])
+
+		# Convert all entires of the main dictionary to strings
+		for item in self.exportObj.threatList:
+			keys = list(item.keys())
+			for key in keys:
+				item[key] = str(item[key])
+
+		# self.assertNotEqual(full_list,[])
+		self.assertEqual(full_list,self.exportObj.threatList)
 
 	# Test JSON Export Methods
 	def test_write_json(self):
-		#Extract Data
+		# Extract Data
 		self.exportObj.extractFromDB()
-		# Restrict Number of Tests to the first 15 entries
-		tmp = dict();
-		keys = list(self.exportObj.threatDict.keys())
-		for count in range(15):
-			tmp[keys[count]] = self.exportObj.threatDict[keys[count]]
-		self.exportObj.threatDict = tmp
+		# Reduce Threats
+		self.prune_threats()
 		# Write Test File
 		self.exportObj.writeJSON()
+		# Set the file string name
+		file_string = self.exportObj.fileString + '.json'
+
 		# Load the test file into a new expected format
-		json_file = self.exportObj.fileString + '.json'
-		json_io = open(json_file)
+		json_io = open(file_string)
 		json_data = json.loads(json_io.read())
+
 		#Check for equality
 		self.assertEqual(json_data,self.exportObj.threatDict)
 
 	def test_write_bro(self):
-		#Extract Data
+		# Extract Data
 		self.exportObj.extractFromDB()
-		# Restrict Number of Tests to the first 15 entries
-		tmp = dict();
-		keys = list(self.exportObj.threatDict.keys())
-		for count in range(15):
-			tmp[keys[count]] = self.exportObj.threatDict[keys[count]]
-		self.exportObj.threatDict = tmp
+		# Reduce Threats
+		self.prune_threats()
 		# Write Test File
 		self.exportObj.writeBro()
+		# Set the file string name
+		file_string = self.exportObj.fileString + '.bro'
+		
 		# Load the test file into a new expected format
-		bro_file = self.exportObj.fileString + '.bro'
+		reader = bro_log_reader.BroLogReader(file_string)
 
-		# Run the bro reader on a given log file
-		reader = bro_log_reader.BroLogReader(bro_file)
+		# Add each imported dictionary into a list
+		full_list = []
 		for row in reader.readrows():
-			pprint(row)
+			tmp_dict = dict()
+			tmp_dict.update(row)
+			full_list.append(tmp_dict)
+
+		# Test Dictionary
+		self.assertNotEqual(full_list,[])
 
 	def test_write_snort(self):
-		#Extract Data
+		# Extract Data with legitimate ipv4 values
+		self.exportObj.addValues('iType',['ipv4'])
 		self.exportObj.extractFromDB()
-		# Restrict Number of Tests to the first 15 entries
-		tmp = dict();
-		keys = list(self.exportObj.threatDict.keys())
-		for count in range(15):
-			tmp[keys[count]] = self.exportObj.threatDict[keys[count]]
-		self.exportObj.threatDict = tmp
+		# Reduce Threats
+		self.prune_threats()
 		# Write Test File
 		self.exportObj.writeSNORT()
-		# Load the test file into a new expected format
-		snort_file = self.exportObj.fileString + '.snort'
+		# Set the file string name
+		file_string = self.exportObj.fileString + '.snort'
 
-		# Run the bro reader on a given log file
-		reader = bro_log_reader.BroLogReader(snort_file)
-		for row in reader.readrows():
-			pprint(row)
+		# Load the test file into a new expected format
+		full_list = []
+		with open(file_string, "r") as infile:
+			full_list = infile.readlines()
+		print(len(full_list))
+		# Test Dictionary
+		self.assertNotEqual(full_list,[])
+
+	def test_ExportRecordedThreats(self):
+		# Overwrite existing export object
+		self.exportObj = ExportRecordedThreats()
+		# Call only function
+		result = self.exportObj.exportRTStatisticByProvider()
+		print(type(result))
+		self.assertNotEqual(result,dict())
+
+	def test_ExportThreatStats(self):
+		self.exportObj = ExportThreatStats()
+		sqlReturn = self.exportObj.exportThreatStats()
+		self.assertNotEqual(sqlReturn,'')
+
+	# Method to reduce the Number of Threats to the first 15 entries
+	def prune_threats(self):
+		num_threats = 15
+		# Create shortened lists and dictionaries
+		tmp_list = list()
+		tmp_dict = dict()
+		# Extract dictionary keys
+		keys = list(self.exportObj.threatDict.keys())
+		# Sort through first X threats
+		for count in range(num_threats):
+			tmp_list.append(self.exportObj.threatList[count])
+			tmp_dict[keys[count]] = self.exportObj.threatDict[keys[count]]
+		# Store new dictionary and lists
+		self.exportObj.threatList = tmp_list
+		self.exportObj.threatDict = tmp_dict
 
 	#Start by creating an export instance 
 	def setUp(self):
 		self.exportObj = ExportSQL('./')
-		self.exportObj.updateDBloc('../../')
+		self.exportObj.updateDBloc('./Database')
 
 	#Clean up all Written Files
 	def tearDown(self):
-		extensions = ['.csv','.json','bro','.snort','.txt']
-		for ext in extensions:
-			file_str = self.exportObj.fileString + ext
-			if os.path.exists(file_str):
-				os.remove(file_str)
-		self.exportObj = None
-		self.exportObj = ExportSQL('./')
+		try:
+			extensions = ['.csv','.json','.bro','.txt','.snort']
+			for ext in extensions:
+				file_str = self.exportObj.fileString + ext
+				if os.path.exists(file_str):
+					os.remove(file_str)
+		except:
+			pass
 
 		
 
 if __name__ == '__main__':
 	unittest.main()
+
 
 	

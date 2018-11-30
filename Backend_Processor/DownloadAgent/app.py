@@ -67,6 +67,16 @@ def dumpDatabase():
     exportThreatStatInstance = ExportThreatStats()
     return exportThreatStatInstance.exportThreatStats()
 
+@app.route('/download/<path>')
+def downloadFile (path = None):
+    if path is None:
+        self.Error(400)
+    try:
+        return send_file('./ExportedFiles/' + path, as_attachment=True)
+    except Exception as e:
+        self.log.exception(e)
+        self.Error(400)
+
 
 @app.route('/download/<path>')
 def downloadFile(path=None):
