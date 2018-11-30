@@ -18,7 +18,7 @@ class IoC_Feodotracker(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print("FeodoTracker")
+        # print("FeodoTracker")
         #self.multiThreader()
     #END Constructor
 
@@ -32,7 +32,7 @@ class IoC_Feodotracker(IoC_Methods):
         allThreats = dict()
         logTitle = "FedoTracker:" + urlItem
 
-        print (urlItem)
+        # print (urlItem)
         self.TIMSlog['startTime']=datetime.datetime.utcnow()
         threatConfidence = 0
         self.threatCounter=0
@@ -91,6 +91,6 @@ class IoC_Feodotracker(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
     #End Pull
 #End EmergingThreatsv2

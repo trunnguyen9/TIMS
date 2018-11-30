@@ -22,8 +22,7 @@ class IoC_NoThink(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("NoThink")
-        #self.multiThreader()
+        # print ("NoThink")
     #END Constructor
 
     def run(self):
@@ -31,7 +30,7 @@ class IoC_NoThink(IoC_Methods):
     # end run
 
     def pull(self,urlItem):
-        NoThink_Threat = dict()
+        # NoThink_Threat = dict()
         allThreats=dict()
 
         logTitle = "NoThink : " + urlItem
@@ -40,7 +39,6 @@ class IoC_NoThink(IoC_Methods):
         # is a seperate threat
 
         individualFileItemCounter=0
-        print (urlItem)
         self.TIMSlog['startTime'] = datetime.datetime.utcnow()
         NoThinkThreat = dict()
         page = requests.get(urlItem).text
@@ -80,6 +78,5 @@ class IoC_NoThink(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
 #End NoThink
 

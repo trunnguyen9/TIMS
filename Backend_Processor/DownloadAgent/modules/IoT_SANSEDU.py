@@ -25,7 +25,7 @@ class IoC_SANsEDU(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("SANS.EDU")
+        # print ("SANS.EDU")
         #self.multiThreader()
     #END Constructor
 
@@ -86,6 +86,6 @@ class IoC_SANsEDU(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 #End SANsEDU
 

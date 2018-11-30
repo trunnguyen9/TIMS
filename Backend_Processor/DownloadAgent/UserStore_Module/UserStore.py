@@ -1,5 +1,4 @@
 import _sqlite3
-import DataStore_Modules
 import jwt
 from datetime import timedelta, datetime
 
@@ -7,7 +6,7 @@ class UserStore:
     conn = 0
 
     def __init__(self):
-        self.conn = _sqlite3.connect('./Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
+        self.conn = _sqlite3.connect('./Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
 
 
 

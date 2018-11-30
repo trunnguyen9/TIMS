@@ -19,7 +19,7 @@ class IoC_OpenPhish(IoC_Methods):
     urlList = ["https://openphish.com/feed.txt"]
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("OpenPhish")
+        # print ("OpenPhish")
         #self.multiThreader()
     #END Constructor
 
@@ -78,7 +78,7 @@ class IoC_OpenPhish(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 
     # end pull OpenPhish
 #End NoThink

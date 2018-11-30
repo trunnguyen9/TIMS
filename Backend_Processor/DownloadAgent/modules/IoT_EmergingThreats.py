@@ -25,7 +25,7 @@ class IoC_EmergingThreats(IoC_Methods):
     # end run
 
     def pull(self,urlItem):
-        print("Pulling Emerging Threats .. shouldnt take long!")
+        # print("Pulling Emerging Threats .. shouldnt take long!")
 
         lineCount = 0
         EmergingThreat = dict()
@@ -73,5 +73,5 @@ class IoC_EmergingThreats(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 #End EmergingThreatsv2

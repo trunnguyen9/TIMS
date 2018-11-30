@@ -23,7 +23,7 @@ class IoC_SpamHaus(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("SpamHaus")
+        # print ("SpamHaus")
         #self.multiThreader()
     #END Constructor
 
@@ -40,7 +40,7 @@ class IoC_SpamHaus(IoC_Methods):
 
         logTitle="Spam Haus : " + urlItem
 
-        print (urlItem)
+        # print (urlItem)
         self.TIMSlog['startTime'] = datetime.datetime.utcnow()
         dresponse = urllib.request.urlopen(urlItem)
         ddata = dresponse.read()  # a `bytes` object
@@ -84,6 +84,6 @@ class IoC_SpamHaus(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 #End SpamHaus
 

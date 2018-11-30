@@ -21,7 +21,7 @@ class IoC_AlienVault(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print("AlienVault")
+        # print("AlienVault")
         #self.multiThreader()
     #END Constructor
 
@@ -73,13 +73,14 @@ class IoC_AlienVault(IoC_Methods):
                 AlienThreat.clear()
 
         # connect to DB
+        # print ("Creating Database Connection:")
         SQLiteDS = SQLiteDataStore()
         dbConn = SQLiteDS.getDBConn()
         dbCursor = SQLiteDS.getDBCursor()
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
     #End Pull
 
 #End EmergingThreatsv2

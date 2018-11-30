@@ -11,6 +11,7 @@ import requests
 from modules.DataStore_SQLite import SQLiteDataStore
 import hashlib
 from hashlib import md5
+import re
 
 class IoC_NetLabs360(IoC_Methods):
     threatCounter = 0
@@ -55,9 +56,7 @@ class IoC_NetLabs360(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("Creating a NetLab360 Object:")
-        #change this:
-        #self.multiThreader()
+        # print ("Creating a NetLab360 Object:")
 
     #END Constructor
 
@@ -66,24 +65,27 @@ class IoC_NetLabs360(IoC_Methods):
     # end run
 
     def pull(self, urlItem):
+        self.textURI = urlItem
 
         allThreats=dict()
 
         NetLabThreat = dict()
         linkItemCount=0
         conn=0
-        print("Item:", urlItem)
+        # print("Item:", urlItem)
         logTitle="Netlabs360:" + urlItem
         self.recordedThreats.clear()
         threatItype="fqdn"
         page = requests.get(urlItem).text
         linesDownloaded=page.split('\n')
         self.TIMSlog['startTime'] = datetime.datetime.utcnow()
-
+        # print("Number of Lines:" + str(len(linesDownloaded)))
         for item in linesDownloaded:
             if item.startswith('#'):
                 continue
             else:
+                split_item = item.split("\t")
+
                 sqlLoggerComment="NetLab : " + urlItem
                 NetLabThreat['threatkey'] = ""
                 NetLabThreat['tlp'] = "green"
@@ -91,7 +93,7 @@ class IoC_NetLabs360(IoC_Methods):
                 NetLabThreat['lasttime'] = str(datetime.datetime.utcnow())
                 NetLabThreat['icount'] = 1
                 NetLabThreat['itype'] = threatItype
-                NetLabThreat['indicator'] = item
+                NetLabThreat['indicator'] = split_item[0]
                 NetLabThreat['cc'] = ""
                 NetLabThreat['asn'] = ""
                 NetLabThreat['asn_desc'] = ""
@@ -117,6 +119,6 @@ class IoC_NetLabs360(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor,allThreats)
         self.writeLogToDB(dbConn,dbCursor,logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 #End NetLab360
 

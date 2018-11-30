@@ -25,7 +25,7 @@ class IoC_Zeus(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print ("Zeus Tracker")
+        # print ("Zeus Tracker")
         #self.multiThreader()
     #END Constructor
 
@@ -39,7 +39,7 @@ class IoC_Zeus(IoC_Methods):
 
         linkItemCount=0
 
-        print (urlItem)
+        # print (urlItem)
         self.TIMSlog['startTime'] = datetime.datetime.utcnow()
         threatItype="type"
         page = requests.get(urlItem).text
@@ -89,7 +89,7 @@ class IoC_Zeus(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
+        # print("Complete!:", logTitle)
 
 #End Zeus
 

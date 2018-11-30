@@ -22,7 +22,7 @@ class IoC_PhishTank(IoC_Methods):
 
     def __init__(self):
         IoC_Methods.__init__(self)
-        print("PhishTank")
+        # print("PhishTank")
     #END Constructor
 
     def run(self):
@@ -31,19 +31,16 @@ class IoC_PhishTank(IoC_Methods):
 
     def pull(self,urlItem):
         allThreats = dict()
-        print("Pulling Phish Tank Data, this could take a while, its pretty large")
+        # print("Pulling Phish Tank Data, this could take a while, its pretty large")
         phishThreat = dict()  # temp spot to hold threat info to put in recordedThreats
         lineCount = 0
         logTitle = "PhishTank : " + urlItem
         # I think it might be worth making the URI an attribute of the class - Doug
         x = urllib.request.urlopen(urlItem)
-        print ("x",x)
         results = x.read()
         results = results.decode("utf-8")
-        # pprint (results)
-        # print("----======----")
+
         jsonResults = json.loads(results)
-        # sqlLogger=DataStore_Modules.DataStore_MySQL.dataStore_MySQL_Logger()
 
         for x in jsonResults:
             lineCount += 1
@@ -83,6 +80,4 @@ class IoC_PhishTank(IoC_Methods):
         self.addToDatabase(dbConn, dbCursor, allThreats)
         self.writeLogToDB(dbConn, dbCursor, logTitle)
         # do DB save and close
-        print("Complete!:", logTitle)
-        print("Completed Phish Tank Ingest!")
 #End EmergingThreatsv2
