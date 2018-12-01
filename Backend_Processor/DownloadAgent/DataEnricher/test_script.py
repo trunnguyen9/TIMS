@@ -12,6 +12,7 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     # testHostname.displayExtract()
     testHostname.updateDB()
+    testHostname.saveEnrichLog()
 
     testGeo = LocateGeoIP()
     print('Threaded Approach:')
@@ -20,3 +21,4 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     # testHostname.displayExtract()
     testGeo.updateDB()
+    testHostname.saveEnrichLog()

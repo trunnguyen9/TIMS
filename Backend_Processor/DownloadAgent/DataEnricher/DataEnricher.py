@@ -15,6 +15,8 @@ import sys
 import os
 import time
 import socket
+import elasticsearch
+from elasticsearch import Elasticsearch
 
 
 class DataEnricher:
@@ -24,9 +26,18 @@ class DataEnricher:
     sqlString = "SELECT * FROM 'RecordedThreatsDB' "
     segment = 1000
 
+    enrichLog = dict()
+    breakCount = 0
+
     def __init__(self):
         # Collect current time to update database with
         self.modtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        self.enrichLog['startTime'] = datetime.now()
+        self.enrichLog['endTime'] = 0
+        self.enrichLog['totalProcessed'] = 0
+        self.enrichLog['totalSuccess'] = 0
+        self.enrichLog['totalFailure'] = 0
 
     def set_sqlDBloc(self, newLoc):
         self.sqlDBloc = newLoc
@@ -123,6 +134,8 @@ class DataEnricher:
         try:
             # Push Update SQL Requests
             print('Pushing Enrichment to Thereat Database...')
+            self.breakCount += 1
+            print(self.breakCount)
             cursor.executemany(updateString, entries)
 
             # Close the SQL Connection
@@ -146,6 +159,7 @@ class DataEnricher:
 
         # Add threats to the dictionary until segment length is met
         count = 0
+
         for key in recordedThreats_all:
             self.recordedThreats[key] = recordedThreats_all[key]
             count = count + 1
@@ -179,6 +193,7 @@ class DataEnricher:
 
         # Add threats to the dictionary until segment length is met
         count = 0
+
         for key in recordedThreats_all:
             self.recordedThreats[key] = recordedThreats_all[key]
             count = count + 1
@@ -246,6 +261,24 @@ class DataEnricher:
     # Method to change segment number externaly
     def set_segment(self, number):
         self.segment = number
+
+    def saveEnrichLog(self):
+        self.enrichLog['endTime'] = datetime.now()
+        self.enrichLog['timeProccessed'] = self.enrichLog['endTime'] - self.enrichLog['startTime']
+        print("Enrichment Log:")
+        print("--===============--")
+        print(self.enrichLog)
+
+        try:
+            es = Elasticsearch([{'host': '173.253.201.243', 'port': 9200}])
+        except Exception as ex:
+            print("ES ERROR:", ex)
+
+        try:
+            es.index(index='timsenricher_index', doc_type='timsenrich_log', id=self.enrichLog['startTime'],
+                     body=self.enrichLog)
+        except elasticsearch.ElasticsearchException as es1:
+            print("TL Error:" + es1)
 
 
 if __name__ == '__main__':
