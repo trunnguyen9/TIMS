@@ -6,8 +6,8 @@
 #
 # --====================================================--
 #
-# Unit Test Object with methods for assessing functionality of
-# TIMS IoC Module
+# Unit Tests for all classes in Export Module
+# 
 import unittest
 import json
 import csv

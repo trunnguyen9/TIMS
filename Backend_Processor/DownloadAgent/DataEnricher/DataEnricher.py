@@ -19,7 +19,7 @@ import socket
 
 class DataEnricher:
     recordedThreats = dict()
-    sqlDBloc = '../Database/Threats.sqlite'
+    sqlDBloc = './Database/Threats.sqlite'
     modtime = ''
     sqlString = "SELECT * FROM 'RecordedThreatsDB' "
     segment = 1000
@@ -122,7 +122,7 @@ class DataEnricher:
             entries.append(params)
         try:
             # Push Update SQL Requests
-            print('Pushing Enrichment to Thereat Database...')
+            print('Pushing Enrichment to Threat Database...')
             cursor.executemany(updateString, entries)
 
             # Close the SQL Connection

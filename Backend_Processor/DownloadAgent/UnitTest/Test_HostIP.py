@@ -6,8 +6,8 @@
 #
 # --====================================================--
 #
-# Unit Test Object with methods for assessing functionality of
-# TIMS IoC Module
+# Unit Tests for HostIP Enrichment Class
+# 
 import unittest
 import os
 from DataEnricher import *
