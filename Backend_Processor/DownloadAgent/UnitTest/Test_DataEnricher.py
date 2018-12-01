@@ -10,13 +10,14 @@
 # 
 import unittest
 import os
+from shutil import copyfile
 from DataEnricher import *
 
 class Test_DataEnricher(unittest.TestCase):
 
-	def suite():
-		suite = unittest.TestSuite()
-		return suite
+	# def suite():
+	# 	suite = unittest.TestSuite()
+	# 	return suite
 
 	# Test the ability to return a dictionary
 	def test_return_data(self):
@@ -54,7 +55,10 @@ class Test_DataEnricher(unittest.TestCase):
 		for item in self.enrichObj.recordedThreats:
 			start_dict[item] = dict()
 			start_dict[item]['enriched'] = self.enrichObj.recordedThreats[item].get('enriched')
-			self.enrichObj.recordedThreats[item]['enriched'] = 'UnitTest'
+			if self.enrichObj.recordedThreats[item]['enriched'] == 'UnitTest':
+				self.enrichObj.recordedThreats[item]['enriched'] = 'UnitTest2'
+			else:
+				self.enrichObj.recordedThreats[item]['enriched'] = 'UnitTest'
 			key_list.append(self.enrichObj.recordedThreats[item]['threatKey'])
 
 		# Push updates to DB
@@ -67,8 +71,6 @@ class Test_DataEnricher(unittest.TestCase):
 		# Count the number of values successfull changed
 		count = 0
 		for item in self.enrichObj.recordedThreats:
-			print(start_dict[item]['enriched'])
-			print(self.enrichObj.recordedThreats[item]['enriched'])
 			if start_dict[item]['enriched'] != self.enrichObj.recordedThreats[item]['enriched']:
 				count +=1
 
@@ -102,11 +104,12 @@ class Test_DataEnricher(unittest.TestCase):
 	#Start by creating an export instance 
 	def setUp(self):
 		self.enrichObj = DataEnricher()
+		copyfile('./Database/Threats.sqlite','./UnitTest/UnitTestThreats.sqlite')
+		self.enrichObj.set_sqlDBloc('./Database/UnitTestThreats.sqlite')
 
-		
 
-if __name__ == '__main__':
-	unittest.main()
+# if __name__ == '__main__':
+# 	unittest.main()
 
 
 	

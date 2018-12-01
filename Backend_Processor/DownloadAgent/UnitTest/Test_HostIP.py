@@ -10,6 +10,7 @@
 # 
 import unittest
 import os
+from shutil import copyfile
 from DataEnricher import *
 from UnitTest import Test_DataEnricher
 
@@ -71,5 +72,8 @@ class Test_HostIP(Test_DataEnricher):
 	#Start by creating an export instance 
 	def setUp(self):
 		self.enrichObj = HostIP()
+		self.sqlString = "SELECT * FROM 'RecordedThreatsDB' "
+		copyfile('./Database/Threats.sqlite','./UnitTest/UnitTestThreats.sqlite')
+		self.enrichObj.set_sqlDBloc('./Database/UnitTestThreats.sqlite')
 
 
