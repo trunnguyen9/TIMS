@@ -6,8 +6,8 @@
 #
 # --====================================================--
 #
-# Unit Test Object with methods for assessing functionality of
-# TIMS IoC Modules
+# Unit Tests Set Ups for All IoC Modules
+# 
 
 from UnitTest import Test_IoC
 from modules import * #Import All Available IoC Modules
@@ -16,9 +16,9 @@ class Test_IoC_AlienVault(Test_IoC):
 	def setUp(self):
 		self.ThreatObject = IoC_AlienVault()	
 
-class Test_IoC_CSIRTG(Test_IoC):
-	def setUp(self):
-		self.ThreatObject = IoC_CSIRTG()	
+# class Test_IoC_CSIRTG(Test_IoC):
+# 	def setUp(self):
+# 		self.ThreatObject = IoC_CSIRTG()	
 
 class Test_IoC_EmergingThreats(Test_IoC):
 	def setUp(self):
@@ -42,7 +42,7 @@ class Test_IoC_OpenPhish(Test_IoC):
 
 class Test_IoC_PhishTank(Test_IoC):
 	def setUp(self):
-		self.ThreatObject = IoC_PhishTankv2()	
+		self.ThreatObject = IoC_PhishTank()	
 
 class Test_IoC_SANsEDU(Test_IoC):
 	def setUp(self):
