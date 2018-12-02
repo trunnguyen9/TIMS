@@ -116,7 +116,7 @@ class LocateGeoIP(DataEnricher):
 		self.count_total = len(self.recordedThreats)
 
 		# Connect to the ASN Database
-		print('Connecting to GeoLite 2 Autonomous System Database...')
+		# print('Connecting to GeoLite 2 Autonomous System Database...')
 		self.reader = geoip2.database.Reader(self.asnDBloc)
 
 		# Set Counter
@@ -132,12 +132,12 @@ class LocateGeoIP(DataEnricher):
 			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
 			# Update Database
 			self.updateValues(rtn[1],rtn[2],rtn[3])
-		print('\n')
+		# print('\n')
 		#Close the Reader
 		self.reader.close()
 
 		# Connect to the City Database
-		print('Connecting to GeoIP City Database...\n')
+		# print('Connecting to GeoIP City Database...\n')
 		self.reader = geoip2.database.Reader(self.cityDBloc)
 
 		# Set Counter
@@ -153,7 +153,7 @@ class LocateGeoIP(DataEnricher):
 			# print('Entry: ' + rtn[1] + ' | #' + str(self.count) + '/' + str(self.count_total) + rtn[0])
 			# Update Database
 			self.updateValues(rtn[1],rtn[2],rtn[3])
-		print('\n')
+		# print('\n')
 		#Close the Reader
 		self.reader.close()
 
@@ -171,7 +171,7 @@ class LocateGeoIP(DataEnricher):
 			self.keyList.append(item)
 
 		# Connect to the ASN Database
-		print('Connecting to GeoLite 2 Autonomous System Database...')
+		# print('Connecting to GeoLite 2 Autonomous System Database...')
 		# Set Counter
 		self.count = 0
 		self.reader = geoip2.database.Reader(self.asnDBloc)
@@ -193,10 +193,10 @@ class LocateGeoIP(DataEnricher):
 		pool.join()
 		#Close the Readers
 		self.reader.close()
-		print('\n')
+		# print('\n')
 
 		# Connect to the City Database
-		print('Connecting to GeoIP City Database...\n')
+		# print('Connecting to GeoIP City Database...\n')
 		# Set Counter
 		self.count = 0
 		self.reader = geoip2.database.Reader(self.cityDBloc)
@@ -218,7 +218,7 @@ class LocateGeoIP(DataEnricher):
 		pool.join()
 		#Close the Readers
 		self.reader.close()
-		print('\n')
+		# print('\n')
 
 	def updateValues(self,item,keys,values):
 		self.recordedThreats[item]['enriched'] = 1
@@ -255,10 +255,10 @@ class LocateGeoIP(DataEnricher):
 	def set_countryDBloc(self,newLoc):
 		self.countryDBloc = newLoc
 # 
-if __name__ == '__main__':
-	pass
-	# test = LocateGeoIP()
-	# test.segmentPush()
+# if __name__ == '__main__':
+# 	pass
+# 	test = LocateGeoIP()
+# 	test.segmentPush()
 
 
 

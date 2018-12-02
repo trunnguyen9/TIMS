@@ -21,7 +21,7 @@ from elasticsearch import Elasticsearch
 
 class DataEnricher:
     recordedThreats = dict()
-    sqlDBloc = '../Database/Threats.sqlite'
+    sqlDBloc = './Database/Threats.sqlite'
     modtime = ''
     sqlString = "SELECT * FROM 'RecordedThreatsDB' "
     segment = 1000
@@ -133,7 +133,7 @@ class DataEnricher:
             entries.append(params)
         try:
             # Push Update SQL Requests
-            print('Pushing Enrichment to Thereat Database...')
+            print('\nPushing Enrichment to Thereat Database...')
             self.breakCount += 1
             print(self.breakCount)
             cursor.executemany(updateString, entries)
@@ -208,7 +208,7 @@ class DataEnricher:
                 count = 0
         # Push the last < segment entires to the table
         # Enrich the data
-        self.enrichData()
+        self.enrichData_threaded()
         # Push to the database
         self.updateDB()
 
@@ -287,8 +287,8 @@ class DataEnricher:
             print("TL Error:" + es1)
 
 
-if __name__ == '__main__':
-    pass
+# if __name__ == '__main__':
+#     pass
 # test = DataEnricher()
 # test.extractFromDB()
 # # test.displayExtract()

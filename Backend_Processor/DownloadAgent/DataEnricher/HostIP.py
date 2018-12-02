@@ -115,7 +115,7 @@ class HostIP(DataEnricher):
 
 
 #
-if __name__ == '__main__':
-    pass
+# if __name__ == '__main__':
+#     pass
 # test = HostIP()
 # test.segmentPush_threaded()
