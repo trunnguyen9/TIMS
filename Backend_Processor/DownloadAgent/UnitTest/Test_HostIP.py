@@ -74,6 +74,6 @@ class Test_HostIP(Test_DataEnricher):
 		self.enrichObj = HostIP()
 		self.sqlString = "SELECT * FROM 'RecordedThreatsDB' "
 		copyfile('./Database/Threats.sqlite','./UnitTest/UnitTestThreats.sqlite')
-		self.enrichObj.set_sqlDBloc('./Database/UnitTestThreats.sqlite')
+		self.enrichObj.set_sqlDBloc('./UnitTest/UnitTestThreats.sqlite')
 
 

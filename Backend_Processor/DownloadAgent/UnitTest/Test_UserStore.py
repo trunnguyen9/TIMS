@@ -36,14 +36,11 @@ class Test_UserStore(unittest.TestCase):
 		self.assertTrue('error' not in user_dict)
 
 	def clear_entry(self):
-		sqlString = "DELETE FROM 'User' WHERE username = " + '\'' + self.test_un + '\'' + " AND " + '\'' + self.test_pw + '\'' " ;"
+		sqlString = "DELETE FROM 'User' WHERE username = " + '\'' + self.test_un + '\'' + " ;"
 		# Delete the inserted entry to avoid creating a security flaw
-		conn = _sqlite3.connect('./Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
-		cursor = conn.cursor()
+		cursor = self.user.conn.cursor()
 		cursor.execute(sqlString)
-		conn.commit()
-		cursor.close()
-		conn.close()
+		self.user.conn.commit()
 
 	def setUp(self):
 		self.user = UserStore()
@@ -51,6 +48,7 @@ class Test_UserStore(unittest.TestCase):
 		self.test_pw = 'UnitTest_Password'
 		self.test_fn = 'UnitTest_FirstName'
 		self.test_ln = 'UnitTest_LastName'
+		self.clear_entry()
 
 
 

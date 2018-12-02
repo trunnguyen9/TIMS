@@ -8,8 +8,6 @@ class UserStore:
     def __init__(self):
         self.conn = _sqlite3.connect('./Database/Threats.sqlite', detect_types=_sqlite3.PARSE_DECLTYPES)
 
-
-
     def retrieveUser(self, username, password):
         cursor = self.conn.cursor()
         sqlString = "SELECT id, username, firstname, lastname FROM `User` WHERE `username` = '" + username + "' AND `password` = '" + password + "';"

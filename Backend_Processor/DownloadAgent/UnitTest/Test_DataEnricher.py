@@ -44,11 +44,11 @@ class Test_DataEnricher(unittest.TestCase):
 		self.enrichObj.extractFromDB()
 		self.assertTrue(self.enrichObj.recordedThreats)
 
-	def test_update_db(self):		
-		# Pull Files to Test
-		self.enrichObj.sqlString = "SELECT * FROM 'RecordedThreatsDB' LIMIT 15 "
+	def test_update_db(self):
 		# Extract the Data
 		self.enrichObj.extractFromDB()
+		# Reduce the Number of Entries
+		self.prune_threats()
 		# Create truth values
 		start_dict = dict()
 		key_list = []
@@ -63,6 +63,8 @@ class Test_DataEnricher(unittest.TestCase):
 
 		# Push updates to DB
 		self.enrichObj.updateDB()
+
+
 		# Pull from database with the same keys
 		self.enrichObj.sqlString = "SELECT * FROM 'RecordedThreatsDB' "
 		self.enrichObj.addValues('threatKey',key_list)
@@ -105,7 +107,7 @@ class Test_DataEnricher(unittest.TestCase):
 	def setUp(self):
 		self.enrichObj = DataEnricher()
 		copyfile('./Database/Threats.sqlite','./UnitTest/UnitTestThreats.sqlite')
-		self.enrichObj.set_sqlDBloc('./Database/UnitTestThreats.sqlite')
+		self.enrichObj.set_sqlDBloc('./UnitTest/UnitTestThreats.sqlite')
 
 
 # if __name__ == '__main__':

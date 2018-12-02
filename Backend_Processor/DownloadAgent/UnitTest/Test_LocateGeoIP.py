@@ -93,6 +93,6 @@ class Test_LocateGeoIP(Test_DataEnricher):
 		self.enrichObj = LocateGeoIP()
 		self.enrichObj.sqlString = "SELECT * FROM 'RecordedThreatsDB' "
 		copyfile('./Database/Threats.sqlite','./UnitTest/UnitTestThreats.sqlite')
-		self.enrichObj.set_sqlDBloc('./Database/UnitTestThreats.sqlite')
+		self.enrichObj.set_sqlDBloc('./UnitTest/UnitTestThreats.sqlite')
 
 
