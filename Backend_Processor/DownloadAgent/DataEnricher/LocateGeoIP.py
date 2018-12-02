@@ -15,6 +15,7 @@ from datetime import datetime
 from multiprocessing import Pool
 import socket
 import geoip2.database
+from pathlib import Path
 
 
 class LocateGeoIP(DataEnricher):
@@ -29,7 +30,9 @@ class LocateGeoIP(DataEnricher):
 	def __init__(self):
 		super().__init__()
 		# Connect the GeoLite object to all available databases of interest
+
 		self.asnDBloc = './DataEnricher/GeoLite2/GeoLite2-ASN_20180918/GeoLite2-ASN.mmdb'
+
 		self.cityDBloc = './DataEnricher/GeoLite2/GeoLite2-City_20180911/GeoLite2-City.mmdb'
 		self.countryDBloc = './DataEnricher/GeoLite2/GeoLite2-Country_20180911/GeoLite2-Country.mmdb'
 
