@@ -85,7 +85,6 @@ class IoC_Methods:
         cursor = dbCursor
 
         # print("Number of Threats::" + str(len(allThreats)))
-
         for item in allThreats:
             self.TIMSlog['lineCount'] += 1
             str_printline = allThreats[item]['provider'] + ":" + str(
@@ -128,11 +127,13 @@ class IoC_Methods:
             except _sqlite3.Error as e:
                 # counts duplicates, records already in the database dont need to be added again
                 self.TIMSlog['dupeCount'] += 1
+                print("::SQL Error:", e)
             except _sqlite3.OperationalError as e:
                 # if database locked, wait 1 sec and try again
                 print("DB wait, collision!")
                 time.sleep(1)
                 self.conn.commit()
+                print(":::SQL Error:", e)
             except Exception as e:
                 print("Exception in _query: %s" % e)
             finally:

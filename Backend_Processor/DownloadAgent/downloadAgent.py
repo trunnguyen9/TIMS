@@ -50,7 +50,7 @@ if __name__ == '__main__':
         # print ("currentHour", currentHour,"interval:",data['time'],"mod:", (currentHour % hourInterval))
 
         # compares interval from configuration file to current hour
-        if currentHour % hourInterval == 0:
+        if currentHour % hourInterval != 0:
             print ("its the right time to process!: processing!!!")
             startTime= datetime.utcnow()
 
@@ -63,10 +63,18 @@ if __name__ == '__main__':
             # This enabling/disabling datafeeds is handled through the web interface
             # that saves to the configuration file
 
+            if "EmergingThreats:True" in sourceList:
+                EmergingThreats_gatherer = modules.IoC_EmergingThreats()
+                objQueue.put(EmergingThreats_gatherer)
+
+            if "NoThink:True" in sourceList:
+                NoThink_Gatherer = modules.IoC_NoThink()
+                objQueue.put(NoThink_Gatherer)
+            '''
             if "AlienVault:True" in sourceList:
                 AlienVault_Gatherer = modules.IoC_AlienVault()
                 objQueue.put(AlienVault_Gatherer)
-
+            
             if "EmergingThreats:True" in sourceList:
                 EmergingThreats_gatherer = modules.IoC_EmergingThreats()
                 objQueue.put(EmergingThreats_gatherer)
@@ -103,7 +111,7 @@ if __name__ == '__main__':
                 FedoTracker_Gatherer = modules.IoC_Feodotracker()
                 objQueue.put(FedoTracker_Gatherer)
             # print ("Objects in Queue:", objQueue.qsize())
-
+            '''
             # create list for multiThreading
             objThreadsList = []
 

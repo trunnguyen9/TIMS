@@ -269,13 +269,19 @@ class DataEnricher:
         print("--===============--")
         print(self.enrichLog)
 
+        self.enrichLog['startTime'] = str(self.enrichLog['startTime'])
+        self.enrichLog['endTime'] = str(self.enrichLog['endTime'])
+        self.enrichLog['timeProccessed'] = str(self.enrichLog['timeProccessed'])
+        self.enrichLog['totalProcessed'] = self.enrichLog['totalSuccess'] + self.enrichLog['totalFailure']
+        print(self.enrichLog)
+
         try:
             es = Elasticsearch([{'host': '173.253.201.243', 'port': 9200}])
         except Exception as ex:
             print("ES ERROR:", ex)
 
         try:
-            es.index(index='timsenricher_index', doc_type='timsenrich_log', id=self.enrichLog['startTime'],
+            es.index(index='timsenricher_index', doc_type='timsenrich_log', id=str(self.enrichLog['startTime']),
                      body=self.enrichLog)
         except elasticsearch.ElasticsearchException as es1:
             print("TL Error:" + es1)
