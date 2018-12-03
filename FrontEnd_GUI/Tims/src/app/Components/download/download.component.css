@@ -16,3 +16,7 @@ a:not([href]):not([tabindex]) {
   color: white;
   text-decoration: none;
 }
+
+.container-fluid {
+  padding-left: 50px;
+}

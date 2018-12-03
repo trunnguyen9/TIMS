@@ -66,8 +66,6 @@ def createUser():
 def updateUser(userid):
     userStoreInstance = UserStore()
     data = request.get_json()
-    print(data['oldPassword'])
-    print(data['newPassword'])
     if not isValidToken():
         return jsonify({"Error": "Token is not valid. Please login again!"}), 403
     else:
