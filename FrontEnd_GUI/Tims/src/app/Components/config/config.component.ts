@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import {ConfigService} from '../../Services/config.service';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-config',
@@ -21,7 +22,7 @@ export class ConfigComponent implements OnInit {
   configForm: FormGroup;
   configObservable: Observable<Config>;
 
-  constructor(private fb: FormBuilder, private configService: ConfigService) {
+  constructor(private fb: FormBuilder, private configService: ConfigService, private router: Router) {
   }
 
   addFeedSourcesForm() {
@@ -86,6 +87,9 @@ export class ConfigComponent implements OnInit {
       },
       error => {
         console.log('Error', error);
+        if (error.status = 403) {
+          this.router.navigate(['/login']);
+        }
       }
     );
   }
@@ -100,6 +104,9 @@ export class ConfigComponent implements OnInit {
       },
       error => {
         console.log('Error', error);
+        if (error.status = 403) {
+          this.router.navigate(['/login']);
+        }
       }
     );
   }

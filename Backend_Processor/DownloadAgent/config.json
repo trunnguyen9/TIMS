@@ -10,15 +10,15 @@
         },
         {
             "name": "Bro",
-            "selected": false
+            "selected": true
         },
         {
             "name": "Snort",
-            "selected": false
+            "selected": true
         },
         {
             "name": "Json",
-            "selected": false
+            "selected": true
         }
     ],
     "feedSources": [

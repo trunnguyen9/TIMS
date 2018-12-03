@@ -16,3 +16,17 @@ class ExportRecordedThreats:
         for result in rows:
             json_data.append(dict(zip(row_headers, result)))
         return json.dumps(json_data)
+
+    def exportRTStatisticByThreat(self):
+        cursor = self.conn.cursor()
+        sqlString = "SELECT provider AS name, COUNT(provider) AS y FROM RecordedThreatsDB GROUP BY provider;"
+        cursor.execute(sqlString)
+        rows = cursor.fetchall()
+        return json.dumps(rows)
+
+    def exportRTStatisticByTags(self):
+        cursor = self.conn.cursor()
+        sqlString = "SELECT lower(tags) AS name, COUNT(lower(tags)) AS y FROM RecordedThreatsDB GROUP BY lower(tags);"
+        cursor.execute(sqlString)
+        rows = cursor.fetchall()
+        return json.dumps(rows)

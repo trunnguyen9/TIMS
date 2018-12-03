@@ -80,6 +80,19 @@ def statisticByProvider():
         exportThreatStatInstance = ExportRecordedThreats()
         return exportThreatStatInstance.exportRTStatisticByProvider()
 
+@app.route('/statisticByThreat',methods=['GET'])
+def statisticByThreat():
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        exportThreatStatInstance = ExportRecordedThreats()
+        return exportThreatStatInstance.exportRTStatisticByThreat()
+
+@app.route('/statisticByTags',methods=['GET'])
+def statisticByTags():
+    exportThreatStatInstance = ExportRecordedThreats()
+    return exportThreatStatInstance.exportRTStatisticByTags()
+
 @app.route('/dump',methods=['GET'])
 def dumpDatabase():
     if not isValidToken():
@@ -90,16 +103,13 @@ def dumpDatabase():
 
 @app.route('/download/<path>')
 def downloadFile (path = None):
-    if not isValidToken():
-        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
-    else:
-        if path is None:
-            self.Error(400)
-        try:
-            return send_file('./ExportedFiles/' + path, as_attachment=True)
-        except Exception as e:
-            self.log.exception(e)
-            self.Error(400)
+    if path is None:
+        self.Error(400)
+    try:
+        return send_file('./ExportedFiles/' + path, as_attachment=True)
+    except Exception as e:
+        self.log.exception(e)
+        self.Error(400)
 
 def isValidToken():
     token = request.headers.get('Authorization')
