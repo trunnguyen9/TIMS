@@ -17,6 +17,8 @@ import { AboutusComponent } from './Components/aboutus/aboutus.component';
 import { DownloadComponent } from './Components/download/download.component';
 import { PasswordChangeComponent } from './Components/password-change/password-change.component';
 import {JwtInterceptor} from './Helpers/jwt.interceptor';
+import { TabsComponent } from './Components/tabs/tabs.component';
+import { TabComponent } from './Components/tab/tab.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import {JwtInterceptor} from './Helpers/jwt.interceptor';
     FooterComponent,
     AboutusComponent,
     DownloadComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    TabsComponent,
+    TabComponent
   ],
   imports: [
     BrowserModule,
