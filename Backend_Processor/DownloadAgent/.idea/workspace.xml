@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="810995d7-1417-42b1-862b-1ea3bf0a723c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/Threats.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Threats.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserStore_Module/UserStore.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserStore_Module/UserStore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Components/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Components/navbar/navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Helpers/jwt.interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Helpers/jwt.interceptor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/authentication.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/authentication.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/config.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/config.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/statistic.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/statistic.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/Services/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd_GUI/Tims/src/app/app.module.ts" afterDir="false" />
-    </list>
+    <list default="true" id="810995d7-1417-42b1-862b-1ea3bf0a723c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,11 +48,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="71" column="81" selection-start-line="71" selection-start-column="81" selection-end-line="71" selection-end-column="81" />
+            <state relative-caret-position="440">
+              <caret line="68" column="30" lean-forward="true" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <marker date="1543798802004" expanded="true" signature="3535:3827" ph="..." />
@@ -76,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/UserStore_Module/UserStore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="65" selection-start-line="65" selection-end-line="65" />
+            <state relative-caret-position="833">
+              <caret line="49" column="37" lean-forward="true" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -197,7 +182,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18283582" />
@@ -311,23 +296,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UserStore_Module/UserStore.py">
+    <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        <state relative-caret-position="440">
+          <caret line="68" column="30" lean-forward="true" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
+            <marker date="1543798802004" expanded="true" signature="3535:3827" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
+    <entry file="file://$PROJECT_DIR$/UserStore_Module/UserStore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="71" column="81" selection-start-line="71" selection-start-column="81" selection-end-line="71" selection-end-column="81" />
+        <state relative-caret-position="833">
+          <caret line="49" column="37" lean-forward="true" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <marker date="1543798802004" expanded="true" signature="3535:3827" ph="..." />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

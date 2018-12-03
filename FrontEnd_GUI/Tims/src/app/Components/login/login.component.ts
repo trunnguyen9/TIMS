@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   isUserLogin: boolean;
+  message: string;
+  isError = false;
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -54,8 +56,15 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.dataService.changeLoginStatus(true);
-          this.router.navigate([this.returnUrl]);
+          if (data['Error']) {
+            this.dataService.changeLoginStatus(false);
+            this.isError = true;
+            this.message = data['Error'];
+            this.loading = false;
+          } else {
+            this.dataService.changeLoginStatus(true);
+            this.router.navigate([this.returnUrl]);
+          }
         },
         error => {
           this.alertService.error(error);
