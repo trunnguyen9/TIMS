@@ -90,8 +90,11 @@ def statisticByThreat():
 
 @app.route('/statisticByTags',methods=['GET'])
 def statisticByTags():
-    exportThreatStatInstance = ExportRecordedThreats()
-    return exportThreatStatInstance.exportRTStatisticByTags()
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        exportThreatStatInstance = ExportRecordedThreats()
+        return exportThreatStatInstance.exportRTStatisticByTags()
 
 @app.route('/dump',methods=['GET'])
 def dumpDatabase():
