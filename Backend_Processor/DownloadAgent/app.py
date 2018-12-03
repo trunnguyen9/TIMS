@@ -2,8 +2,9 @@ from flask import Flask, request, jsonify
 import json
 from ExportAgent import ExportThreatStats, ExportRecordedThreats
 from UserStore_Module import UserStore
-from flask import send_file
+from flask import send_file, request
 import logging
+import jwt
 
 app = Flask(__name__)
 
@@ -22,11 +23,16 @@ def __init__(self):
 
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
-    return jsonify(getConfigData()), 200
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        return jsonify(getConfigData()), 200
 
 @app.route('/updateConfig',methods=['PUT'])
 def updateConfig():
-    if request.method == 'PUT':
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
         content = request.get_json()
         updateConfigFile(content)
         return jsonify(content), 201
@@ -56,37 +62,57 @@ def createUser():
     data = request.get_json()
     msg = userStoreInstance.createUser(data['firstName'], data['lastName'], data['username'], data['password'])
     return jsonify(msg), 200
+@app.route('/users/<userid>',methods=['PUT'])
+def updateUser(userid):
+    userStoreInstance = UserStore()
+    data = request.get_json()
+    print(data['oldPassword'])
+    print(data['newPassword'])
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+        return jsonify(msg), 200
 
 @app.route('/statisticByProvider',methods=['GET'])
 def statisticByProvider():
-    exportThreatStatInstance = ExportRecordedThreats()
-    return exportThreatStatInstance.exportRTStatisticByProvider()
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        exportThreatStatInstance = ExportRecordedThreats()
+        return exportThreatStatInstance.exportRTStatisticByProvider()
 
 @app.route('/dump',methods=['GET'])
 def dumpDatabase():
-    exportThreatStatInstance = ExportThreatStats()
-    return exportThreatStatInstance.exportThreatStats()
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        exportThreatStatInstance = ExportThreatStats()
+        return exportThreatStatInstance.exportThreatStats()
 
 @app.route('/download/<path>')
 def downloadFile (path = None):
-    if path is None:
-        self.Error(400)
+    if not isValidToken():
+        return jsonify({"Error": "Token is not valid. Please login again!"}), 403
+    else:
+        if path is None:
+            self.Error(400)
+        try:
+            return send_file('./ExportedFiles/' + path, as_attachment=True)
+        except Exception as e:
+            self.log.exception(e)
+            self.Error(400)
+
+def isValidToken():
+    token = request.headers.get('Authorization')
+    if not token:
+        return False
     try:
-        return send_file('./ExportedFiles/' + path, as_attachment=True)
-    except Exception as e:
-        self.log.exception(e)
-        self.Error(400)
-
-
-@app.route('/download/<path>')
-def downloadFile(path=None):
-    if path is None:
-        self.Error(400)
-    try:
-        return send_file('./ExportedFiles/' + path, as_attachment=True)
-    except Exception as e:
-        self.log.exception(e)
-        self.Error(400)
-
+        decoded = jwt.decode(token, 'secret', algorithms=['HS256'])
+    except jwt.ExpiredSignatureError:
+        return False
+    except jwt.InvalidTokenError:
+        return False
+    return True
 
 app.logger.addHandler(handler)

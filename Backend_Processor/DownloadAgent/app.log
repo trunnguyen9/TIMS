@@ -62,3 +62,448 @@ Traceback (most recent call last):
   File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 77, in downloadFile
     self.log.exception(e)
 NameError: name 'self' is not defined
+Exception on /users/register [POST]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 57, in createUser
+    msg = userStoreInstance.createUser(data['firstName'], data['lastName'], data['username'], data['password'])
+KeyError: 'firstName'
+Exception on /users/register [POST]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 57, in createUser
+    msg = userStoreInstance.createUser(data['firstName'], data['lastName'], data['username'], data['password'])
+KeyError: 'firstName'
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1831, in finalize_request
+    response = self.make_response(rv)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1982, in make_response
+    reraise(TypeError, new_error, sys.exc_info()[2])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 34, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1974, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\werkzeug\test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'int' object is not callable
+The view function did not return a valid response. The return type must be a string, tuple, Response instance, or WSGI callable, but it was a int.
+Exception on /users [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 64, in updateUser
+    isValidToken()
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 90, in isValidToken
+    decoded = jwt.decode(token, 'secret', algorithms=['HS256'])
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\jwt\api_jwt.py", line 61, in decode
+    payload, signing_input, header, signature = self._load(jwt)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\jwt\api_jws.py", line 140, in _load
+    binary_type))
+jwt.exceptions.DecodeError: Invalid token type. Token must be a <class 'bytes'>
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 72, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 72, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [POST]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 72, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 72, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 73, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 73, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 69, in updateUser
+    print(data['oldPassword'])
+TypeError: 'NoneType' object is not subscriptable
+Exception on /users/1 [PUT]
+Traceback (most recent call last):
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\nano\appdata\local\programs\python\python37-32\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Workspace\TIMS\Backend_Processor\DownloadAgent\app.py", line 73, in updateUser
+    msg = userStoreInstance.updateUser(userid, data['oldPassword'], data['newPassword'])
+TypeError: 'NoneType' object is not subscriptable

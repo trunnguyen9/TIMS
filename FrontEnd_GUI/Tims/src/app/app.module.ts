@@ -9,12 +9,14 @@ import { ConfigComponent } from './Components/config/config.component';
 import { HomeComponent } from './Components/home/home.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { StatisticComponent } from './Components/statistic/statistic.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ChartModule } from 'angular-highcharts';
 import { FooterComponent } from './Components/footer/footer.component';
 import { AboutusComponent } from './Components/aboutus/aboutus.component';
 import { DownloadComponent } from './Components/download/download.component';
+import { PasswordChangeComponent } from './Components/password-change/password-change.component';
+import {JwtInterceptor} from './Helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { DownloadComponent } from './Components/download/download.component';
     StatisticComponent,
     FooterComponent,
     AboutusComponent,
-    DownloadComponent
+    DownloadComponent,
+    PasswordChangeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,13 @@ import { DownloadComponent } from './Components/download/download.component';
     ChartModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
